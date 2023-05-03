@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NiteDelivery.Shared.DAL\NitoDeliveryService.Shared.DAL.csproj" />
+    <ProjectReference Include="..\..\Shared\NitoDeliveryService.Shared.DAL\NitoDeliveryService.Shared.DAL.csproj" />
   </ItemGroup>
 
 </Project>

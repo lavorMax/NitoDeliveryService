@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitoDeliveryService.ManagementPortal.API", "ClientManager\NitoDeliveryService.ManagementPortal.API.csproj", "{EBA79EE5-BCF7-493F-A03C-C3E09EC575D0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitoDeliveryService.ManagementPortal.API", "NitoDeliveryService.ManagementPortal.API\NitoDeliveryService.ManagementPortal.API.csproj", "{EBA79EE5-BCF7-493F-A03C-C3E09EC575D0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NitoDeliveryService.ManagementPortal.Models", "NitoDelivery.ClientManager.Models\NitoDeliveryService.ManagementPortal.Models.csproj", "{3D4B4701-BBA7-4F0A-A00E-31AF4E039D58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NitoDeliveryService.ManagementPortal.Models", "NitoDeliveryService.ManagementPortal.Models\NitoDeliveryService.ManagementPortal.Models.csproj", "{3D4B4701-BBA7-4F0A-A00E-31AF4E039D58}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NitoDeliveryService.ManagementPortal.Services", "NitoDelivery.ClientManager.Services\NitoDeliveryService.ManagementPortal.Services.csproj", "{3B38E95A-B967-4E50-BCD2-1DA84EC8B452}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NitoDeliveryService.ManagementPortal.Services", "NitoDeliveryService.ManagementPortal.Services\NitoDeliveryService.ManagementPortal.Services.csproj", "{3B38E95A-B967-4E50-BCD2-1DA84EC8B452}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NitoDeliveryService.ManagementPortal.Repositories", "NitoDelivery.ClientManager.Repositories\NitoDeliveryService.ManagementPortal.Repositories.csproj", "{CC56B49C-4DB0-4243-9437-8D3C131AB806}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NitoDeliveryService.ManagementPortal.Repositories", "NitoDeliveryService.ManagementPortal.Repositories\NitoDeliveryService.ManagementPortal.Repositories.csproj", "{CC56B49C-4DB0-4243-9437-8D3C131AB806}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitoDeliveryService.Shared.DAL", "NiteDelivery.Shared.DAL\NitoDeliveryService.Shared.DAL.csproj", "{45C1F634-561F-4AE3-9618-2F6E259AE898}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitoDeliveryService.Shared.DAL", "..\Shared\NitoDeliveryService.Shared.DAL\NitoDeliveryService.Shared.DAL.csproj", "{45C1F634-561F-4AE3-9618-2F6E259AE898}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NitoDeliveryService.ManagementPortal.Entities", "NitoDeliveryService.ManagementPortal.Entities\NitoDeliveryService.ManagementPortal.Entities.csproj", "{394C14AA-5DF0-411B-A9B6-303D66ED0415}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitoDeliveryService.Shared.Models", "NitoDeliveryService.Shared.Models\NitoDeliveryService.Shared.Models.csproj", "{1A487FDC-C693-463E-B5E6-7DB717239A92}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitoDeliveryService.Shared.Models", "..\Shared\NitoDeliveryService.Shared.Models\NitoDeliveryService.Shared.Models.csproj", "{1A487FDC-C693-463E-B5E6-7DB717239A92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

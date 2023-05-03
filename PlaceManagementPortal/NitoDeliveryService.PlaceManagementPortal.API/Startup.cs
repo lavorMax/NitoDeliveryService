@@ -9,6 +9,7 @@ using Microsoft.OpenApi.Models;
 using NitoDeliveryService.PlaceManagementPortal.API.Infrastructure;
 using NitoDeliveryService.PlaceManagementPortal.API.Infrastructure.DIInit;
 using NitoDeliveryService.PlaceManagementPortal.Services.Infrasctructure;
+using NitoDeliveryService.PlaceManagementPortal.Services.Infrastructure;
 using System.Text;
 
 namespace PlaceManagementPortal
@@ -69,6 +70,9 @@ namespace PlaceManagementPortal
 
             var deliveryServiceOptions = Configuration.GetSection("DeliveryServiceOptions").Get<DeliveryServiceOptions>();
             services.AddSingleton(deliveryServiceOptions);
+
+            var auth0DeliveryServiceOptions = Configuration.GetSection("Auth0DeliveryServiceOptions").Get<Auth0DeliveryServiceOptions>();
+            services.AddSingleton(auth0DeliveryServiceOptions);
 
             services.SetupDAL();
             services.SetupBL();

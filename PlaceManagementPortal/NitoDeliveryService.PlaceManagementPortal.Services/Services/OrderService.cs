@@ -21,32 +21,17 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
         public async Task ChangeStatusToClosed(int orderId)
         {
-            var result = await _deliveryServiceHttpClient.ChangeStatus(orderId, OrderStatuses.Closed);
-
-            if (!result)
-            {
-                throw new Exception("Error updating order status");
-            }
+            await _deliveryServiceHttpClient.ChangeStatus(orderId, OrderStatuses.Closed);
         }
 
         public async Task ChangeStatusToDelivering(int orderId)
         {
-            var result = await _deliveryServiceHttpClient.ChangeStatus(orderId, OrderStatuses.Delivering);
-
-            if (!result)
-            {
-                throw new Exception("Error updating order status");
-            }
+            await _deliveryServiceHttpClient.ChangeStatus(orderId, OrderStatuses.Delivering);
         }
 
         public async Task ChangeStatusToPrepearing(int orderId)
         {
-            var result = await _deliveryServiceHttpClient.ChangeStatus(orderId, OrderStatuses.Prepearing);
-
-            if (!result)
-            {
-                throw new Exception("Error updating order status");
-            }
+            await _deliveryServiceHttpClient.ChangeStatus(orderId, OrderStatuses.Prepearing);
         }
 
         public async Task<IEnumerable<OrderDTO>> GetActiveOrders()

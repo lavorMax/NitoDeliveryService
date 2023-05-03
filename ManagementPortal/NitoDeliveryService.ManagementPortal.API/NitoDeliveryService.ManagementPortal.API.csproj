@@ -13,9 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NitoDelivery.ClientManager.Models\NitoDeliveryService.ManagementPortal.Models.csproj" />
-    <ProjectReference Include="..\NitoDelivery.ClientManager.Repositories\NitoDeliveryService.ManagementPortal.Repositories.csproj" />
-    <ProjectReference Include="..\NitoDelivery.ClientManager.Services\NitoDeliveryService.ManagementPortal.Services.csproj" />
+    <ProjectReference Include="..\NitoDeliveryService.ManagementPortal.Models\NitoDeliveryService.ManagementPortal.Models.csproj" />
+    <ProjectReference Include="..\NitoDeliveryService.ManagementPortal.Repositories\NitoDeliveryService.ManagementPortal.Repositories.csproj" />
+    <ProjectReference Include="..\NitoDeliveryService.ManagementPortal.Services\NitoDeliveryService.ManagementPortal.Services.csproj" />
   </ItemGroup>
 
 </Project>

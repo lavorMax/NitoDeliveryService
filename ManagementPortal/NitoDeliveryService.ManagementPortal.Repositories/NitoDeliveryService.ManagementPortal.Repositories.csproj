@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -10,8 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NiteDelivery.Shared.DAL\NitoDeliveryService.Shared.DAL.csproj" />
-    <ProjectReference Include="..\NitoDelivery.ClientManager.Models\NitoDeliveryService.ManagementPortal.Models.csproj" />
+    <ProjectReference Include="..\..\Shared\NitoDeliveryService.Shared.DAL\NitoDeliveryService.Shared.DAL.csproj" />
+    <ProjectReference Include="..\NitoDeliveryService.ManagementPortal.Models\NitoDeliveryService.ManagementPortal.Models.csproj" />
     <ProjectReference Include="..\NitoDeliveryService.ManagementPortal.Entities\NitoDeliveryService.ManagementPortal.Entities.csproj" />
   </ItemGroup>
 

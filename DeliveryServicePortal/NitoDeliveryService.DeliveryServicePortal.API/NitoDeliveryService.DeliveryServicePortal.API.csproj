@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NitoDeliveryService.PlaceManagementPortal.Repositories\NitoDeliveryService.PlaceManagementPortal.Repositories.csproj" />
-    <ProjectReference Include="..\NitoDeliveryService.PlaceManagementPortal.Services\NitoDeliveryService.PlaceManagementPortal.Services.csproj" />
+    <ProjectReference Include="..\NitoDeliveryService.DeliveryServicePortal.Repositories\NitoDeliveryService.DeliveryServicePortal.Repositories.csproj" />
+    <ProjectReference Include="..\NitoDeliveryService.DeliveryServicePortal.Services\NitoDeliveryService.DeliveryServicePortal.Services.csproj" />
   </ItemGroup>
 
 </Project>

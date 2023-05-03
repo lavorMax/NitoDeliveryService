@@ -48,12 +48,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
             }
 
             var placeDTO = _mapper.Map<Place, PlaceDTO>(result);
-            var deliveryServiceResult = await _deliveryServiceHttpClient.CreatePlace(placeDTO);
-
-            if (!deliveryServiceResult)
-            {
-                throw new Exception("Error creating place in deliveryService API");
-            }
+            await _deliveryServiceHttpClient.CreatePlace(placeDTO);
 
             await _unitOfWork.SaveAsync();
         }

@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.0.0" />
+    <PackageReference Include="GeoCoordinate" Version="0.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Nominatim.API" Version="1.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NitoDeliveryService.DeliveryServicePortal.Entities\NitoDeliveryService.DeliveryServicePortal.Models.csproj" />
+    <ProjectReference Include="..\NitoDeliveryService.DeliveryServicePortal.Repositories\NitoDeliveryService.DeliveryServicePortal.Repositories.csproj" />
+    <ProjectReference Include="..\..\Shared\NitoDeliveryService.Shared.Models\NitoDeliveryService.Shared.Models.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -7,12 +7,14 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\NitoDeliveryService.Shared.DAL\NitoDeliveryService.Shared.DAL.csproj" />
     <ProjectReference Include="..\..\Shared\NitoDeliveryService.Shared.Models\NitoDeliveryService.Shared.Models.csproj" />
-    <ProjectReference Include="..\NitoDeliveryService.PlaceManagementPortal.Repositories\NitoDeliveryService.PlaceManagementPortal.Repositories.csproj" />
+    <ProjectReference Include="..\NitoDeliveryService.ManagementPortal.Models\NitoDeliveryService.ManagementPortal.Models.csproj" />
+    <ProjectReference Include="..\NitoDeliveryService.ManagementPortal.Repositories\NitoDeliveryService.ManagementPortal.Repositories.csproj" />
   </ItemGroup>
 
 </Project>

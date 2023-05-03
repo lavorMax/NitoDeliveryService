@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "ClientManager": {
+    "ManagementPortal": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,
