@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitoDeliveryService.DeliveryServicePortal.API", "NitoDeliveryService.DeliveryServicePortal.API.csproj", "{C31DB618-DEE3-4C8F-8C72-28CAF718B8E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitoDeliveryService.PlaceManagementPortal.Models", "..\NitoDeliveryService.PlaceManagementPortal.Entities\NitoDeliveryService.PlaceManagementPortal.Models.csproj", "{DD6956A8-7A0E-4656-B324-3BB300B76DB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitoDeliveryService.PlaceManagementPortal.Repositories", "..\NitoDeliveryService.PlaceManagementPortal.Repositories\NitoDeliveryService.PlaceManagementPortal.Repositories.csproj", "{585FCA66-2998-44F1-9AA9-2105EA719047}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitoDeliveryService.PlaceManagementPortal.Services", "..\NitoDeliveryService.PlaceManagementPortal.Services\NitoDeliveryService.PlaceManagementPortal.Services.csproj", "{C69C5023-7EC2-463A-89CF-D9E84294E9F3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NitoDeliveryService.Shared.Models", "..\NitoDeliveryService.Shared.Models\NitoDeliveryService.Shared.Models.csproj", "{BB8534C9-86D0-493B-B143-D25558D9488D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NitoDeliveryService.Shared.DAL", "..\NiteDelivery.Shared.DAL\NitoDeliveryService.Shared.DAL.csproj", "{3F8E1C93-4586-4CBB-94ED-3880C7089D69}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C31DB618-DEE3-4C8F-8C72-28CAF718B8E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C31DB618-DEE3-4C8F-8C72-28CAF718B8E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C31DB618-DEE3-4C8F-8C72-28CAF718B8E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C31DB618-DEE3-4C8F-8C72-28CAF718B8E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD6956A8-7A0E-4656-B324-3BB300B76DB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD6956A8-7A0E-4656-B324-3BB300B76DB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD6956A8-7A0E-4656-B324-3BB300B76DB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD6956A8-7A0E-4656-B324-3BB300B76DB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{585FCA66-2998-44F1-9AA9-2105EA719047}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{585FCA66-2998-44F1-9AA9-2105EA719047}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{585FCA66-2998-44F1-9AA9-2105EA719047}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{585FCA66-2998-44F1-9AA9-2105EA719047}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C69C5023-7EC2-463A-89CF-D9E84294E9F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C69C5023-7EC2-463A-89CF-D9E84294E9F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C69C5023-7EC2-463A-89CF-D9E84294E9F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C69C5023-7EC2-463A-89CF-D9E84294E9F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB8534C9-86D0-493B-B143-D25558D9488D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB8534C9-86D0-493B-B143-D25558D9488D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB8534C9-86D0-493B-B143-D25558D9488D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB8534C9-86D0-493B-B143-D25558D9488D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F8E1C93-4586-4CBB-94ED-3880C7089D69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F8E1C93-4586-4CBB-94ED-3880C7089D69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F8E1C93-4586-4CBB-94ED-3880C7089D69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F8E1C93-4586-4CBB-94ED-3880C7089D69}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DE7B9FE0-D062-490A-8ED9-6BF81BDE9B55}
+	EndGlobalSection
+EndGlobal

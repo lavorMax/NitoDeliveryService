@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NiteDelivery.Shared.DAL\NitoDeliveryService.Shared.DAL.csproj" />
+    <ProjectReference Include="..\NitoDelivery.ClientManager.Models\NitoDeliveryService.ManagementPortal.Models.csproj" />
+    <ProjectReference Include="..\NitoDeliveryService.ManagementPortal.Entities\NitoDeliveryService.ManagementPortal.Entities.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\NiteDelivery.Shared.DAL\NitoDeliveryService.Shared.DAL.csproj" />
+    <ProjectReference Include="..\..\NitoDeliveryService.Shared.Models\NitoDeliveryService.Shared.Models.csproj" />
+  </ItemGroup>
+
+</Project>
