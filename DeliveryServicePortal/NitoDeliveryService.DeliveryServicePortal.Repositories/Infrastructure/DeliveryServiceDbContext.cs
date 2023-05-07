@@ -5,7 +5,6 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Infrastructure
 {
     public class DeliveryServiceDbContext : DbContext
     {
-        public DbSet<CategoryView> Categories { get; set; }
         public DbSet<PlaceView> Places { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<DishOrder> DishOrder { get; set; }
@@ -25,12 +24,6 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<CategoryView>()
-                .HasOne(c => c.PlaceView)
-                .WithMany(p => p.Categories)
-                .HasForeignKey(c => c.PlaceView)
-                .OnDelete(DeleteBehavior.Cascade);
-
             modelBuilder.Entity<Order>()
                 .HasOne(o => o.User)
                 .WithMany(u => u.Orders)

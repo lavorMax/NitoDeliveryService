@@ -1,5 +1,4 @@
 ﻿using NiteDeliveryService.Shared.DAL;
-using System.Collections.Generic;
 
 namespace NitoDeliveryService.PlaceManagementPortal.Entities.Entities
 {
@@ -13,7 +12,5 @@ namespace NitoDeliveryService.PlaceManagementPortal.Entities.Entities
         public int DeliveryRange { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
-
-        public IEnumerable<CategoryView> Categories { get; set; }
     }
 }

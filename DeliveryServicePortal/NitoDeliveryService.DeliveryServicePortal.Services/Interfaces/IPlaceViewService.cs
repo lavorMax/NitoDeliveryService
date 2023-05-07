@@ -11,8 +11,6 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Interfaces
         Task CreatePlaceView(PlaceDTO placeDto);
         Task UpdatePlaceView(PlaceDTO placeDto);
         Task<IEnumerable<PlaceViewDTO>> GetAllPossibleToDeliver(string adress);
-        Task<IEnumerable<PlaceViewDTO>> Search(string adress, string keys);
-        Task<IEnumerable<PlaceViewDTO>> SearchByCategory(string adress, PlaceCategories category);
         Task<PlaceDTO> Get(int placeId, int clientId);
     }
 }

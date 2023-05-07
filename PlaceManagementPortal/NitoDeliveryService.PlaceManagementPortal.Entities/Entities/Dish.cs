@@ -9,6 +9,6 @@ namespace NitoDeliveryService.PlaceManagementPortal.Entities.Entities
         public int CategoryId { get; set; }
         public decimal Price { get; set; }
 
-        public Category Category { get; set; }
+        public Place Place { get; set; }
     }
 }

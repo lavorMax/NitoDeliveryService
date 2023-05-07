@@ -10,8 +10,7 @@ namespace NitoDeliveryService.Shared.Models.PlaceDTOs
         public string Description { get; set; }
         public string Address { get; set; }
 
-        public IEnumerable<CategoryDTO> Categories { get; set; }
+        public IEnumerable<DishDTO> Dishes { get; set; }
         public IEnumerable<PaymentConfigurationDTO> PaymentConfigurations { get; set; }
-        public IEnumerable<PlaceCategoryDTO> PlaceCategories { get; set; }
     }
 }

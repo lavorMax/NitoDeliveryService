@@ -11,7 +11,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Entities.Entities
         public int SlotId { get; set; }
         public string Address { get; set; }
 
-        public IEnumerable<Category> Categories { get; set; }
+        public IEnumerable<Dish> Dishes { get; set; }
         public IEnumerable<PaymentConfiguration> PaymentConfigurations { get; set; }
         public IEnumerable<PlaceCategory> PlaceCategories { get; set; }
     }

@@ -34,8 +34,6 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
         {
             var (addressLatitude, addressLongitude) = await GetCoordinates(placeDto.Address);
 
-            var categories = _mapper.Map<IEnumerable<PlaceCategoryDTO>, IEnumerable<CategoryView>>(placeDto.PlaceCategories);
-
             var PlaceView = new PlaceView()
             {
                 PlaceId = placeDto.Id,
@@ -45,9 +43,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
                 Adress = placeDto.Address,
                 DeliveryRange = placeDto.PaymentConfigurations.Select(pc => pc.MaxRange).OrderBy(i => i).First(),
                 Longitude = addressLongitude,
-                Latitude = addressLatitude,
-
-                Categories = categories
+                Latitude = addressLatitude
             };
 
             var result = await _placeViewRepository.Create(PlaceView);
@@ -83,35 +79,11 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
             return resultDto;
         }
 
-        public async Task<IEnumerable<PlaceViewDTO>> Search(string adress, string keys)
-        {
-            var (addressLatitude, addressLongitude) = await GetCoordinates(adress);
-
-            var result = await _placeViewRepository.SearchByName(addressLatitude, addressLongitude, keys.Split(" "));
-
-            var resultDto = _mapper.Map<IEnumerable<PlaceView>, IEnumerable<PlaceViewDTO>>(result);
-
-            return resultDto;
-        }
-
-        public async Task<IEnumerable<PlaceViewDTO>> SearchByCategory(string adress, PlaceCategories category)
-        {
-            var (addressLatitude, addressLongitude) = await GetCoordinates(adress);
-
-            var result = await _placeViewRepository.SearchByCategory(addressLatitude, addressLongitude, category);
-
-            var resultDto = _mapper.Map<IEnumerable<PlaceView>, IEnumerable<PlaceViewDTO>>(result);
-
-            return resultDto;
-        }
-
         public async Task UpdatePlaceView(PlaceDTO placeDto)
         {
             var entityToUpdate = _placeViewRepository.ReadByPlaceAndClientId(placeDto.ClientId, placeDto.Id);
 
             var (addressLatitude, addressLongitude) = await GetCoordinates(placeDto.Address);
-
-            var categories = _mapper.Map<IEnumerable<PlaceCategoryDTO>, IEnumerable<CategoryView>>(placeDto.PlaceCategories);
 
             var PlaceView = new PlaceView()
             {
@@ -123,9 +95,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
                 Adress = placeDto.Address,
                 DeliveryRange = placeDto.PaymentConfigurations.Select(pc => pc.MaxRange).OrderBy(i => i).First(),
                 Longitude = addressLongitude,
-                Latitude = addressLatitude,
-
-                Categories = categories
+                Latitude = addressLatitude
             };
 
             var result = await _placeViewRepository.Update(PlaceView);
