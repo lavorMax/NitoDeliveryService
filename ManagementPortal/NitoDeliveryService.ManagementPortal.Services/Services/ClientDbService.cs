@@ -20,7 +20,7 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
             string connectionString = _options.ConnectionString;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string databaseName = $"ClientDB-{clientId}";
+                string databaseName = $"ClientDB{clientId}";
                 string createDatabaseQuery = $"CREATE DATABASE {databaseName}";
                 using (SqlCommand command = new(createDatabaseQuery, connection))
                 {
@@ -32,7 +32,7 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
 
         public async Task RemoveDb(int clientId)
         {
-            string databaseName = $"ClientDB-{clientId}";
+            string databaseName = $"ClientDB{clientId}";
 
             string connectionString = _options.ConnectionString;
 

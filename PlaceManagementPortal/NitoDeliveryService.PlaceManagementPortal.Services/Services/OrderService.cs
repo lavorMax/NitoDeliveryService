@@ -1,4 +1,4 @@
-﻿using NitoDeliveryService.PlaceManagementPortal.Repositories.Infrastucture;
+﻿using NitoDeliveryService.PlaceManagementPortal.Repositories;
 using NitoDeliveryService.PlaceManagementPortal.Services.Interfaces;
 using NitoDeliveryService.Shared.Models.Models;
 using NitoDeliveryService.Shared.Models.PlaceDTOs;
@@ -48,18 +48,16 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
             return activeOrders;
         }
 
-        public async Task<IEnumerable<OrderDTO>> GetArchievedOrders()
+        public async Task<OrderDTO> GetOrder(int orderId)
         {
-            var userMetadata = _tokenParser.GetMetadata();
+            var activeOrder = await _deliveryServiceHttpClient.GetOrder(orderId);
 
-            var archievedOrders = await _deliveryServiceHttpClient.GetOrders(userMetadata.PlaceId, userMetadata.ClientId, false);
-
-            if (archievedOrders == null)
+            if (activeOrder == null)
             {
-                throw new Exception("Error getting archieved orders");
+                throw new Exception("Error getting order");
             }
 
-            return archievedOrders;
+            return activeOrder;
         }
     }
 }

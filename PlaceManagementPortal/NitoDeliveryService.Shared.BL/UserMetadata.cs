@@ -1,4 +1,4 @@
-﻿namespace NitoDeliveryService.PlaceManagementPortal.Models.DTOs
+﻿namespace NitoDeliveryService.Shared.BL
 {
     public class UserMetadata
     {

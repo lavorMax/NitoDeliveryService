@@ -32,18 +32,12 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
         public async Task CreatePlaceView(PlaceDTO placeDto)
         {
-            var (addressLatitude, addressLongitude) = await GetCoordinates(placeDto.Address);
-
             var PlaceView = new PlaceView()
             {
                 PlaceId = placeDto.Id,
                 Name = placeDto.Name,
                 ClientId = placeDto.ClientId,
                 Description = placeDto.Description,
-                Adress = placeDto.Address,
-                DeliveryRange = placeDto.PaymentConfigurations.Select(pc => pc.MaxRange).OrderBy(i => i).First(),
-                Longitude = addressLongitude,
-                Latitude = addressLatitude
             };
 
             var result = await _placeViewRepository.Create(PlaceView);

@@ -1,0 +1,21 @@
+﻿<Window x:Class="DeliveryServiceWPF.View.PlaceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DeliveryServiceWPF.View"
+        mc:Ignorable="d"
+        Title="Delivery Service" Height="450" Width="400">
+    <Grid>
+        <Label Content="{Binding PlaceName}" HorizontalAlignment="Left" Margin="53,28,0,0" VerticalAlignment="Top" Width="147" Height="26"/>
+        <Label Content="{Binding PlaceAdress}" HorizontalAlignment="Left" Margin="53,59,0,0" VerticalAlignment="Top" Height="21" Width="134"/>
+        <ListBox Margin="27,130,213,101" ItemsSource="{Binding PlaceItems}" SelectedItem="{Binding SelectedPlaceItem}"/>
+        <ListBox Margin="216,130,24,101" ItemsSource="{Binding DishOrders}" SelectedItem="{Binding SelectedOrderItem}"/>
+        <Label Content="Items" HorizontalAlignment="Left" Margin="27,104,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.039,0.252"/>
+        <Label Content="YourOrder" HorizontalAlignment="Left" Margin="216,104,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.039,0.252"/>
+        <Button Content="Add" HorizontalAlignment="Center" Margin="0,348,0,0" VerticalAlignment="Top" Command="{Binding AddCommand}"/>
+        <Button Content="Remove" HorizontalAlignment="Center" Margin="0,373,0,0" VerticalAlignment="Top" Command="{Binding RemoveCommand}"/>
+        <Button Content="Create Order" HorizontalAlignment="Center" Margin="0,398,0,0" VerticalAlignment="Top" Command="{Binding CreateOrderCommand}"/>
+
+    </Grid>
+</Window>

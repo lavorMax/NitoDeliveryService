@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using NitoDeliveryService.PlaceManagementPortal.Models.DTOs;
+using NitoDeliveryService.PlaceManagementPortal.Entities;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Infrastucture
+namespace NitoDeliveryService.PlaceManagementPortal.Repositories
 {
     public class TokenParser : ITokenParser
     {

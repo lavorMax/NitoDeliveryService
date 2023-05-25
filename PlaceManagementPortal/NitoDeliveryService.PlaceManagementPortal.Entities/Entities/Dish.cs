@@ -6,7 +6,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Entities.Entities
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public int CategoryId { get; set; }
+        public int PlaceId { get; set; }
         public decimal Price { get; set; }
 
         public Place Place { get; set; }

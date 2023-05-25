@@ -11,7 +11,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Repositories
 {
     public class PlaceRepository : BaseRepository<Place, int>, IPlaceRepository
     {
-        public PlaceRepository(IDbContextFactory<PlaceManagementDbContext> contextfactory) : base(contextfactory.CreateDbContext())
+        public PlaceRepository(IOverridingDbContextFactory<PlaceManagementDbContext> contextfactory) : base(contextfactory.CreateDbContext())
         {
         }
 
@@ -39,10 +39,8 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Repositories
             try
             {
                 return await _context.Set<Place>()
-                    .Include(p => p.PlaceCategories)
                     .Include(p => p.PaymentConfigurations)
-                    .Include(p => p.Categories)
-                    .ThenInclude(c => c.Dishes)
+                    .Include(c => c.Dishes)
                     .FirstAsync(p => p.Id == id);
             }
             catch (Exception e)

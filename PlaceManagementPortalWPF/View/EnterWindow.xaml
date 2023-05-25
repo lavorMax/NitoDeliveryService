@@ -1,0 +1,23 @@
+﻿<Window x:Class="PlaceManagementPortalWPF.View.EnterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PlaceManagementPortalWPF.View"
+        mc:Ignorable="d"
+        Title="Place Management Portal" Height="450" Width="400">
+    <Grid HorizontalAlignment="Left" Width="399" Margin="0,0,0,-6">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBox HorizontalAlignment="Center" Margin="0,146,0,0" Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="169" Height="22" Visibility="Visible" Grid.Column="1"/>
+        <TextBox Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Height="21" Grid.Column="1" Margin="116,199,115,0"/>
+        <Button Content="Enter" HorizontalAlignment="Center" Margin="0,240,0,0" VerticalAlignment="Top" Width="40" Grid.Column="1" Height="20" Command="{Binding EnterCommand}"/>
+        <Label Content="Login" Margin="121,120,229,0" VerticalAlignment="Top" AutomationProperties.Name="Label" Grid.Column="1" Height="26"/>
+        <Label Content="Password" HorizontalAlignment="Left" Margin="121,173,0,0" VerticalAlignment="Top" Grid.Column="1" Height="26" Width="64"/>
+        <Label Content="Place Management Portal" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" AutomationProperties.Name="Label" Height="50" Width="267" FontSize="20" FontFamily="Segoe UI Emoji" FontWeight="Bold" Grid.ColumnSpan="2"/>
+        <Label Content="Uncorrect credentials" Margin="132,279,132,0" VerticalAlignment="Top" AutomationProperties.Name="Label" Grid.Column="1" Height="26" Visibility="{Binding IncorrectCredentialsVisibility}"/>
+
+    </Grid>
+</Window>

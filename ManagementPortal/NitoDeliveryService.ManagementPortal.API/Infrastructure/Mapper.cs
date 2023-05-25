@@ -13,12 +13,6 @@ namespace NitoDelivery.ClientManager.API.Infrastructure
 
             CreateMap<Client, ClientDto>();
             CreateMap<ClientDto, Client>();
-
-            CreateMap<ClientResponsibleDto, ClientResponsible>();
-            CreateMap<ClientResponsible, ClientResponsibleDto>();
-
-            CreateMap<ClientPhoneDto, ClientPhone>();
-            CreateMap<ClientPhone, ClientPhoneDto>();
         }
     }
 }

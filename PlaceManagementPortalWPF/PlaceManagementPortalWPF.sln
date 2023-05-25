@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaceManagementPortalWPF", "PlaceManagementPortalWPF.csproj", "{55499474-A492-4003-AE3A-6812CFD2D266}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NitoDeliveryService.Shared.View", "..\NitoDeliveryService.Shared.View\NitoDeliveryService.Shared.View.csproj", "{D84BA71A-93C2-4FC2-8F6A-BBDE058737F1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NitoDeliveryService.Shared.View.Models", "..\NitoDeliveryService.Shared.View.Models\NitoDeliveryService.Shared.View.Models.csproj", "{3AF17F8C-22EB-414E-8CB3-45C75FF96371}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NitoDeliveryService.Shared.HttpClients", "..\NitoDeliveryService.Shared.HttpClients\NitoDeliveryService.Shared.HttpClients.csproj", "{C59C7C24-CB0D-459D-A959-4327F66A38E6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NitoDeliveryService.Shared.Models", "..\Shared\NitoDeliveryService.Shared.Models\NitoDeliveryService.Shared.Models.csproj", "{FAB6A3C7-B5A3-4EB5-8136-D4F3585C882D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NitoDeliveryService.Shared.BL", "..\PlaceManagementPortal\NitoDeliveryService.Shared.BL\NitoDeliveryService.Shared.BL.csproj", "{BB2EC7F2-79B9-420D-9E8F-24DFC10CFD45}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{55499474-A492-4003-AE3A-6812CFD2D266}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55499474-A492-4003-AE3A-6812CFD2D266}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55499474-A492-4003-AE3A-6812CFD2D266}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55499474-A492-4003-AE3A-6812CFD2D266}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D84BA71A-93C2-4FC2-8F6A-BBDE058737F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D84BA71A-93C2-4FC2-8F6A-BBDE058737F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D84BA71A-93C2-4FC2-8F6A-BBDE058737F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D84BA71A-93C2-4FC2-8F6A-BBDE058737F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AF17F8C-22EB-414E-8CB3-45C75FF96371}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AF17F8C-22EB-414E-8CB3-45C75FF96371}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AF17F8C-22EB-414E-8CB3-45C75FF96371}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AF17F8C-22EB-414E-8CB3-45C75FF96371}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C59C7C24-CB0D-459D-A959-4327F66A38E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C59C7C24-CB0D-459D-A959-4327F66A38E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C59C7C24-CB0D-459D-A959-4327F66A38E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C59C7C24-CB0D-459D-A959-4327F66A38E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAB6A3C7-B5A3-4EB5-8136-D4F3585C882D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAB6A3C7-B5A3-4EB5-8136-D4F3585C882D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAB6A3C7-B5A3-4EB5-8136-D4F3585C882D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAB6A3C7-B5A3-4EB5-8136-D4F3585C882D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB2EC7F2-79B9-420D-9E8F-24DFC10CFD45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB2EC7F2-79B9-420D-9E8F-24DFC10CFD45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB2EC7F2-79B9-420D-9E8F-24DFC10CFD45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB2EC7F2-79B9-420D-9E8F-24DFC10CFD45}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B3C55FC9-4800-4303-AF25-98299479C9CD}
+	EndGlobalSection
+EndGlobal

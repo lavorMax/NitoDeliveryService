@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using NitoDeliveryService.PlaceManagementPortal.Repositories.Infrastucture;
+using NitoDeliveryService.PlaceManagementPortal.Repositories.Interfaces;
 using NitoDeliveryService.PlaceManagementPortal.Services.Interfaces;
 using NitoDeliveryService.Shared.Models.DTOs;
 using System;
@@ -28,7 +29,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.API.Controllers
             {
                 using (var scope = _scopeFactory.CreateScope())
                 {
-                    var factory = scope.ServiceProvider.GetRequiredService<PlaceManagementDbContextFactory>();
+                    var factory = scope.ServiceProvider.GetRequiredService<IOverridingDbContextFactory<PlaceManagementDbContext>>();
                     factory.OverrideClientId(clientId);
 
                     var placeService = scope.ServiceProvider.GetRequiredService<IPlaceService>();

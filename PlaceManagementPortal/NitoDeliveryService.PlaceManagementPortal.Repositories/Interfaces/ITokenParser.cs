@@ -1,6 +1,6 @@
-﻿using NitoDeliveryService.PlaceManagementPortal.Models.DTOs;
+﻿using NitoDeliveryService.PlaceManagementPortal.Entities;
 
-namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Infrastucture
+namespace NitoDeliveryService.PlaceManagementPortal.Repositories
 {
     public interface ITokenParser
     {

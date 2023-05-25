@@ -13,6 +13,5 @@ namespace NitoDeliveryService.PlaceManagementPortal.Entities.Entities
 
         public IEnumerable<Dish> Dishes { get; set; }
         public IEnumerable<PaymentConfiguration> PaymentConfigurations { get; set; }
-        public IEnumerable<PlaceCategory> PlaceCategories { get; set; }
     }
 }

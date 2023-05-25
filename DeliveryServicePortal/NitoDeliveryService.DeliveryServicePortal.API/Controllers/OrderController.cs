@@ -22,11 +22,25 @@ namespace NitoDeliveryService.DeliveryServicePortal.API.Controllers
         }
 
         [HttpGet("getall/{userId}/{onlyActive}")]
-        public async Task<ActionResult<IEnumerable<OrderDTO>>> Get(int userId, bool onlyActive = true)
+        public async Task<ActionResult<IEnumerable<OrderDTO>>> GetAll(int userId, bool onlyActive = true)
         {
             try
             {
                 var result = await _orderService.GetOrdersByUser(userId, onlyActive);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpGet("get/{orderId}")]
+        public async Task<ActionResult<OrderDTO>> Get(int orderId)
+        {
+            try
+            {
+                var result = await _orderService.GetOrder(orderId);
                 return Ok(result);
             }
             catch (Exception e)

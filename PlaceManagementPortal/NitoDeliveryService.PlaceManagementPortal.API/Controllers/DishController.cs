@@ -33,20 +33,6 @@ namespace NitoDeliveryService.PlaceManagementPortal.API.Controllers
             }
         }
 
-        [HttpPut("update")]
-        public async Task<ActionResult> Update([FromBody] DishDTO dish)
-        {
-            try
-            {
-                await _dishService.EditDish(dish);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
-        }
-
         [HttpDelete("remove/{Id}")]
         public async Task<ActionResult> Remove(int id)
         {

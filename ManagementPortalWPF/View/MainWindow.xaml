@@ -1,0 +1,23 @@
+﻿<Window x:Class="ManagementPortalWPF.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ManagementPortalWPF.View"
+        mc:Ignorable="d"
+        Title="Management Portal" Height="450" Width="550">
+    <Grid Margin="0,0,0,-6">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="61*"/>
+            <RowDefinition Height="49*"/>
+        </Grid.RowDefinitions>
+        <Label Content="Management Portal" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" AutomationProperties.Name="Label" Height="50" Width="199" FontSize="20" FontFamily="Segoe UI Emoji" FontWeight="Bold"/>
+        <Label Content="Client number" HorizontalAlignment="Right" Margin="0,0,159,191" VerticalAlignment="Bottom" Grid.RowSpan="2" Height="26" Width="85"/>
+        <Label Content="Client title" HorizontalAlignment="Right" Margin="0,0,169,53" VerticalAlignment="Bottom" Height="26" Width="64"/>
+        <Button Content="Add" HorizontalAlignment="Right" Margin="0,0,86,143" RenderTransformOrigin="1.237,1.956" Command="{Binding AddCommand}" Grid.Row="1" Width="26" Height="23" VerticalAlignment="Bottom"/>
+        <TextBox HorizontalAlignment="Right" Margin="0,0,32,52" Text="{Binding ClientTitle, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="120" Height="18"/>
+        <TextBox HorizontalAlignment="Right" Margin="0,0,32,2" Text="{Binding ClientNumber, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="120" Height="18"/>
+        <ListBox Margin="10,0,0,10" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" Height="370" VerticalAlignment="Bottom" Grid.RowSpan="2" HorizontalAlignment="Left" Width="240"/>
+
+    </Grid>
+</Window>

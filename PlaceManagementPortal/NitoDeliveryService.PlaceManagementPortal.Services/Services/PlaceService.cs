@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using NiteDeliveryService.Shared.DAL.Interfaces;
 using NitoDeliveryService.PlaceManagementPortal.Entities.Entities;
+using NitoDeliveryService.PlaceManagementPortal.Repositories;
 using NitoDeliveryService.PlaceManagementPortal.Repositories.Infrastucture;
 using NitoDeliveryService.PlaceManagementPortal.Repositories.Interfaces;
 using NitoDeliveryService.PlaceManagementPortal.Services.Interfaces;
@@ -30,19 +31,16 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
         public async Task CreateNewPlace(InitializeSlotRequest place)
         {
-            var userMetadata = _tokenParser.GetMetadata();
-
             var placeEntity = new Place()
             {
-                ClientId = userMetadata.ClientId,
+                ClientId = place.ClientId,
                 Name = place.Name,
-                Description = place.Description,
                 SlotId = place.SlotId
             };
 
             var result = await _placeRepository.Create(placeEntity);
 
-            if (result != null)
+            if (result == null)
             {
                 throw new Exception("Error creating place");
             }
@@ -53,11 +51,11 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task<PlaceDTO> GetPlace()
+        public async Task<PlaceDTO> GetPlace(int placeId = -1)
         {
-            var userMetadata = _tokenParser.GetMetadata();
+            int placeIdToGet = placeId != -1 ? placeId : _tokenParser.GetMetadata().PlaceId;
 
-            var entity = await _placeRepository.ReadWithIncludes(userMetadata.PlaceId);
+            var entity = await _placeRepository.ReadWithIncludes(placeIdToGet);
 
             if (entity == null)
             {

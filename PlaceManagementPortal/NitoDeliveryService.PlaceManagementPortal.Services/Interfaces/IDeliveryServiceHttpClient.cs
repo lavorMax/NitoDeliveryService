@@ -9,6 +9,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Interfaces
     {
         Task ChangeStatus(int orderId, OrderStatuses status);
         Task<IEnumerable<OrderDTO>> GetOrders(int placeId, int clientId, bool onlyActive = true);
+        Task<OrderDTO> GetOrder(int orderId);
         Task UpdatePlace(PlaceDTO place);
         Task CreatePlace(PlaceDTO place);
     }

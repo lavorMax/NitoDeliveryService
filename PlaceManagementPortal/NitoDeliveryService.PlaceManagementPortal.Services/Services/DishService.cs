@@ -36,20 +36,6 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task EditDish(DishDTO dish)
-        {
-            var dishEntity = _mapper.Map<DishDTO, Dish>(dish);
-
-            var result = await _dishRepository.Update(dishEntity);
-
-            if (!result)
-            {
-                throw new Exception("Error updating dish");
-            }
-
-            await _unitOfWork.SaveAsync();
-        }
-
         public async Task RemoveDish(int dishId)
         {
             var result = await _dishRepository.Delete(dishId);

@@ -31,7 +31,7 @@ namespace DeliveryServicePortal
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
-                    options.Authority = auth0Options.Domain;
+                    options.Authority = "https://" + auth0Options.Domain;
                     options.Audience = auth0Options.Audience;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
@@ -39,11 +39,38 @@ namespace DeliveryServicePortal
                         ValidateAudience = true,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = auth0Options.Domain,
+                        ValidIssuer = "https://" + auth0Options.Domain,
                         ValidAudience = auth0Options.Audience,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(auth0Options.ClientSecret))
                     };
                 });
+
+
+
+            services.AddAuthentication("ClientCredentials")
+                .AddJwtBearer("ClientCredentials", options =>
+                {
+                    options.Authority = "https://" + auth0Options.Domain;
+                    options.Audience = auth0Options.Audience;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = "https://" + auth0Options.Domain,
+                        ValidAudience = auth0Options.Audience,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(auth0Options.SigingSecret))
+
+                    };
+                });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ClientCredentialsPolicy", policy =>
+                    policy.RequireAuthenticatedUser());
+            });
 
             var placeManagementPortalOptions = Configuration.GetSection("PlaceManagementPortalOptions").Get<PlaceManagementPortalOptions>();
             services.AddSingleton(placeManagementPortalOptions);

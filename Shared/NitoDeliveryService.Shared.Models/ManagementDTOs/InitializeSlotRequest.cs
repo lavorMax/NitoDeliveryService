@@ -3,7 +3,8 @@
     public class InitializeSlotRequest
     {
         public string Name { get; set; }
-        public string Description { get; set; }
+        public string Email { get; set; }
         public int SlotId { get; set; }
+        public int ClientId { get; set; }
     }
 }

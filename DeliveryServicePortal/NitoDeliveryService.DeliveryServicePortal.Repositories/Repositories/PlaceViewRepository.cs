@@ -19,24 +19,14 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Repositories
 
         public async Task<IEnumerable<PlaceView>> GetPossibleToDeliverPlaces(double Latitude, double Longitude)
         {
-            var result = await _context.Set<PlaceView>().Include(p => p.Categories).Where(p => GetDistance(Latitude, Longitude, p.Latitude, p.Longitude) <= p.DeliveryRange).ToListAsync();
+            var result = await _context.Set<PlaceView>().Where(p => GetDistance(Latitude, Longitude, p.Latitude, p.Longitude) <= p.DeliveryRange).ToListAsync();
 
             return result;
         }
 
         public async Task<PlaceView> ReadByPlaceAndClientId(int clientId, int placeId)
         {
-            var result = await _context.Set<PlaceView>().Include(p => p.Categories).Where(p => p.ClientId == clientId && p.PlaceId == placeId).FirstOrDefaultAsync();
-
-            return result;
-        }
-
-        public async Task<IEnumerable<PlaceView>> SearchByCategory(double Latitude, double Longitude, PlaceCategories category)
-        {
-            var result = await _context.Set<PlaceView>()
-                .Include(p => p.Categories)
-                .Where(p => GetDistance(Latitude, Longitude, p.Latitude, p.Longitude) <= p.DeliveryRange && p.Categories.Any(c => c.Category == category))
-                .ToListAsync();
+            var result = await _context.Set<PlaceView>().Where(p => p.ClientId == clientId && p.PlaceId == placeId).FirstOrDefaultAsync();
 
             return result;
         }
@@ -44,7 +34,6 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Repositories
         public async Task<IEnumerable<PlaceView>> SearchByName(double Latitude, double Longitude, string[] keys)
         {
             var result = await _context.Set<PlaceView>()
-                .Include(p => p.Categories)
                 .Where(p => GetDistance(Latitude, Longitude, p.Latitude, p.Longitude) <= p.DeliveryRange && keys.Any(k => p.Name.Contains(k)))
                 .ToListAsync();
 

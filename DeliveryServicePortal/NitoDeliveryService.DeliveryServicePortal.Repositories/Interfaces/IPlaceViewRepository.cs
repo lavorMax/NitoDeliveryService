@@ -10,7 +10,6 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Interfaces
     {
         Task<IEnumerable<PlaceView>> GetPossibleToDeliverPlaces(double Latitude, double Longitude);
         Task<IEnumerable<PlaceView>> SearchByName(double Latitude, double Longitude, string[] keys);
-        Task<IEnumerable<PlaceView>> SearchByCategory(double Latitude, double Longitude, PlaceCategories category);
         Task<PlaceView> ReadByPlaceAndClientId(int clientId, int placeId);
     }
 }

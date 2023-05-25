@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NitoDeliveryService.PlaceManagementPortal.Models.DTOs;
 using NitoDeliveryService.PlaceManagementPortal.Services.Interfaces;
-using NitoDeliveryService.Shared.Models.Models;
+using NitoDeliveryService.Shared.Models.PlaceDTOs;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -22,7 +22,7 @@ namespace NitoDeliveryService.DeliveryServicePortal.API.Controllers
         }
 
         [HttpGet("get/{placeId}/{clientId}")]
-        public async Task<ActionResult<PlaceViewDTO>> Get(int placeId, int clientId)
+        public async Task<ActionResult<PlaceDTO>> Get(int placeId, int clientId)
         {
             try
             {
@@ -41,34 +41,6 @@ namespace NitoDeliveryService.DeliveryServicePortal.API.Controllers
             try
             {
                 var result = await _placeService.GetAllPossibleToDeliver(adress);
-                return Ok(result);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
-        }
-
-        [HttpGet("search/{adress}/{keys}")]
-        public async Task<ActionResult<IEnumerable<PlaceViewDTO>>> Search(string adress, string keys)
-        {
-            try
-            {
-                var result = await _placeService.Search(adress, keys);
-                return Ok(result);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
-        }
-
-        [HttpGet("searchCategory/{adress}/{category}")]
-        public async Task<ActionResult<IEnumerable<PlaceViewDTO>>> SearchByCategory(string adress, PlaceCategories category)
-        {
-            try
-            {
-                var result = await _placeService.SearchByCategory(adress, category);
                 return Ok(result);
             }
             catch (Exception e)

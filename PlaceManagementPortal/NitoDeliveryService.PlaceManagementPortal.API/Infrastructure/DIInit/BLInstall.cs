@@ -18,7 +18,6 @@ namespace NitoDeliveryService.PlaceManagementPortal.API.Infrastructure.DIInit
             services.AddTransient<IPaymentConfigurationService, PaymentConfigurationService>();
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IDishService, DishService>();
-            services.AddTransient<ICategoryService, CategoryService>();
         }
     }
 }

@@ -13,12 +13,11 @@ namespace NitoDelivery.ClientManager.API.Infrastructure.DIInit
         {
             builder.AddDbContext<ManagementPortalDbContext>();
 
+
             builder.AddTransient<IUnitOfWork, UnitOfWork>();
 
             builder.AddTransient<ISlotRepository, SlotRepository>();
-            builder.AddTransient<IClientResponsibleRepository, ClientResponsibleRepository>();
             builder.AddTransient<IClientRepository, ClientRepository>();
-            builder.AddTransient<IClientPhoneRepository, ClientPhoneRepository>();
         } 
     }
 }

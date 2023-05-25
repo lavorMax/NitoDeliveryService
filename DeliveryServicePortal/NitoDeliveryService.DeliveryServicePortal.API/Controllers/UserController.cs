@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NitoDeliveryService.DeliveryServicePortal.API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
@@ -33,27 +33,13 @@ namespace NitoDeliveryService.DeliveryServicePortal.API.Controllers
             }
         }
 
-        [HttpPut("update")]
-        public async Task<ActionResult> Status([FromBody] UserDTO user)
-        {
-            try
-            {
-                await _userService.UpdateUser(user);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
-        }
-
         [HttpPost("create")]
-        public async Task<ActionResult> Create([FromBody] UserDTO request)
+        public async Task<ActionResult<int>> Create([FromBody] UserDTO request)
         {
             try
             {
-                await _userService.CreateUser(request);
-                return Ok();
+                var id = await _userService.CreateUser(request);
+                return Ok(id);
             }
             catch (Exception e)
             {

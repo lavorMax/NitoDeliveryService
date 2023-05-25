@@ -7,6 +7,5 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Interfaces
     {
         Task CreateNewDish(DishDTO dish);
         Task RemoveDish(int dishId);
-        Task EditDish(DishDTO dish);
     }
 }

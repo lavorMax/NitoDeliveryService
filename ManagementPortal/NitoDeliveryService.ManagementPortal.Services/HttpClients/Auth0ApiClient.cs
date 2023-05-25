@@ -18,18 +18,18 @@ namespace NitoDeliveryService.ManagementPortal.Services.HttpClients
         {
             _httpClient = new HttpClient
             {
-                BaseAddress = new Uri($"https://{options.Domain}")
+                BaseAddress = new Uri(options.Audience)
             };
             var authHeader = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes($"{options.ClientId}:{options.ClientSecret}")));
             _httpClient.DefaultRequestHeaders.Authorization = authHeader;
         }
 
-        public async Task<Auth0CredentialsResponse> CreateUser(string username, int clientId, int slotId)
+        public async Task<Auth0CredentialsResponse> CreateUser(string email, int clientId, int slotId)
         {
             var password = GenerateRandomPassword();
             var content = new StringContent(JsonConvert.SerializeObject(new
             {
-                username,
+                email,
                 password,
                 connection = "Username-Password-Authentication",
                 app_metadata = new
@@ -49,7 +49,7 @@ namespace NitoDeliveryService.ManagementPortal.Services.HttpClients
 
             return new Auth0CredentialsResponse()
             {
-                auth0login = username,
+                auth0login = email,
                 auth0password = password
             };
         }

@@ -62,8 +62,8 @@ namespace NitoDeliveryService.PlaceManagementPortal.API.Controllers
             }
         }
 
-        [HttpGet("getarchieved")]
-        public async Task<ActionResult<IEnumerable<OrderDTO>>> GetArchieved()
+        [HttpGet("getactive")]
+        public async Task<ActionResult<IEnumerable<OrderDTO>>> GetActive()
         {
             try
             {
@@ -76,8 +76,8 @@ namespace NitoDeliveryService.PlaceManagementPortal.API.Controllers
             }
         }
 
-        [HttpGet("getactive")]
-        public async Task<ActionResult<IEnumerable<OrderDTO>>> GetActive()
+        [HttpGet("get/{id}")]
+        public async Task<ActionResult<OrderDTO>> Get(int id)
         {
             try
             {

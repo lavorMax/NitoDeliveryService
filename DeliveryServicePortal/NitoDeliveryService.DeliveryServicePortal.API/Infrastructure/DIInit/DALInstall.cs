@@ -18,7 +18,6 @@ namespace NitoDeliveryService.DeliveryServicePortal.API.Infrastructure.DIInit
             services.AddTransient<IPlaceViewRepository, PlaceViewRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IDishOrderRepository, DishOrderRepository>();
-            services.AddTransient<ICategoryViewRepository, CategoryViewRepository>();
         }
     }
 }

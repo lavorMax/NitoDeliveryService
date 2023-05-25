@@ -2,6 +2,6 @@
 {
     public class DeliveryServiceDbOptions
     {
-        public string ConncectionString { get; set; }
+        public string ConnectionString { get; set; }
     }
 }

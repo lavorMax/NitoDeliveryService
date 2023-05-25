@@ -22,7 +22,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task CreateUser(UserDTO userDto)
+        public async Task<int> CreateUser(UserDTO userDto)
         {
             var userEntity = _mapper.Map<UserDTO, User>(userDto);
 
@@ -33,6 +33,8 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
             }
 
             await _unitOfWork.SaveAsync();
+
+            return result.Id;
         }
 
         public async Task<UserDTO> GetUser(int userId)

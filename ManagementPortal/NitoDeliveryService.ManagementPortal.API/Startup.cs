@@ -33,18 +33,22 @@ namespace ClientManager
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options =>
             {
-                options.Authority = auth0Options.Domain;
+                options.Authority = "https://" + auth0Options.Domain;
                 options.Audience = auth0Options.Audience;
+
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
+                    
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = auth0Options.Domain,
+                    ValidIssuer = "https://" + auth0Options.Domain,
                     ValidAudience = auth0Options.Audience,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(auth0Options.ClientSecret))
+                    
                 };
+                
             });
 
             var managementDbOptions = Configuration.GetSection("ManagementPortalDbOptions").Get<ManagementPortalDbOptions>();
@@ -81,12 +85,13 @@ namespace ClientManager
             }
 
             app.UseHttpsRedirection();
+            app.UseAuthentication();
+            
 
             app.UseRouting();
 
-            app.UseAuthentication();
-            app.UseAuthorization();
 
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

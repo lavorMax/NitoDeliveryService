@@ -20,8 +20,6 @@ namespace NitoDeliveryService.ManagementPortal.Repositories.Repositories
             {
                 return await _context.Set<Client>()
                     .Include(c => c.Slots)
-                    .Include(c => c.Responsibles)
-                    .ThenInclude(r => r.ClientPhones)
                     .FirstAsync(c => c.Id == id);
             }
             catch (Exception e)

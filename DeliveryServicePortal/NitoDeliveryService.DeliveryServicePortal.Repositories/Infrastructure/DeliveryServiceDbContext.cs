@@ -13,17 +13,34 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Infrastructure
 
         public DeliveryServiceDbContext(DeliveryServiceDbOptions options) : base(GenerateOptions(options))
         {
+            Database.EnsureCreated();
         }
 
         private static DbContextOptions<DeliveryServiceDbContext> GenerateOptions(DeliveryServiceDbOptions options)
         {
             var optionsBuilder = new DbContextOptionsBuilder<DeliveryServiceDbContext>()
-                .UseSqlServer(options.ConncectionString);
+                .UseSqlServer(options.ConnectionString);
             return optionsBuilder.Options;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<PlaceView>()
+                .Property(c => c.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<User>()
+                .Property(c => c.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<DishOrder>()
+                .Property(c => c.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Order>()
+               .Property(c => c.Id)
+               .ValueGeneratedOnAdd();
+
             modelBuilder.Entity<Order>()
                 .HasOne(o => o.User)
                 .WithMany(u => u.Orders)
@@ -33,7 +50,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Infrastructure
             modelBuilder.Entity<DishOrder>()
                 .HasOne(d => d.Order)
                 .WithMany(o => o.DishOrders)
-                .HasForeignKey(d => d.Order)
+                .HasForeignKey(d => d.OrderId)
                 .OnDelete(DeleteBehavior.Cascade);
 
         }

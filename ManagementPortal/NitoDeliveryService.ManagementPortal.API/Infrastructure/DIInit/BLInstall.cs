@@ -14,10 +14,10 @@ namespace NitoDeliveryService.ManagementPortal.API.Infrastructure.DIInit
 
             builder.AddTransient<IPlaceManagementPortalHttpClient, PlaceManagementPortalHttpClient>();
             builder.AddTransient<IAuth0ApiClient, Auth0ApiClient>();
+            builder.AddTransient<IClientDbService, ClientDbService>();
 
             builder.AddTransient<ISlotService, SlotService>();
             builder.AddTransient<IClientService, ClientService>();
-            builder.AddTransient<IClientResponsibleService, ClientResponsibleService>();
         }
     }
 }

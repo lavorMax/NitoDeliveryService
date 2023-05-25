@@ -36,9 +36,9 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
 
                 var result = await _slotRepository.Create(slot);
 
-                if (result != null)
+                if (result == null)
                 {
-                    throw new Exception("Error crating slots");
+                    throw new Exception("Error creating slots");
                 }
 
                 await _unitOfWork.SaveAsync();
@@ -97,34 +97,40 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
 
         public async Task<Auth0CredentialsResponse> InitializeSlot(InitializeSlotRequest request)
         {
-            var slot = await _slotRepository.Read(request.SlotId);
-
-            if (slot == null)
+            try
             {
-                throw new Exception("Error getting slot for initializing");
-            }
+                var slot = await _slotRepository.Read(request.SlotId);
 
-            if (slot.IsUsed)
+                if (slot == null)
+                {
+                    throw new Exception("Error getting slot for initializing");
+                }
+
+                if (slot.IsUsed)
+                {
+                    throw new Exception("Slot is in use");
+                }
+
+                await _placeHttpClient.InitializeSlot(slot.ClientId, request);
+
+                var auth0Creds = await _auth0cClient.CreateUser(request.Email, slot.ClientId, slot.Id);
+
+                slot.IsUsed = true;
+                slot.Name = request.Name;
+                var result = await _slotRepository.Update(slot);
+
+                if (!result)
+                {
+                    throw new Exception("Error initializing slot");
+                }
+
+                await _unitOfWork.SaveAsync();
+
+                return auth0Creds;
+            }catch(Exception e)
             {
-                throw new Exception("Slot is in use");
+                throw;
             }
-
-            await _placeHttpClient.InitializeSlot(slot.ClientId, request);
-
-            var auth0Creds  = await _auth0cClient.CreateUser(slot.ClientId.ToString() + slot.Id.ToString(), slot.ClientId, slot.Id);
-
-            slot.IsUsed = true;
-            slot.Name = request.Name;
-            var result = await _slotRepository.Update(slot);
-
-            if (!result)
-            {
-                throw new Exception("Error initializing slot");
-            }
-
-            await _unitOfWork.SaveAsync();
-
-            return auth0Creds;
         }
 
         public async Task RemoveSlots(int id)

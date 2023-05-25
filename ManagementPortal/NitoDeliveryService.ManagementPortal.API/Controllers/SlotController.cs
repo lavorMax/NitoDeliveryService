@@ -20,7 +20,7 @@ namespace NitoDelivery.ClientManager.API.Controllers
             _slotService = slotService;
         }
 
-        [HttpPost("create/{id}/{number}")]
+        [HttpPost("create/{clientId}/{number}")]
         public async Task<ActionResult> Create(int clientId, int number = 1)
         {
             try

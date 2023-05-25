@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NitoDeliveryService.PlaceManagementPortal.Repositories.Interfaces;
+using System;
 
 namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Infrastucture
 {
-    public class PlaceManagementDbContextFactory : IDbContextFactory<PlaceManagementDbContext>
+    public class PlaceManagementDbContextFactory : IOverridingDbContextFactory<PlaceManagementDbContext>
     {
         private readonly ITokenParser _tokenParser;
         private int _overrideClientId = -1;
@@ -14,20 +16,26 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Infrastucture
 
         public PlaceManagementDbContext CreateDbContext()
         {
-            if(_overrideClientId != -1)
+            try
             {
-                var overrideOptionsBuilder = new DbContextOptionsBuilder<PlaceManagementDbContext>()
-                .UseSqlServer($"Server=(localdb)\\mssqllocaldb;Database={_overrideClientId};Trusted_Connection=True;MultipleActiveResultSets=true");
+                if (_overrideClientId != -1)
+                {
+                    var overrideOptionsBuilder = new DbContextOptionsBuilder<PlaceManagementDbContext>()
+                    .UseSqlServer($"Data Source=.\\SQLEXPRESS;Initial Catalog=ClientDB{_overrideClientId};Integrated Security=True;MultipleActiveResultSets=True;");
 
-                return new PlaceManagementDbContext(overrideOptionsBuilder.Options);
+                    return new PlaceManagementDbContext(overrideOptionsBuilder.Options);
+                }
+
+                var dbName = _tokenParser.GetMetadata().ClientId;
+
+                var optionsBuilder = new DbContextOptionsBuilder<PlaceManagementDbContext>()
+                    .UseSqlServer($"Server=(localdb)\\mssqllocaldb;Database={dbName};Trusted_Connection=True;MultipleActiveResultSets=true");
+
+                return new PlaceManagementDbContext(optionsBuilder.Options);
+            }catch(Exception e)
+            {
+                throw;
             }
-
-            var dbName = _tokenParser.GetMetadata().ClientId;
-
-            var optionsBuilder = new DbContextOptionsBuilder<PlaceManagementDbContext>()
-                .UseSqlServer($"Server=(localdb)\\mssqllocaldb;Database={dbName};Trusted_Connection=True;MultipleActiveResultSets=true");
-
-            return new PlaceManagementDbContext(optionsBuilder.Options);
         }
 
         public void OverrideClientId(int clientId)

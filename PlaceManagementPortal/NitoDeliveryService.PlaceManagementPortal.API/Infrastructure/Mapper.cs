@@ -14,12 +14,6 @@ namespace NitoDeliveryService.PlaceManagementPortal.API.Infrastructure
             CreateMap<Dish, DishDTO>();
             CreateMap<DishDTO, Dish>();
 
-            CreateMap<Category, CategoryDTO>();
-            CreateMap<CategoryDTO, Category>();
-
-            CreateMap<PlaceCategory, PlaceCategoryDTO>();
-            CreateMap<PlaceCategoryDTO, PlaceCategory>();
-
             CreateMap<PaymentConfiguration, PaymentConfigurationDTO>();
             CreateMap<PaymentConfigurationDTO, PaymentConfiguration>();
         }

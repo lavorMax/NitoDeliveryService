@@ -13,20 +13,20 @@ namespace NitoDeliveryService.ManagementPortal.Services.HttpClients
     public class PlaceManagementPortalHttpClient : IPlaceManagementPortalHttpClient
     {
         private readonly PlaceManagementPortalOptions _options;
+        private readonly Auth0PlaceManagementOptions _auth0Options;
         private readonly HttpClient _httpClient;
 
         public PlaceManagementPortalHttpClient(PlaceManagementPortalOptions options, Auth0PlaceManagementOptions auth0options)
         {
             _options = options;
+            _auth0Options = auth0options;
 
             _httpClient = new HttpClient();
-
-            var authHeader = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes($"{auth0options.ClientId}:{auth0options.ClientSecret}")));
-            _httpClient.DefaultRequestHeaders.Authorization = authHeader;
         }
 
         public async Task DeinitializeSlot(int clientId, int slotId)
         {
+            await EnsureAccessToken();
 
             var url = BuildUrl(_options.DeinitializeSlotEndpoint, clientId, slotId);
 
@@ -40,6 +40,8 @@ namespace NitoDeliveryService.ManagementPortal.Services.HttpClients
 
         public async Task InitializeSlot(int clientId, InitializeSlotRequest request)
         {
+            await EnsureAccessToken();
+
             var data = JsonConvert.SerializeObject(request);
 
             var content = new StringContent(data, Encoding.UTF8, "application/json");
@@ -58,14 +60,43 @@ namespace NitoDeliveryService.ManagementPortal.Services.HttpClients
             var builder = new StringBuilder(_options.PlaceManagementPortalURL);
 
             builder.Append(endpoint);
-            builder.Append($"?clientId={clientId}");
+            builder.Append($"/{clientId}");
 
             if(slotId != -1)
             {
-                builder.Append($"&slotId={slotId}");
+                builder.Append($"/{slotId}");
             }
 
             return builder.ToString();
+        }
+
+        private async Task EnsureAccessToken()
+        {
+            var token = await GetClientCredentialsToken();
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        }
+
+        private async Task<string> GetClientCredentialsToken()
+        {
+            var request = new HttpRequestMessage(HttpMethod.Post, $"https://{_auth0Options.Domain}oauth/token");
+
+            var body = new
+            {
+                grant_type = "client_credentials",
+                client_id = _auth0Options.ClientId,
+                client_secret = _auth0Options.ClientSecret,
+                audience = _auth0Options.Audience
+            };
+
+            request.Content = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            var responseContent = await response.Content.ReadAsStringAsync();
+            dynamic tokenResponse = JsonConvert.DeserializeObject(responseContent);
+
+            return tokenResponse.access_token;
         }
     }
 }

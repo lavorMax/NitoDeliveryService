@@ -9,8 +9,6 @@ namespace NitoDeliveryService.PlaceManagementPortal.Models.DTOs
         public int ClientId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string Adress { get; set; }
-
-        public IEnumerable<PlaceCategoryDTO> Categories { get; set; }
+        public string Address { get; set; }
     }
 }

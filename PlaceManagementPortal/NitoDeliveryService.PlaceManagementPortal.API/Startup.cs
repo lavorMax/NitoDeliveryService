@@ -11,6 +11,7 @@ using NitoDeliveryService.PlaceManagementPortal.API.Infrastructure.DIInit;
 using NitoDeliveryService.PlaceManagementPortal.Services.Infrasctructure;
 using NitoDeliveryService.PlaceManagementPortal.Services.Infrastructure;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PlaceManagementPortal
 {
@@ -28,10 +29,11 @@ namespace PlaceManagementPortal
         {
             var auth0Options = Configuration.GetSection("Auth0Options").Get<Auth0Options>();
 
+            
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                     {
-                        options.Authority = auth0Options.Domain;
+                        options.Authority = "https://" + auth0Options.Domain;
                         options.Audience = auth0Options.Audience;
                         options.TokenValidationParameters = new TokenValidationParameters
                         {
@@ -39,33 +41,37 @@ namespace PlaceManagementPortal
                             ValidateAudience = true,
                             ValidateLifetime = true,
                             ValidateIssuerSigningKey = true,
-                            ValidIssuer = auth0Options.Domain,
+                            ValidIssuer = "https://" + auth0Options.Domain,
                             ValidAudience = auth0Options.Audience,
                             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(auth0Options.ClientSecret))
                         };
                     });
 
+            
+            
             services.AddAuthentication("ClientCredentials")
                 .AddJwtBearer("ClientCredentials", options =>
                 {
-                    options.Authority = auth0Options.Domain;
+                    options.Authority = "https://" + auth0Options.Domain;
                     options.Audience = auth0Options.Audience;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
+                        
                         ValidateIssuer = true,
                         ValidateAudience = true,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = auth0Options.Domain,
+                        ValidIssuer = "https://" + auth0Options.Domain,
                         ValidAudience = auth0Options.Audience,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(auth0Options.ClientSecret))
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(auth0Options.SigingSecret))
+                        
                     };
                 });
-
+            
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("ClientCredentialsPolicy", policy =>
-                    policy.RequireAuthenticatedUser().RequireClaim("scope", "client_credentials"));
+                    policy.RequireAuthenticatedUser());
             });
 
             var deliveryServiceOptions = Configuration.GetSection("DeliveryServiceOptions").Get<DeliveryServiceOptions>();

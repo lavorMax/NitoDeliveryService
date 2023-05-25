@@ -33,5 +33,13 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Repositories
 
             return result;
         }
+
+        public async Task<Order> ReadWithIncludes(int orderId)
+        {
+            var result = await _context.Set<Order>()
+                .FirstOrDefaultAsync(o => o.Id == orderId);
+
+            return result;
+        }
     }
 }

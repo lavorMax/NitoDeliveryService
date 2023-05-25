@@ -1,0 +1,25 @@
+﻿<Window x:Class="DeliveryServiceWPF.View.RegistrationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DeliveryServiceWPF.View"
+        mc:Ignorable="d"
+        Title="Delivery Service" Height="450" Width="400">
+    <Grid HorizontalAlignment="Left" Width="399" Margin="0,0,0,-6">
+        <TextBox HorizontalAlignment="Center" Margin="0,86,0,0" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="169" Height="22" Visibility="Visible"/>
+        <TextBox Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Height="21" Margin="117,259,114,0"/>
+        <Button Content="Enter" HorizontalAlignment="Center" Margin="0,285,0,0" VerticalAlignment="Top" Width="40" Height="20" Command="{Binding EnterCommand}"/>
+        <Label Content="Email" Margin="121,60,229,0" VerticalAlignment="Top" AutomationProperties.Name="Label" Height="26"/>
+        <Label Content="Password" HorizontalAlignment="Left" Margin="121,239,0,0" VerticalAlignment="Top" Height="26" Width="64"/>
+        <Label Content="Delivery Service" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" AutomationProperties.Name="Label" Height="50" Width="267" FontSize="20" FontFamily="Segoe UI Emoji" FontWeight="Bold" Grid.ColumnSpan="2"/>
+        <Label Content="Uncorrect user data" Margin="134,310,131,0" VerticalAlignment="Top" AutomationProperties.Name="Label" Height="26" Visibility="{Binding IncorrectCredentialsVisibility}"/>
+        <TextBox HorizontalAlignment="Center" Margin="0,130,0,0" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="169" Height="22" Visibility="Visible"/>
+        <Label Content="Name" Margin="121,104,229,0" VerticalAlignment="Top" AutomationProperties.Name="Label" Height="26"/>
+        <TextBox HorizontalAlignment="Left" Margin="117,217,0,0" Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="169" Height="22" Visibility="Visible"/>
+        <TextBox HorizontalAlignment="Left" Margin="117,172,0,0" Text="{Binding Surname, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="169" Height="22" Visibility="Visible"/>
+        <Label Content="Surname" Margin="121,152,214,0" VerticalAlignment="Top" AutomationProperties.Name="Label" Height="26"/>
+        <Label Content="Phone" Margin="121,197,229,0" VerticalAlignment="Top" AutomationProperties.Name="Label" Height="26"/>
+
+    </Grid>
+</Window>

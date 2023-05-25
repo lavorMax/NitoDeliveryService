@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitoDeliveryService.PlaceManagementPortal.API", "NitoDeliveryService.PlaceManagementPortal.API\NitoDeliveryService.PlaceManagementPortal.API.csproj", "{936C31BA-2B57-4513-A694-B4468D23413F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NitoDeliveryService.PlaceManagementPortal.API", "NitoDeliveryService.PlaceManagementPortal.API\NitoDeliveryService.PlaceManagementPortal.API.csproj", "{936C31BA-2B57-4513-A694-B4468D23413F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NitoDeliveryService.Shared.DAL", "..\Shared\NitoDeliveryService.Shared.DAL\NitoDeliveryService.Shared.DAL.csproj", "{10566CC8-D4D4-4084-A8F7-0339CA824068}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NitoDeliveryService.Shared.Models", "..\Shared\NitoDeliveryService.Shared.Models\NitoDeliveryService.Shared.Models.csproj", "{F0830F97-AFF2-4A26-A167-E6D852316D1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitoDeliveryService.PlaceManagementPortal.Entities", "NitoDeliveryService.PlaceManagementPortal.Entities\NitoDeliveryService.PlaceManagementPortal.Entities.csproj", "{6FCD0AF5-84F0-4A66-A390-FDF20532BA2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NitoDeliveryService.PlaceManagementPortal.Entities", "NitoDeliveryService.PlaceManagementPortal.Entities\NitoDeliveryService.PlaceManagementPortal.Entities.csproj", "{6FCD0AF5-84F0-4A66-A390-FDF20532BA2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitoDeliveryService.PlaceManagementPortal.Repositories", "NitoDeliveryService.PlaceManagementPortal.Repositories\NitoDeliveryService.PlaceManagementPortal.Repositories.csproj", "{3D366CF5-DC2E-42C0-ADB0-04557B7A8872}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NitoDeliveryService.PlaceManagementPortal.Repositories", "NitoDeliveryService.PlaceManagementPortal.Repositories\NitoDeliveryService.PlaceManagementPortal.Repositories.csproj", "{3D366CF5-DC2E-42C0-ADB0-04557B7A8872}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NitoDeliveryService.PlaceManagementPortal.Services", "NitoDeliveryService.PlaceManagementPortal.Services\NitoDeliveryService.PlaceManagementPortal.Services.csproj", "{F1816AC9-C9C1-4FC9-99EC-7AB5AFF0F8E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NitoDeliveryService.PlaceManagementPortal.Services", "NitoDeliveryService.PlaceManagementPortal.Services\NitoDeliveryService.PlaceManagementPortal.Services.csproj", "{F1816AC9-C9C1-4FC9-99EC-7AB5AFF0F8E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

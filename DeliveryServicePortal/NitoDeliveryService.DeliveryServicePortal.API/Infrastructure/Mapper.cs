@@ -15,9 +15,6 @@ namespace NitoDeliveryService.DeliveryServicePortal.API.Infrastructure
             CreateMap<PlaceView, PlaceViewDTO>();
             CreateMap<PlaceViewDTO, PlaceView>();
 
-            CreateMap<CategoryView, PlaceCategoryDTO>();
-            CreateMap<PlaceCategoryDTO, CategoryView>();
-
             CreateMap<OrderDTO, Order>();
             CreateMap<Order, OrderDTO>();
         }

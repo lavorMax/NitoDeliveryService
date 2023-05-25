@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NiteDeliveryService.Shared.DAL.Interfaces;
+﻿using NiteDeliveryService.Shared.DAL.Interfaces;
+using NitoDeliveryService.PlaceManagementPortal.Repositories.Interfaces;
 using System.Threading.Tasks;
 
 namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Infrastucture
@@ -8,7 +8,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Infrastucture
     {
         private readonly PlaceManagementDbContext _context;
 
-        public UnitOfWork(IDbContextFactory<PlaceManagementDbContext> contextfactory)
+        public UnitOfWork(IOverridingDbContextFactory<PlaceManagementDbContext> contextfactory)
         {
             _context = contextfactory.CreateDbContext();
         }

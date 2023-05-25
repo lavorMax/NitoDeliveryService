@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NitoDeliveryService.DeliveryServicePortal.API.Controllers
 {
-    [Authorize(Policy = "ClientCredentialsPolicy")]
+    //[Authorize(Policy = "ClientCredentialsPolicy")]
     [ApiController]
     [Route("api/[controller]")]
     public class ManagementController : ControllerBase
@@ -72,6 +72,20 @@ namespace NitoDeliveryService.DeliveryServicePortal.API.Controllers
             {
                 await _orderService.UpdateOrderStatus(orderId, status);
                 return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpGet("get/{id}")]
+        public async Task<ActionResult<OrderDTO>> Get(int id)
+        {
+            try
+            {
+                var result = await _orderService.GetOrder(id);
+                return Ok(result);
             }
             catch (Exception e)
             {

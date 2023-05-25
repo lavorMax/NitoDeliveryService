@@ -27,17 +27,23 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
 
         public async Task CreateNewClient(ClientDto client)
         {
-            var clientEntity = _mapper.Map<ClientDto, Client>(client);
-
-            var result = await _clientRepository.Create(clientEntity);
-            if (result != null)
+            try
             {
-                throw new Exception("Error crating client");
+                var clientEntity = _mapper.Map<ClientDto, Client>(client);
+
+                var result = await _clientRepository.Create(clientEntity);
+                if (result == null)
+                {
+                    throw new Exception("Error crating client");
+                }
+
+                await _unitOfWork.SaveAsync();
+
+                await _clientDbService.CreateDb(result.Id);
+            }catch(Exception e)
+            {
+                throw;
             }
-
-            await _unitOfWork.SaveAsync();
-
-            await _clientDbService.CreateDb(result.Id);
         }
 
         public async Task RemoveClient(int id)

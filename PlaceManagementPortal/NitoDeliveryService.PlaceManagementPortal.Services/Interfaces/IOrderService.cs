@@ -10,6 +10,6 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Interfaces
         Task ChangeStatusToPrepearing(int orderId);
         Task ChangeStatusToDelivering(int orderId);
         Task<IEnumerable<OrderDTO>> GetActiveOrders();
-        Task<IEnumerable<OrderDTO>> GetArchievedOrders();
+        Task<OrderDTO> GetOrder(int orderId);
     }
 }
