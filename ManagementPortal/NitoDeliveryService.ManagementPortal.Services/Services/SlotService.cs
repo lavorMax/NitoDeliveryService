@@ -62,7 +62,7 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
 
             await _placeHttpClient.DeinitializeSlot(slot.ClientId, slot.Id);
 
-            await _auth0cClient.DeleteUser(slot.ClientId.ToString()+slot.Id.ToString());
+            await _auth0cClient.DeleteUser(slot.ManagerLogin);
 
             slot.IsUsed = false;
             slot.Name = null;
@@ -90,47 +90,48 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
                 throw new Exception("Slot is not in use");
             }
 
-            var creds = await _auth0cClient.GetPassword(slot.ClientId.ToString() + slot.Id.ToString());
+            var creds = new Auth0CredentialsResponse()
+            {
+                auth0login = slot.ManagerLogin,
+                auth0password = slot.ManagerPassword
+            };
 
             return creds;
         }
 
         public async Task<Auth0CredentialsResponse> InitializeSlot(InitializeSlotRequest request)
         {
-            try
+            var slot = await _slotRepository.Read(request.SlotId);
+
+            if (slot == null)
             {
-                var slot = await _slotRepository.Read(request.SlotId);
-
-                if (slot == null)
-                {
-                    throw new Exception("Error getting slot for initializing");
-                }
-
-                if (slot.IsUsed)
-                {
-                    throw new Exception("Slot is in use");
-                }
-
-                await _placeHttpClient.InitializeSlot(slot.ClientId, request);
-
-                var auth0Creds = await _auth0cClient.CreateUser(request.Email, slot.ClientId, slot.Id);
-
-                slot.IsUsed = true;
-                slot.Name = request.Name;
-                var result = await _slotRepository.Update(slot);
-
-                if (!result)
-                {
-                    throw new Exception("Error initializing slot");
-                }
-
-                await _unitOfWork.SaveAsync();
-
-                return auth0Creds;
-            }catch(Exception e)
-            {
-                throw;
+                throw new Exception("Error getting slot for initializing");
             }
+
+            if (slot.IsUsed)
+            {
+                throw new Exception("Slot is in use");
+            }
+
+            await _placeHttpClient.InitializeSlot(slot.ClientId, request);
+
+            var auth0Creds = await _auth0cClient.CreateUser(request.Email, slot.ClientId, slot.Id);
+
+            slot.ManagerPassword = auth0Creds.auth0password;
+            slot.ManagerLogin = request.Email;
+            slot.IsUsed = true;
+            slot.Name = request.Name;
+            var result = await _slotRepository.Update(slot);
+
+            if (!result)
+            {
+                throw new Exception("Error initializing slot");
+            }
+
+            await _unitOfWork.SaveAsync();
+
+            return auth0Creds;
+        
         }
 
         public async Task RemoveSlots(int id)

@@ -55,6 +55,7 @@ namespace PlaceManagementPortalWPF
             navigation.EnterWindow = eWindow;
             navigation.MainWindow = mWindow;
             navigation.MainVM = mVM;
+            navigation.PlaceConfigurationVM = pcVM; 
             navigation.PlaceConfigurationWindow = pcWindow;
             navigation.ManagementClient = client;
 

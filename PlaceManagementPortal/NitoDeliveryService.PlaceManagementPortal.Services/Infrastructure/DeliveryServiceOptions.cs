@@ -8,6 +8,6 @@
         public string GetOrderEndpoint { get; set; }
         public string CreatePlaceEndpoint { get; set; }
         public string UpdatePlaceEndpoint { get; set; }
-
+        public string DeletePlaceEndpoint { get; set; }
     }
 }

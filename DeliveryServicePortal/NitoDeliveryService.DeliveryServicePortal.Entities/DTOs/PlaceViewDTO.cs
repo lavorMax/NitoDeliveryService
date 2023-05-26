@@ -1,7 +1,4 @@
-﻿using NitoDeliveryService.Shared.Models.PlaceDTOs;
-using System.Collections.Generic;
-
-namespace NitoDeliveryService.PlaceManagementPortal.Models.DTOs
+﻿namespace NitoDeliveryService.PlaceManagementPortal.Models.DTOs
 {
     public class PlaceViewDTO
     {
@@ -10,5 +7,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Models.DTOs
         public string Name { get; set; }
         public string Description { get; set; }
         public string Address { get; set; }
+
+        public bool Deleted { get; set; }
     }
 }

@@ -9,8 +9,8 @@
     <Grid>
         <Label Content="Place Management Portal" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" AutomationProperties.Name="Label" Height="50" Width="267" FontSize="20" FontFamily="Segoe UI Emoji" FontWeight="Bold" Grid.ColumnSpan="2"/>
         <Label Content="Place name" HorizontalAlignment="Left" Margin="24,60,0,0" VerticalAlignment="Top" FontSize="18"/>
-        <TextBox HorizontalAlignment="Left" Margin="40,115,0,0" Text="{Binding Address}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Margin="40,175,0,0" Text="{Binding PlaceDescription}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="75"/>
+        <TextBox HorizontalAlignment="Left" Margin="40,115,0,0" Text="{Binding Address , UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox HorizontalAlignment="Left" Margin="40,175,0,0" Text="{Binding PlaceDescription , UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="75"/>
         <Label Content="Adress" HorizontalAlignment="Left" Margin="40,94,0,0" VerticalAlignment="Top"/>
         <Label Content="Description" HorizontalAlignment="Left" Margin="40,149,0,0" VerticalAlignment="Top"/>
         <Button Content="Update" HorizontalAlignment="Left" Margin="75,273,0,0" VerticalAlignment="Top" Command="{Binding UpdateCommand}"/>
@@ -20,17 +20,17 @@
         <Label Content="MaxRange (in meters)" HorizontalAlignment="Left" Margin="236,247,0,0" VerticalAlignment="Top"/>
         <Label Content="Price" HorizontalAlignment="Left" Margin="236,297,0,0" VerticalAlignment="Top"/>
         <Button Content="Add new" HorizontalAlignment="Left" Margin="277,349,0,0" VerticalAlignment="Top" RenderTransformOrigin="0,0.453" Command="{Binding AddDeliveryConfigurationCommand}"/>
-        <TextBox HorizontalAlignment="Left" Margin="242,273,0,0" Text="{Binding MaxRange}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Margin="242,323,0,0" Text="{Binding DeliveryPrice}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <ListBox Margin="432,89,223,217" ItemsSource="{Binding MenuItems}" SelectedItem="{Binding SelectedMenuItem}"/>
+        <TextBox HorizontalAlignment="Left" Margin="242,273,0,0" Text="{Binding MaxRange , UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox HorizontalAlignment="Left" Margin="242,323,0,0" Text="{Binding DeliveryPrice , UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <ListBox Margin="432,89,223,217" ItemsSource="{Binding MenuItems , UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedMenuItem}"/>
         <Label Content="Menu:" HorizontalAlignment="Left" Margin="432,63,0,0" VerticalAlignment="Top"/>
         <Button Content="Remove" HorizontalAlignment="Left" Margin="481,222,0,0" VerticalAlignment="Top" Command="{Binding RemoveMenuItemCommand}"/>
         <Label Content="Name" HorizontalAlignment="Left" Margin="438,249,0,0" VerticalAlignment="Top"/>
         <Label Content="Price" HorizontalAlignment="Left" Margin="441,341,0,0" VerticalAlignment="Top"/>
         <Button Content="Add new" HorizontalAlignment="Left" Margin="479,390,0,0" VerticalAlignment="Top" RenderTransformOrigin="0,0.453" Command="{Binding AddMenuItemCommand}"/>
-        <TextBox HorizontalAlignment="Left" Margin="441,274,0,0" Text="{Binding DishName}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Margin="441,367,0,0" Text="{Binding DishPrice}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Margin="441,323,0,0" Text="{Binding DishDescription}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="18"/>
+        <TextBox HorizontalAlignment="Left" Margin="441,274,0,0" Text="{Binding DishName , UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox HorizontalAlignment="Left" Margin="441,367,0,0" Text="{Binding DishPrice , UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox HorizontalAlignment="Left" Margin="441,323,0,0" Text="{Binding DishDescription , UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="18"/>
         <Label Content="Description" HorizontalAlignment="Left" Margin="441,297,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

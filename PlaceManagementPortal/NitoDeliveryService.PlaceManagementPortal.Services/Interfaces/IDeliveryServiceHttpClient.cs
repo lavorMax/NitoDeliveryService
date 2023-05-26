@@ -12,5 +12,6 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Interfaces
         Task<OrderDTO> GetOrder(int orderId);
         Task UpdatePlace(PlaceDTO place);
         Task CreatePlace(PlaceDTO place);
+        Task DeletePlace(int placeId, int clientId);
     }
 }

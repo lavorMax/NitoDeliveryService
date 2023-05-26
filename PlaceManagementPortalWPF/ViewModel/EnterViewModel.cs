@@ -16,8 +16,8 @@ namespace PlaceManagementPortalWPF.ViewModel
         private readonly IPlaceManagementPortal _managementClient;
 
 
-        private string login = "lavor.maxim@gmail.com";
-        private string password = "sobaka32";
+        private string login = "manager@gmail.com";
+        private string password = "a_ywkM^cHyOG";
         private Visibility incorrectCredentialsVisibility;
 
         public ICommand EnterCommand { get; }

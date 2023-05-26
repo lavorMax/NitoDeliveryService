@@ -80,6 +80,9 @@ namespace ManagementPortalWPF.ViewModels
         private void Add(object parameter)
         {
             _managementClient.CreateCustomer(new ClientDto() { Title = ClientTitle, ResponsiblePhone = ClientNumber});
+            ClientTitle = null;
+            ClientNumber = null;
+
             _navigationService.UpdateMain();
         }
 

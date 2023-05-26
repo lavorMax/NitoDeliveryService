@@ -11,7 +11,6 @@ using NitoDeliveryService.PlaceManagementPortal.API.Infrastructure.DIInit;
 using NitoDeliveryService.PlaceManagementPortal.Services.Infrasctructure;
 using NitoDeliveryService.PlaceManagementPortal.Services.Infrastructure;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace PlaceManagementPortal
 {
@@ -73,6 +72,9 @@ namespace PlaceManagementPortal
                 options.AddPolicy("ClientCredentialsPolicy", policy =>
                     policy.RequireAuthenticatedUser());
             });
+
+            services.AddSingleton(auth0Options);
+
 
             var deliveryServiceOptions = Configuration.GetSection("DeliveryServiceOptions").Get<DeliveryServiceOptions>();
             services.AddSingleton(deliveryServiceOptions);

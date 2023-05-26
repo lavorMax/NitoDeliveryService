@@ -32,6 +32,7 @@ namespace NitoDeliveryService.ManagementPortal.Services.HttpClients
 
             var response = await _httpClient.DeleteAsync(url);
 
+            
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception($"Error occurred while calling the Denitialize endpoint. StatusCode={response.StatusCode}");

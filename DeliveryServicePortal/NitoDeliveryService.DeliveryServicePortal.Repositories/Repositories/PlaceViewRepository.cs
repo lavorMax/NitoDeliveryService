@@ -3,7 +3,6 @@ using NiteDeliveryService.Shared.DAL.Implemetations;
 using NitoDeliveryService.PlaceManagementPortal.Entities.Entities;
 using NitoDeliveryService.PlaceManagementPortal.Repositories.Infrastructure;
 using NitoDeliveryService.PlaceManagementPortal.Repositories.Interfaces;
-using NitoDeliveryService.Shared.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +18,10 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Repositories
 
         public async Task<IEnumerable<PlaceView>> GetPossibleToDeliverPlaces(double Latitude, double Longitude)
         {
-            var result = await _context.Set<PlaceView>().Where(p => GetDistance(Latitude, Longitude, p.Latitude, p.Longitude) <= p.DeliveryRange).ToListAsync();
+            var result = await _context.Set<PlaceView>()
+                .Where(p => GetDistance(Latitude, Longitude, p.Latitude, p.Longitude) <= p.DeliveryRange 
+                && p.Deleted)
+                .ToListAsync();
 
             return result;
         }

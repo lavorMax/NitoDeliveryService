@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NitoDeliveryService.PlaceManagementPortal.Services.HttpClients;
 using NitoDeliveryService.PlaceManagementPortal.Services.Interfaces;
 using NitoDeliveryService.PlaceManagementPortal.Services.Services;
+using PlaceManagementPortal;
 
 namespace NitoDeliveryService.PlaceManagementPortal.API.Infrastructure.DIInit
 {

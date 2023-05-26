@@ -3,9 +3,7 @@ using ManagementPortalWPF.Services;
 using ManagementPortalWPF.View;
 using ManagementPortalWPF.ViewModels;
 using Microsoft.Extensions.Configuration;
-using NitoDeliveryService.Shared.HttpClients.HttpClients;
-using NitoDeliveryService.Shared.View;
-using NitoDeliveryService.Shared.View.HttpClients;
+using NitoDeliveryService.Shared.HttpClients;
 using System.IO;
 using System.Windows;
 

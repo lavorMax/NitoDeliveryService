@@ -4,6 +4,7 @@ using PlaceManagementPortalWPF.HttpClients;
 using PlaceManagementPortalWPF.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace PlaceManagementPortalWPF.ViewModel
@@ -208,6 +209,8 @@ namespace PlaceManagementPortalWPF.ViewModel
                 MaxRange = maxRage
             };
 
+            DeliveryPrice = null;
+            MaxRange = null;
             _managementClient.CreatePaymentConfiguration(configuration);
             ResetPlace();
         }
@@ -230,6 +233,9 @@ namespace PlaceManagementPortalWPF.ViewModel
                 Description = DishDescription
             };
 
+            DishPrice = null;
+            DishName = null;
+            DishDescription = null;
             _managementClient.CreateDish(dish);
             ResetPlace();
         }
@@ -259,7 +265,7 @@ namespace PlaceManagementPortalWPF.ViewModel
 
         private bool AddMenuItemCanExecute(object parameter)
         {
-            var menuItemPriceResult = int.TryParse(DeliveryPrice, out var menuItemPrice);
+            var menuItemPriceResult = int.TryParse(DishPrice, out var menuItemPrice);
 
             return menuItemPriceResult 
                 && menuItemPrice > 0
@@ -267,14 +273,17 @@ namespace PlaceManagementPortalWPF.ViewModel
                 && !string.IsNullOrEmpty(DishDescription);
         }
 
-        public  void ResetPlace()
+        public void ResetPlace()
         {
             var place = _managementClient.GetPlaceByToken();
 
-            _placeName = place.Name;
+            PlaceName = place.Name;
+            PlaceDescription = place.Description;
+            Address = place.Address;
             _placeDTO = place;
 
-            DeliveryConfigurations = new ObservableCollection<PaymentConfigDTO>(_placeDTO.PaymentConfigurations);
+
+            DeliveryConfigurations = new ObservableCollection<PaymentConfigDTO>(_placeDTO.PaymentConfigurations.OrderBy(i => i.MaxRange));
             MenuItems = new ObservableCollection<DishDTO>(_placeDTO.Dishes);
         }
 

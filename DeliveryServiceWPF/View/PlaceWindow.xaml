@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DeliveryServiceWPF.View"
         mc:Ignorable="d"
-        Title="Delivery Service" Height="450" Width="400">
+        Title="Delivery Service" Height="450" Width="400"
+        Closing="{Binding Closing}">
     <Grid>
         <Label Content="{Binding PlaceName}" HorizontalAlignment="Left" Margin="53,28,0,0" VerticalAlignment="Top" Width="147" Height="26"/>
         <Label Content="{Binding PlaceAdress}" HorizontalAlignment="Left" Margin="53,59,0,0" VerticalAlignment="Top" Height="21" Width="134"/>

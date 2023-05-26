@@ -11,6 +11,7 @@
         <ListBox Margin="68,239,67,35" ItemsSource="{Binding Orders}" SelectedItem="{Binding SelectedOrder}"/>
         <Label Content="Orders:" HorizontalAlignment="Left" Margin="68,0,0,0" VerticalAlignment="Center"/>
         <Button Content="Configure place" HorizontalAlignment="Center" Margin="0,161,0,0" VerticalAlignment="Top" Height="28" Width="100" Command="{Binding OpenConfigCommand}"/>
-        <Label Content="{Binding PlaceName}" HorizontalAlignment="Center" Margin="0,85,0,0" VerticalAlignment="Top" FontSize="20"/>
+        <Label Content="{Binding PlaceName}" HorizontalAlignment="Left" Margin="10,91,0,0" VerticalAlignment="Top" FontSize="20" Height="35" Width="278"/>
+        <Label Content="Place name" HorizontalAlignment="Left" Margin="10,65,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

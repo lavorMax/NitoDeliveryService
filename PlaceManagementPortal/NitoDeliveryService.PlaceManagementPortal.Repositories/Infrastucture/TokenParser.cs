@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
-using NitoDeliveryService.PlaceManagementPortal.Entities;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace NitoDeliveryService.PlaceManagementPortal.Repositories
@@ -14,17 +12,16 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public UserMetadata GetMetadata()
+        public string GetUserId()
         {
-            var token = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+            var token = _httpContextAccessor.HttpContext.Request.Headers["Authorization"].ToString();
 
             var handler = new JwtSecurityTokenHandler();
-            var decodedToken = handler.ReadJwtToken(token);
-            var userMetadata = decodedToken.Payload["metadata"].ToString();
 
-            var metadata = JsonConvert.DeserializeObject<UserMetadata>(userMetadata);
+            var decodedToken = handler.ReadJwtToken(token.Split(' ')[1]);
+            var userMetadata = decodedToken.Subject.ToString();
 
-            return metadata;
+            return userMetadata;
         }
     }
 }

@@ -10,6 +10,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Entities.Entities
         public string Description { get; set; }
         public string Adress { get; set; }
         public int DeliveryRange { get; set; }
+        public bool Deleted { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
     }

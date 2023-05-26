@@ -1,4 +1,4 @@
-﻿using NitoDeliveryService.PlaceManagementPortal.Repositories;
+﻿using NitoDeliveryService.PlaceManagementPortal.Repositories.Interfaces;
 using NitoDeliveryService.PlaceManagementPortal.Services.Interfaces;
 using NitoDeliveryService.Shared.Models.Models;
 using NitoDeliveryService.Shared.Models.PlaceDTOs;
@@ -11,12 +11,12 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
     public class OrderService : IOrderService
     {
         private readonly IDeliveryServiceHttpClient _deliveryServiceHttpClient;
-        private readonly ITokenParser _tokenParser;
+        private readonly IAuth0Client _auth0Client;
 
-        public OrderService(IDeliveryServiceHttpClient deliveryServiceHttpClient, ITokenParser tokenParser)
+        public OrderService(IDeliveryServiceHttpClient deliveryServiceHttpClient, IAuth0Client auth0Client)
         {
             _deliveryServiceHttpClient = deliveryServiceHttpClient;
-            _tokenParser = tokenParser;
+            _auth0Client = auth0Client;
         }
 
         public async Task ChangeStatusToClosed(int orderId)
@@ -36,7 +36,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
         public async Task<IEnumerable<OrderDTO>> GetActiveOrders()
         {
-            var userMetadata = _tokenParser.GetMetadata();
+            var userMetadata = await _auth0Client.GetMetadata();
 
             var activeOrders = await _deliveryServiceHttpClient.GetOrders(userMetadata.PlaceId, userMetadata.ClientId, true);
 

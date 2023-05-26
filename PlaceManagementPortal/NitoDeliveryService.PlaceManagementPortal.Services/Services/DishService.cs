@@ -28,7 +28,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
             var result = await _dishRepository.Create(dishEntity);
 
-            if (result != null)
+            if (result == null)
             {
                 throw new Exception("Error creating dish");
             }

@@ -1,5 +1,6 @@
 ﻿using ManagementPortalWPF.HttpClients;
 using ManagementPortalWPF.Services;
+using NitoDeliveryService.Shared.HttpClients;
 using NitoDeliveryService.Shared.View;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -10,8 +11,8 @@ namespace ManagementPortalWPF.ViewModels
 {
     public class EnterViewModel : INotifyPropertyChanged
     {
-        private string login;
-        private string password;
+        private string login = "lavor.maxim@gmail.com";
+        private string password = "maksym32";
         private Visibility incorrectCredentialsVisibility;
 
         private readonly IAuthClient _authClient;

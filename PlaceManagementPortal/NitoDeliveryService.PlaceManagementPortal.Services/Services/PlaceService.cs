@@ -2,7 +2,6 @@
 using NiteDeliveryService.Shared.DAL.Interfaces;
 using NitoDeliveryService.PlaceManagementPortal.Entities.Entities;
 using NitoDeliveryService.PlaceManagementPortal.Repositories;
-using NitoDeliveryService.PlaceManagementPortal.Repositories.Infrastucture;
 using NitoDeliveryService.PlaceManagementPortal.Repositories.Interfaces;
 using NitoDeliveryService.PlaceManagementPortal.Services.Interfaces;
 using NitoDeliveryService.Shared.Models.DTOs;
@@ -15,15 +14,19 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
     public class PlaceService : IPlaceService
     {
         private readonly IDeliveryServiceHttpClient _deliveryServiceHttpClient;
-        private readonly ITokenParser _tokenParser;
+        private readonly IAuth0Client _auth0Client;
         private readonly IPlaceRepository _placeRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
 
-        public PlaceService(IDeliveryServiceHttpClient deliveryServiceHttpClient, ITokenParser tokenParser, IPlaceRepository placeRepository, IMapper mapper, IUnitOfWork unitOfWork)
+        public PlaceService(IDeliveryServiceHttpClient deliveryServiceHttpClient, 
+            IAuth0Client auth0Client, 
+            IPlaceRepository placeRepository, 
+            IMapper mapper, 
+            IUnitOfWork unitOfWork)
         {
             _deliveryServiceHttpClient = deliveryServiceHttpClient;
-            _tokenParser = tokenParser;
+            _auth0Client = auth0Client;
             _placeRepository = placeRepository;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
@@ -45,17 +48,22 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
                 throw new Exception("Error creating place");
             }
 
-            var placeDTO = _mapper.Map<Place, PlaceDTO>(result);
-            await _deliveryServiceHttpClient.CreatePlace(placeDTO);
-
             await _unitOfWork.SaveAsync();
+
+            var placeDTO = _mapper.Map<Place, PlaceDTO>(result);
+
+            await _deliveryServiceHttpClient.CreatePlace(placeDTO);
         }
 
         public async Task<PlaceDTO> GetPlace(int placeId = -1)
         {
-            int placeIdToGet = placeId != -1 ? placeId : _tokenParser.GetMetadata().PlaceId;
+            if (placeId == -1)
+            {
+                var metadata = await _auth0Client.GetMetadata();
+                placeId = metadata.PlaceId;
+            }
 
-            var entity = await _placeRepository.ReadWithIncludes(placeIdToGet);
+            var entity = await _placeRepository.ReadWithIncludesBySlotId(placeId);
 
             if (entity == null)
             {
@@ -69,12 +77,16 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
         public async Task RemovePlace(int slotId)
         {
+            var place = await _placeRepository.ReadWithIncludesBySlotId(slotId);
+
             var result = await _placeRepository.DeleteBySlotId(slotId);
 
             if (!result)
             {
                 throw new Exception("Error removing place");
             }
+
+            await _deliveryServiceHttpClient.DeletePlace(place.Id, place.ClientId);
 
             await _unitOfWork.SaveAsync();
         }
@@ -89,6 +101,8 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
             {
                 throw new Exception("Error updatng place");
             }
+
+            await _deliveryServiceHttpClient.UpdatePlace(place);
 
             await _unitOfWork.SaveAsync();
         }

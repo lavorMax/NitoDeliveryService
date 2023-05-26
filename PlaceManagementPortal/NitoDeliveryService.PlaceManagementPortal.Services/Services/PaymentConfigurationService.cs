@@ -11,12 +11,20 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 {
     public class PaymentConfigurationService : IPaymentConfigurationService
     {
+        private readonly IDeliveryServiceHttpClient _deliveryServiceHttpClient;
+        private readonly IPlaceRepository _placeRepository;
         private readonly IPaymentConfigurationRepository _paymentConfigurationRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
 
-        public PaymentConfigurationService(IPaymentConfigurationRepository paymentConfigurationRepository, IMapper mapper, IUnitOfWork unitOfWork)
+        public PaymentConfigurationService(IPaymentConfigurationRepository paymentConfigurationRepository,
+            IPlaceRepository placeRepository,
+            IDeliveryServiceHttpClient deliveryServiceHttpClient,
+            IMapper mapper, 
+            IUnitOfWork unitOfWork)
         {
+            _placeRepository = placeRepository;
+            _deliveryServiceHttpClient = deliveryServiceHttpClient;
             _paymentConfigurationRepository = paymentConfigurationRepository;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
@@ -24,20 +32,28 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
         public async Task CreateNewConfiguration(PaymentConfigurationDTO configuration)
         {
-            var configurattionEntity = _mapper.Map<PaymentConfigurationDTO, PaymentConfiguration>(configuration);
+            var configurationEntity = _mapper.Map<PaymentConfigurationDTO, PaymentConfiguration>(configuration);
 
-            var result = await _paymentConfigurationRepository.Create(configurattionEntity);
+            var placeIdToUpdate = configurationEntity.PlaceId;
 
-            if (result != null)
+            var result = await _paymentConfigurationRepository.Create(configurationEntity);
+
+            if (result == null)
             {
                 throw new Exception("Error creating payment configuration");
             }
 
             await _unitOfWork.SaveAsync();
+
+            await UpdatePlaceOnDeliveryPortal(placeIdToUpdate);
         }
 
         public async Task RemoveConfiguration(int configurationId)
         {
+            var configuration = await _paymentConfigurationRepository.Read(configurationId);
+
+            var placeIdToUpdate = configuration.PlaceId;
+
             var result = await _paymentConfigurationRepository.Delete(configurationId);
 
             if (!result)
@@ -46,6 +62,17 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
             }
 
             await _unitOfWork.SaveAsync();
+
+            await UpdatePlaceOnDeliveryPortal(placeIdToUpdate);
+        }
+
+        private async Task UpdatePlaceOnDeliveryPortal(int placeId)
+        {
+            var placeToUpdate = await _placeRepository.ReadWithIncludes(placeId);
+
+            var placeDto = _mapper.Map<Place, PlaceDTO>(placeToUpdate);
+
+            await _deliveryServiceHttpClient.UpdatePlace(placeDto);
         }
     }
 }

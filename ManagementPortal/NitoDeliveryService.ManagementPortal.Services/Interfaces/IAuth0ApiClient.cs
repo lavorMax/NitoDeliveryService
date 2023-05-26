@@ -6,7 +6,6 @@ namespace NitoDeliveryService.ManagementPortal.Services.Interfaces
     public interface IAuth0ApiClient
     {
         Task DeleteUser(string userId);
-        Task<Auth0CredentialsResponse> GetPassword(string username);
         Task<Auth0CredentialsResponse> CreateUser(string username, int clientId, int slotId);
     }
 }

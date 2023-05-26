@@ -16,7 +16,7 @@ namespace NitoDeliveryService.Shared.HttpClients
             _options = options;
             _httpClient = new HttpClient
             {
-                BaseAddress = new Uri($"https://{options.Domain}/")
+                BaseAddress = new Uri($"https://{options.Domain}")
             };
             
         }
@@ -29,7 +29,8 @@ namespace NitoDeliveryService.Shared.HttpClients
                 client_id=_options.ClientId, 
                 client_secret=_options.ClientSecret, 
                 audience = _options.Audience, 
-                realm = "Username-Password-Authentication"};
+                realm = _options.Realm
+            };
 
             var response = await _httpClient.PostAsJsonAsync("/oauth/token", requestData);
 

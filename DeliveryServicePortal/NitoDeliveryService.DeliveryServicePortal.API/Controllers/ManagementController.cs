@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NitoDeliveryService.DeliveryServicePortal.API.Controllers
 {
-    //[Authorize(Policy = "ClientCredentialsPolicy")]
+    [Authorize(Policy = "ClientCredentialsPolicy")]
     [ApiController]
     [Route("api/[controller]")]
     public class ManagementController : ControllerBase
@@ -23,7 +23,7 @@ namespace NitoDeliveryService.DeliveryServicePortal.API.Controllers
             _placeService = placeService;
         }
 
-        [HttpGet("getall/{clientId}/{placeId}/{onlyActive}")]
+        [HttpGet("getall/{placeId}/{clientId}/{onlyActive}")]
         public async Task<ActionResult<IEnumerable<OrderDTO>>> Get(int placeId, int clientId, bool onlyActive = true)
         {
             try
@@ -57,6 +57,20 @@ namespace NitoDeliveryService.DeliveryServicePortal.API.Controllers
             try
             {
                 await _placeService.UpdatePlaceView(request);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpDelete("delete/{placeId}/{clientId}")]
+        public async Task<ActionResult> Remove(int placeId, int clientId)
+        {
+            try
+            {
+                await _placeService.DeletePlaceView(placeId, clientId);
                 return Ok();
             }
             catch (Exception e)

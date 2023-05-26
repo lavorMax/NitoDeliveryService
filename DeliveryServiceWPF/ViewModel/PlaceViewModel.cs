@@ -35,6 +35,7 @@ namespace DeliveryServiceWPF.ViewModel
             AddCommand = new Command(Add, CanAdd);
             RemoveCommand = new Command(Remove, CanRemove);
             CreateOrderCommand = new Command(CreateOrder, CanCreateOrder);
+            Closing = new Command(Close);
         }
 
         private string _placeName;
@@ -48,6 +49,7 @@ namespace DeliveryServiceWPF.ViewModel
         public ICommand AddCommand;
         public ICommand RemoveCommand;
         public ICommand CreateOrderCommand;
+        public ICommand Closing;
 
         public string PlaceName
         {
@@ -107,6 +109,11 @@ namespace DeliveryServiceWPF.ViewModel
                 _selectedOrderItem = value;
                 OnPropertyChanged();
             }
+        }
+
+        private void Close(object parameter)
+        {
+            _navigationService.ClosePlace(_placeId, _clientId, true);
         }
 
         private void Add(object parameter)

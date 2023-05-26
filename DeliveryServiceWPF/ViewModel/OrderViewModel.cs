@@ -85,6 +85,7 @@ namespace DeliveryServiceWPF.ViewModel
         }
 
         public ICommand FinishCommand { get; }
+        public ICommand Closing { get; }
 
         public OrderViewModel(int orderId, IDeliveryServiceHttpClient managementClient, INavigationService nav)
         {
@@ -95,8 +96,13 @@ namespace DeliveryServiceWPF.ViewModel
             ResetOrderDTO();
 
             FinishCommand = new Command(Close, CloseCanExecute);
+            Closing = new Command(CloseWidow);
         }
 
+        private void CloseWidow(object parameter)
+        {
+            _navigationService.CloseOrder(_orderId, true);
+        }
         private void Close(object parameter)
         {
             _client.FinishOrder(_orderDTO.Id);

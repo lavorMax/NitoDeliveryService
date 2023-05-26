@@ -151,9 +151,7 @@ namespace ManagementPortalWPF.ViewModels
         {
             var result = _managementClient.GetCreds(_selectedItem.Id);
 
-            MessageBox.Show($"Login: {result.auth0login}");
-
-            MessageBox.Show($"Password: {result.auth0password}");
+            MessageBox.Show($"Login: {result.auth0login} & Password: {result.auth0password}");
         }
 
         private void DeleteSlotCommandAction(object parameter)

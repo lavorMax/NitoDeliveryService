@@ -19,6 +19,8 @@ namespace NitoDeliveryService.PlaceManagementPortal.API.Infrastructure.DIInit
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
+            services.AddTransient<IAuth0Client, Auth0Client>();
+
             services.AddTransient<IDishRepository, DishRepository>();
             services.AddTransient<IPlaceRepository, PlaceRepository>();
             services.AddTransient<IPaymentConfigurationRepository, PaymentConfigurationRepository>();

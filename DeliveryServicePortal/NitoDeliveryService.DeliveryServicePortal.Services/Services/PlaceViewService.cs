@@ -4,7 +4,6 @@ using NitoDeliveryService.PlaceManagementPortal.Entities.Entities;
 using NitoDeliveryService.PlaceManagementPortal.Models.DTOs;
 using NitoDeliveryService.PlaceManagementPortal.Repositories.Interfaces;
 using NitoDeliveryService.PlaceManagementPortal.Services.Interfaces;
-using NitoDeliveryService.Shared.Models.Models;
 using NitoDeliveryService.Shared.Models.PlaceDTOs;
 using Nominatim.API.Geocoders;
 using Nominatim.API.Models;
@@ -38,6 +37,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
                 Name = placeDto.Name,
                 ClientId = placeDto.ClientId,
                 Description = placeDto.Description,
+                Deleted = false
             };
 
             var result = await _placeViewRepository.Create(PlaceView);
@@ -75,7 +75,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
         public async Task UpdatePlaceView(PlaceDTO placeDto)
         {
-            var entityToUpdate = _placeViewRepository.ReadByPlaceAndClientId(placeDto.ClientId, placeDto.Id);
+            var entityToUpdate = await _placeViewRepository.ReadByPlaceAndClientId(placeDto.ClientId, placeDto.Id);
 
             var (addressLatitude, addressLongitude) = await GetCoordinates(placeDto.Address);
 
@@ -87,12 +87,33 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
                 ClientId = placeDto.ClientId,
                 Description = placeDto.Description,
                 Adress = placeDto.Address,
-                DeliveryRange = placeDto.PaymentConfigurations.Select(pc => pc.MaxRange).OrderBy(i => i).First(),
+                DeliveryRange = placeDto.PaymentConfigurations
+                    .Select(pc => pc.MaxRange)
+                    .OrderByDescending(i => i)
+                    .FirstOrDefault(),
+
                 Longitude = addressLongitude,
-                Latitude = addressLatitude
+                Latitude = addressLatitude,
+                Deleted = false
             };
 
             var result = await _placeViewRepository.Update(PlaceView);
+
+            if (!result)
+            {
+                throw new Exception("Error updating place");
+            }
+
+            await _unitOfWork.SaveAsync();
+        }
+
+        public async Task DeletePlaceView(int placeId, int clientId)
+        {
+            var entityToUpdate = await _placeViewRepository.ReadByPlaceAndClientId(clientId, placeId);
+
+            entityToUpdate.Deleted = true;
+
+            var result = await _placeViewRepository.Update(entityToUpdate);
 
             if (!result)
             {

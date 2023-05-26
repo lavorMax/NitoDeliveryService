@@ -33,7 +33,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.API.Controllers
             }
         }
 
-        [HttpGet("remove/{Id}")]
+        [HttpDelete("remove/{Id}")]
         public async Task<ActionResult> Remove(int id)
         {
             try

@@ -35,7 +35,7 @@ namespace PlaceManagementPortalWPF.Services
 
         public void ShowConfiguration()
         {
-            if (!PlaceConfigurationWindow.ShowActivated)
+            if (PlaceConfigurationWindow.ShowActivated)
             {
                 PlaceConfigurationWindow.Show();
                 PlaceConfigurationVM.ResetPlace();
@@ -49,6 +49,7 @@ namespace PlaceManagementPortalWPF.Services
 
         public void ShowMain()
         {
+            EnterWindow.Close();
             MainVM.Initialize();
             MainWindow.Show();
         }

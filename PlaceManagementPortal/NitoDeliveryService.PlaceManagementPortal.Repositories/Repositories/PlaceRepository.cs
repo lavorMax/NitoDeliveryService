@@ -49,6 +49,21 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Repositories
             }
         }
 
+        public async Task<Place> ReadWithIncludesBySlotId(int id)
+        {
+            try
+            {
+                return await _context.Set<Place>()
+                    .Include(p => p.PaymentConfigurations)
+                    .Include(c => c.Dishes)
+                    .FirstAsync(p => p.SlotId == id);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
         public async new Task<bool> Update(Place entity)
         {
             try

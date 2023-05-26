@@ -102,7 +102,7 @@ namespace PlaceManagementPortalWPF.HttpClients
 
         public PlaceDTO GetPlaceByToken()
         {
-            var url = _placeManagementPortalUrl + "/order/get";
+            var url = _placeManagementPortalUrl + "/place/get";
             var response = _httpClient.GetAsync(url).Result;
 
             if (!response.IsSuccessStatusCode)

@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DeliveryServiceWPF.View"
         mc:Ignorable="d"
-        Title="OrderWindow" Height="450" Width="400">
+        Title="OrderWindow" Height="450" Width="400"
+        Closing="{Binding Closing}">
     <Grid>
         <Label Content="Place Management Portal" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" AutomationProperties.Name="Label" Height="50" Width="267" FontSize="20" FontFamily="Segoe UI Emoji" FontWeight="Bold" Grid.ColumnSpan="2"/>
         <Label Content="{Binding OrderName}" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Width="54"/>

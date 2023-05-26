@@ -6,10 +6,10 @@ namespace NitoDeliveryService.PlaceManagementPortal.API.Infrastructure
 {
     public class Mapper : Profile
     {
-        public void Init()
+        public Mapper()
         {
             CreateMap<Place, PlaceDTO>();
-            CreateMap<PlaceDTO, Place>();
+            CreateMap<PlaceDTO, Place>().ForMember(dest => dest.SlotId, opt => opt.Ignore());
 
             CreateMap<Dish, DishDTO>();
             CreateMap<DishDTO, Dish>();

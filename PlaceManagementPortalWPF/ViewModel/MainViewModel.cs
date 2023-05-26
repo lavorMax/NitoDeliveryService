@@ -65,7 +65,7 @@ namespace PlaceManagementPortalWPF.ViewModel
         {
             var place = _managementClient.GetPlaceByToken();
 
-            _placeName = place.Name;
+            PlaceName = place.Name;
             _placeDTO = place;
 
             var orders = _managementClient.GetAllOrders(_placeDTO.Id);

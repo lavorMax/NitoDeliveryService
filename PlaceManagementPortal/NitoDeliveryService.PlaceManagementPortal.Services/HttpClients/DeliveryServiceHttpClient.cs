@@ -49,25 +49,33 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.HttpClients
 
         public async Task CreatePlace(PlaceDTO place)
         {
-            try
+            await EnsureAccessToken();
+
+            var data = JsonConvert.SerializeObject(place);
+
+            var content = new StringContent(data, Encoding.UTF8, "application/json");
+
+            var url = BuildUrl(_options.CreatePlaceEndpoint);
+
+            var response = await _httpClient.PostAsync(url, content);
+
+            if (!response.IsSuccessStatusCode)
             {
-                await EnsureAccessToken();
+                throw new Exception($"Error occurred while calling the CreatePlace endpoint. StatusCode={response.StatusCode}");
+            }
+        }
 
-                var data = JsonConvert.SerializeObject(place);
+        public async Task DeletePlace(int placeId, int clientId)
+        {
+            await EnsureAccessToken();
 
-                var content = new StringContent(data, Encoding.UTF8, "application/json");
+            var url = BuildUrl(_options.DeletePlaceEndpoint)+$"/{placeId}/{clientId}";
 
-                var url = BuildUrl(_options.CreatePlaceEndpoint);
+            var response = await _httpClient.DeleteAsync(url);
 
-                var response = await _httpClient.PostAsync(url, content);
-
-                if (!response.IsSuccessStatusCode)
-                {
-                    throw new Exception($"Error occurred while calling the CreatePlace endpoint. StatusCode={response.StatusCode}");
-                }
-            }catch(Exception e)
+            if (!response.IsSuccessStatusCode)
             {
-                throw;
+                throw new Exception($"Error occurred while calling the DeletePlace endpoint. StatusCode={response.StatusCode}");
             }
         }
 

@@ -1,13 +1,20 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace DeliveryServiceWPF.HttpClients
 {
     public static class TokenParser
     {
-        public static Task<string> GetUserId(string token)
+        public static string GetUserId(string token)
         {
-            throw new NotImplementedException();
+            var handler = new JwtSecurityTokenHandler();
+            var decodedToken = handler.ReadJwtToken(token);
+
+            var userMetadata = decodedToken.Payload["metadata"].ToString();
+
+            var metadata = JsonConvert.DeserializeObject<string>(userMetadata);
+
+            return metadata;
         }
     }
 }
