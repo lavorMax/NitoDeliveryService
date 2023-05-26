@@ -16,8 +16,8 @@ namespace DeliveryServiceWPF.ViewModel
         private readonly IDeliveryServiceHttpClient _client;
 
 
-        private string login = "lavor.maxim@gmail.com";
-        private string password = "sobaka32";
+        private string login = "maksym32@gmail.com";
+        private string password = "maksym32";
         private Visibility incorrectCredentialsVisibility;
 
         public ICommand EnterCommand { get; }
@@ -83,9 +83,10 @@ namespace DeliveryServiceWPF.ViewModel
 
             if (token != null)
             {
-                var userId = int.Parse(await TokenParser.GetUserId(token));
-
                 _client.SetupToken(token);
+
+                var userId = _client.GetUser(Login).Id;
+
                 _navigationService.ShowMain(userId);
             }
             else

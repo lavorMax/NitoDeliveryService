@@ -87,7 +87,7 @@ namespace PlaceManagementPortalWPF.HttpClients
 
         public OrderDTO GetOrder(int orderId)
         {
-            var url = _placeManagementPortalUrl + "/order/get/{orderId}";
+            var url = _placeManagementPortalUrl + $"/order/get/{orderId}";
             var response = _httpClient.GetAsync(url).Result;
 
             if (!response.IsSuccessStatusCode)

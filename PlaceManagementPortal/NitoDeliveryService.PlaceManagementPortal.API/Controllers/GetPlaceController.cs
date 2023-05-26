@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NitoDeliveryService.PlaceManagementPortal.Repositories.Infrastucture;
 using NitoDeliveryService.PlaceManagementPortal.Repositories.Interfaces;
@@ -23,7 +22,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.API.Controllers
             _scopeFactory = scopeFactory;
         }
 
-        [HttpGet("/{placeId}/{clientId}")]
+        [HttpGet("get/{placeId}/{clientId}")]
         public async Task<ActionResult<PlaceDTO>> Get(int placeId, int clientId)
         {
             try

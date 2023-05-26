@@ -1,4 +1,5 @@
-﻿using NitoDeliveryService.Shared.Models.Models;
+﻿using NitoDeliveryService.PlaceManagementPortal.Models.DTOs;
+using NitoDeliveryService.Shared.Models.Models;
 using System.Collections.Generic;
 
 namespace NitoDeliveryService.Shared.Models.PlaceDTOs
@@ -15,6 +16,7 @@ namespace NitoDeliveryService.Shared.Models.PlaceDTOs
         public decimal DeliveryPrice { get; set; }
 
 
+        public UserDTO User { get; set; }
         public IEnumerable<DishOrderDTO> DishOrders { get; set; }
     }
 }

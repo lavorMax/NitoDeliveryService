@@ -1,4 +1,5 @@
 ﻿using NitoDeliveryService.Shared.Models.Models;
+using NitoDeliveryService.Shared.View.Models.DeliveryServicePortal;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -15,11 +16,12 @@ namespace NitoDeliveryService.Shared.View.Models.PlaceManagementPortal
         public int PlaceViewId { get; set; }
         public decimal DeliveryPrice { get; set; }
 
+        public UserDto User { get; set; }
         public List<DishOrderDTO> DishOrders { get; set; }
 
         public override string ToString()
         {
-            return $"Ordet #{Id}";
+            return $"Order #{Id}";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

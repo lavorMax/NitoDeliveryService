@@ -1,5 +1,6 @@
 ﻿using DeliveryServiceWPF.HttpClients;
 using DeliveryServiceWPF.Services;
+using NitoDeliveryService.Shared.HttpClients;
 using NitoDeliveryService.Shared.View;
 using NitoDeliveryService.Shared.View.Models.DeliveryServicePortal;
 using System.ComponentModel;
@@ -11,9 +12,9 @@ namespace DeliveryServiceWPF.ViewModel
 {
     public class RegistrationViewModel : INotifyPropertyChanged
     {
-        private readonly IAuth0RegisterClient _authClient;
         private readonly INavigationService _navigationService;
         private readonly IDeliveryServiceHttpClient _client;
+        private readonly IAuthClient _authClient;
 
 
         private string email;
@@ -102,7 +103,7 @@ namespace DeliveryServiceWPF.ViewModel
             }
         }
 
-        public RegistrationViewModel(IAuth0RegisterClient authClient, INavigationService navigationService, IDeliveryServiceHttpClient managementClient)
+        public RegistrationViewModel(IAuthClient authClient, INavigationService navigationService, IDeliveryServiceHttpClient managementClient)
         {
             EnterCommand = new Command(ExecuteEnterCommand, CanExecuteEnterCommand);
             IncorrectCredentialsVisibility = Visibility.Hidden;
@@ -119,11 +120,12 @@ namespace DeliveryServiceWPF.ViewModel
                 Name = Name,
                 Surname = Surname,
                 Phone = Phone,
-                Email = email
+                Email = email,
+                Password = password
             };
 
-            var userId = await _client.CreateUser(user);
-            var token = await _authClient.CreateUser(Email, Password, userId);
+            var userId = _client.CreateUser(user);
+            var token = await _authClient.Authenticate(Email, Password);
 
             if (token != null)
             {

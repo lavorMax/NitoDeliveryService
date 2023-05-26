@@ -13,7 +13,7 @@ namespace NitoDeliveryService.Shared.View.Models.PlaceManagementPortal
 
         public override string ToString()
         {
-            return $"{DishName} - {Number}$";
+            return $"{DishName} - {Number}";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

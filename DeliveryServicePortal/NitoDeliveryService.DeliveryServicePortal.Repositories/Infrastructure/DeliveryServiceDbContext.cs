@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NitoDeliveryService.PlaceManagementPortal.Entities.Entities;
+using System;
 
 namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Infrastructure
 {
@@ -25,6 +26,8 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<PlaceView>()
                 .Property(c => c.Id)
                 .ValueGeneratedOnAdd();

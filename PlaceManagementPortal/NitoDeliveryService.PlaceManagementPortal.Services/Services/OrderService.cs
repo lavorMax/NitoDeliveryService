@@ -12,11 +12,13 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
     {
         private readonly IDeliveryServiceHttpClient _deliveryServiceHttpClient;
         private readonly IAuth0Client _auth0Client;
+        private readonly IPlaceRepository _placeRepository;
 
-        public OrderService(IDeliveryServiceHttpClient deliveryServiceHttpClient, IAuth0Client auth0Client)
+        public OrderService(IDeliveryServiceHttpClient deliveryServiceHttpClient, IAuth0Client auth0Client, IPlaceRepository placeRepository)
         {
             _deliveryServiceHttpClient = deliveryServiceHttpClient;
             _auth0Client = auth0Client;
+            _placeRepository = placeRepository;
         }
 
         public async Task ChangeStatusToClosed(int orderId)
@@ -38,7 +40,9 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
         {
             var userMetadata = await _auth0Client.GetMetadata();
 
-            var activeOrders = await _deliveryServiceHttpClient.GetOrders(userMetadata.PlaceId, userMetadata.ClientId, true);
+            var place = await _placeRepository.ReadWithIncludesBySlotId(userMetadata.PlaceId);
+
+            var activeOrders = await _deliveryServiceHttpClient.GetOrders(place.Id, userMetadata.ClientId, true);
 
             if(activeOrders == null)
             {

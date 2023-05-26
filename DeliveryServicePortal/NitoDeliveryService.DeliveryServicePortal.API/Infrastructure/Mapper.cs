@@ -7,13 +7,16 @@ namespace NitoDeliveryService.DeliveryServicePortal.API.Infrastructure
 {
     public class Mapper : Profile
     {
-        public void Init()
+        public Mapper()
         {
-            CreateMap<User, UserDTO>();
+            CreateMap<User, UserDTO>().ForMember(dest => dest.Password, opt => opt.Ignore());
             CreateMap<UserDTO, User>();
 
             CreateMap<PlaceView, PlaceViewDTO>();
             CreateMap<PlaceViewDTO, PlaceView>();
+
+            CreateMap<DishOrder, DishOrderDTO>();
+            CreateMap<DishOrderDTO, DishOrder>();
 
             CreateMap<OrderDTO, Order>();
             CreateMap<Order, OrderDTO>();

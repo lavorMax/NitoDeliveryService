@@ -26,11 +26,11 @@ namespace DeliveryServiceWPF
 
             var auth0Options = configuration.GetSection("Auth0Options").Get<Auth0Options>();
 
-            IAuth0RegisterClient authClient = new Auth0RegisterClient(auth0Options);
+            IAuthClient authClient = new Auth0Client(auth0Options);
             IDeliveryServiceHttpClient client = new DeliveryServiceHttpClient(configuration);
 
 
-            NavigationService navigation = new NavigationService();
+            NavigationService navigation = new NavigationService(client);
 
             var eVM = new EnterViewModel(authClient, navigation, client);
             var mVM = new MainViewModel(navigation, client);

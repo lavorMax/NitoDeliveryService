@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NitoDeliveryService.DeliveryServicePortal.API.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
@@ -19,12 +19,12 @@ namespace NitoDeliveryService.DeliveryServicePortal.API.Controllers
             _userService = userService;
         }
 
-        [HttpGet("get/{userId}")]
-        public async Task<ActionResult<UserDTO>> Get(int userId)
+        [HttpGet("get/{login}")]
+        public async Task<ActionResult<UserDTO>> Get(string login)
         {
             try
             {
-                var result = await _userService.GetUser(userId);
+                var result = await _userService.GetUser(login);
                 return Ok(result);
             }
             catch (Exception e)
@@ -33,6 +33,7 @@ namespace NitoDeliveryService.DeliveryServicePortal.API.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpPost("create")]
         public async Task<ActionResult<int>> Create([FromBody] UserDTO request)
         {

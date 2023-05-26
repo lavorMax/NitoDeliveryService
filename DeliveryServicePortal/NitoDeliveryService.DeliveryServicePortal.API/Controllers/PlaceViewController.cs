@@ -26,7 +26,7 @@ namespace NitoDeliveryService.DeliveryServicePortal.API.Controllers
         {
             try
             {
-                var result = await _placeService.Get(clientId, placeId);
+                var result = await _placeService.Get(placeId, clientId);
                 return Ok(result);
             }
             catch (Exception e)

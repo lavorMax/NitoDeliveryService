@@ -37,7 +37,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.HttpClients
 
             var url = BuildUrl(_options.ChangeOrderStatusEndpoint);
 
-            url += $"?orderId={orderId}";
+            url += $"/{orderId}";
 
             var response = await _httpClient.PutAsync(url, content);
 
@@ -85,7 +85,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.HttpClients
 
             var url = BuildUrl(_options.GetOrderEndpoint);
 
-            url += $"?id={orderId}";
+            url += $"/{orderId}";
 
             var response = await _httpClient.GetAsync(url);
 
@@ -107,7 +107,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.HttpClients
 
             var url = BuildUrl(_options.GetOrdersEndpoint);
 
-            url += $"?clientId={clientId}&placeId={placeId}&onlyActive={onlyActive}";
+            url += $"/{placeId}/{clientId}/{onlyActive}";
 
             var response = await _httpClient.GetAsync(url);
 

@@ -26,17 +26,6 @@ namespace DeliveryServiceWPF.ViewModel
             }
         }
 
-        private DishOrderDTO _selectedItem;
-        public DishOrderDTO SelectedItem
-        {
-            get { return _selectedItem; }
-            set
-            {
-                _selectedItem = value;
-                OnPropertyChanged(nameof(SelectedItem));
-            }
-        }
-
         private int _orderId;
         private OrderDTO _orderDTO;
 
@@ -74,18 +63,18 @@ namespace DeliveryServiceWPF.ViewModel
         }
 
         private string _orderDeliveryPrice;
-        public string OrderDeliveryPricee
+        public string OrderDeliveryPrice
         {
             get { return _orderDeliveryPrice; }
             set
             {
                 _orderDeliveryPrice = value;
-                OnPropertyChanged(nameof(OrderDeliveryPricee));
+                OnPropertyChanged(nameof(OrderDeliveryPrice));
             }
         }
 
-        public ICommand FinishCommand { get; }
-        public ICommand Closing { get; }
+        public ICommand FinishCommand { get; set; }
+        public ICommand Closing { get; set; }
 
         public OrderViewModel(int orderId, IDeliveryServiceHttpClient managementClient, INavigationService nav)
         {
@@ -111,16 +100,18 @@ namespace DeliveryServiceWPF.ViewModel
         }
         private bool CloseCanExecute(object parameter)
         {
-            return _orderDTO.OrderStatus != OrderStatuses.Finished;
+            return _orderDTO.OrderStatus == OrderStatuses.Delivering;
         }
 
-        private async void ResetOrderDTO()
+        private void ResetOrderDTO()
         {
-            _orderDTO = await _client.GetOrder(_orderId);
+            _orderDTO = _client.GetOrder(_orderId);
             OrderName = _orderDTO.ToString();
             OrderStatus = _orderDTO.OrderStatus.ToString();
             OrderPrice = _orderDTO.DishOrders.Sum(i => i.DishPrice * i.Number).ToString();
-            OrderDeliveryPricee = _orderDTO.DeliveryPrice.ToString();
+            OrderDeliveryPrice = _orderDTO.DeliveryPrice.ToString();
+
+            Items = new ObservableCollection<DishOrderDTO>(_orderDTO.DishOrders);
         }
 
 

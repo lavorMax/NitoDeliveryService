@@ -29,7 +29,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.HttpClients
             
             var url = BuildUrl(_options.GetPlaceEndpoint);
 
-            url += $"?placeId={placeId}&clientId={clientId}";
+            url += $"/{placeId}/{clientId}";
 
             var response = await _httpClient.GetAsync(url);
 

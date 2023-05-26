@@ -49,8 +49,8 @@ namespace PlaceManagementPortalWPF.Services
 
         public void ShowMain()
         {
-            EnterWindow.Close();
             MainVM.Initialize();
+            EnterWindow.Close();
             MainWindow.Show();
         }
 

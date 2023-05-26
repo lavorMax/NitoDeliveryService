@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using NiteDeliveryService.Shared.DAL.Interfaces;
+using NitoDeliveryService.DeliveryServicePortal.Services.Interfaces;
 using NitoDeliveryService.PlaceManagementPortal.Entities.Entities;
 using NitoDeliveryService.PlaceManagementPortal.Models.DTOs;
 using NitoDeliveryService.PlaceManagementPortal.Repositories.Interfaces;
@@ -12,11 +13,13 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IAuth0Client _auth0Client;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
 
-        public UserService(IUserRepository userRepository, IMapper mapper, IUnitOfWork unitOfWork)
+        public UserService(IUserRepository userRepository, IAuth0Client auth0Client, IMapper mapper, IUnitOfWork unitOfWork)
         {
+            _auth0Client = auth0Client;
             _userRepository = userRepository;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
@@ -27,19 +30,23 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
             var userEntity = _mapper.Map<UserDTO, User>(userDto);
 
             var result = await _userRepository.Create(userEntity);
-            if (result != null)
+            if (result == null)
             {
                 throw new Exception("Error creating user");
             }
 
             await _unitOfWork.SaveAsync();
 
+            var userDTO = _mapper.Map<User, UserDTO>(result);
+            userDTO.Password = userDto.Password;
+
+            await _auth0Client.CreateUser(userDTO);
             return result.Id;
         }
 
-        public async Task<UserDTO> GetUser(int userId)
+        public async Task<UserDTO> GetUser(string userLogin)
         {
-            var userEntity = await _userRepository.Read(userId);
+            var userEntity = await _userRepository.ReadByLogin(userLogin);
 
             var result = _mapper.Map<User, UserDTO>(userEntity);
 

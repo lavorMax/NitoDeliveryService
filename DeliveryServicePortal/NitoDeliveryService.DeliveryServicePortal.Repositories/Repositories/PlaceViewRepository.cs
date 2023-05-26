@@ -12,6 +12,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Repositories
 {
     public class PlaceViewRepository : BaseRepository<PlaceView, int>, IPlaceViewRepository
     {
+        private const double EarthRadiusInMeters = 6371000;
         public PlaceViewRepository(DeliveryServiceDbContext context) : base(context)
         {
         }
@@ -19,8 +20,11 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Repositories
         public async Task<IEnumerable<PlaceView>> GetPossibleToDeliverPlaces(double Latitude, double Longitude)
         {
             var result = await _context.Set<PlaceView>()
-                .Where(p => GetDistance(Latitude, Longitude, p.Latitude, p.Longitude) <= p.DeliveryRange 
-                && p.Deleted)
+                .Where(p => Math.Acos(
+                    Math.Sin(Latitude * Math.PI / 180) * Math.Sin(p.Latitude * Math.PI / 180) +
+                    Math.Cos(Latitude * Math.PI / 180) * Math.Cos(p.Latitude * Math.PI / 180) *
+                    Math.Cos(p.Longitude * Math.PI / 180 - Longitude * Math.PI / 180)
+                ) * EarthRadiusInMeters <= p.DeliveryRange && !p.Deleted)
                 .ToListAsync();
 
             return result;
@@ -31,20 +35,6 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Repositories
             var result = await _context.Set<PlaceView>().Where(p => p.ClientId == clientId && p.PlaceId == placeId).FirstOrDefaultAsync();
 
             return result;
-        }
-
-        public async Task<IEnumerable<PlaceView>> SearchByName(double Latitude, double Longitude, string[] keys)
-        {
-            var result = await _context.Set<PlaceView>()
-                .Where(p => GetDistance(Latitude, Longitude, p.Latitude, p.Longitude) <= p.DeliveryRange && keys.Any(k => p.Name.Contains(k)))
-                .ToListAsync();
-
-            return result;
-        }
-
-        private double GetDistance(double Latitude1, double Longitude1, double Latitude2, double Longitude2)
-        {
-            return Math.Sqrt(Math.Pow(Latitude1 - Latitude2, 2) + Math.Pow(Longitude1 - Longitude2, 2));
         }
     }
 }

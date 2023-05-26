@@ -14,6 +14,12 @@ namespace NitoDeliveryService.Shared.View.Models.PlaceManagementPortal
         public IEnumerable<DishDTO> Dishes { get; set; }
         public IEnumerable<PaymentConfigDTO> PaymentConfigurations { get; set; }
 
+
+        public override string ToString()
+        {
+            return $"{Id} - {Name}";
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {

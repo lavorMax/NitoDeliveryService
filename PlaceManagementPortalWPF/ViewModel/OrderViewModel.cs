@@ -3,9 +3,11 @@ using NitoDeliveryService.Shared.View;
 using NitoDeliveryService.Shared.View.Models.PlaceManagementPortal;
 using PlaceManagementPortalWPF.HttpClients;
 using PlaceManagementPortalWPF.Services;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace PlaceManagementPortalWPF.ViewModel
 {
@@ -40,6 +42,9 @@ namespace PlaceManagementPortalWPF.ViewModel
         private OrderDTO _orderDTO;
 
         private string _orderName;
+        private string _userName;
+        private string _userPhone;
+
         public string OrderName
         {
             get { return _orderName; }
@@ -47,6 +52,26 @@ namespace PlaceManagementPortalWPF.ViewModel
             {
                 _orderName = value;
                 OnPropertyChanged(nameof(OrderName));
+            }
+        }
+
+        public string UserName
+        {
+            get { return _userName; }
+            set
+            {
+                _userName = value;
+                OnPropertyChanged(nameof(UserName));
+            }
+        }
+
+        public string UserPhone
+        {
+            get { return _userPhone; }
+            set
+            {
+                _userPhone = value;
+                OnPropertyChanged(nameof(UserPhone));
             }
         }
 
@@ -116,6 +141,9 @@ namespace PlaceManagementPortalWPF.ViewModel
             _orderDTO = _managementClient.GetOrder(_orderId);
             OrderName = _orderDTO.ToString();
             OrderStatus = _orderDTO.OrderStatus.ToString();
+            UserName = $"{_orderDTO.User.Name} {_orderDTO.User.Surname}";
+            UserPhone = _orderDTO.User.Phone;
+            Items = new ObservableCollection<DishOrderDTO>(_orderDTO.DishOrders);
         }
 
 

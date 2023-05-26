@@ -20,6 +20,10 @@ namespace DeliveryServiceWPF.Services
         public EnterViewModel EnterViewModel;
         public RegistrationViewModel RegistrationViewModel;
 
+        public NavigationService(IDeliveryServiceHttpClient client)
+        {
+            _client = client;
+        }
 
         public void CloseOrder(int orderId, bool closed = false)
         {
@@ -31,6 +35,7 @@ namespace DeliveryServiceWPF.Services
                     currentOrderWindow.Close();
                 }
             }
+            MainViewModel.Initialize();
         }
 
         public void ClosePlace(int placeId, int clientId, bool closed = false)
@@ -43,6 +48,7 @@ namespace DeliveryServiceWPF.Services
                     currentPlaceWindow.Close();
                 }
             }
+            MainViewModel.Initialize();
         }
 
         public void ShowEnter()
@@ -75,10 +81,8 @@ namespace DeliveryServiceWPF.Services
 
         public void ShowRegister()
         {
-            if (!RegistrationWindow.ShowActivated)
-            {
-                RegistrationWindow.Show();
-            }
+            EnterWindow.Close();
+            RegistrationWindow.Show();
         }
 
         public void ShowOrder(int orderId)

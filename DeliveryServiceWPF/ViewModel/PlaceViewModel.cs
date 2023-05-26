@@ -3,6 +3,7 @@ using DeliveryServiceWPF.Services;
 using NitoDeliveryService.Shared.Models.Models;
 using NitoDeliveryService.Shared.View;
 using NitoDeliveryService.Shared.View.Models.PlaceManagementPortal;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -26,16 +27,32 @@ namespace DeliveryServiceWPF.ViewModel
         {
             _navigationService = navigationService;
             _client = managementClient;
+
             _userId = userId;
             _clientId = clientId;
             _placeId = placeId;
             _placeViewId = placeViewId;
             _address = address;
 
+            var place = _client.GetPlace(placeId, clientId);
+            PlaceName = place.Name;
+            PlaceAddress = place.Address;
+
+            if (place.Dishes != null)
+            {
+                PlaceItems = new ObservableCollection<DishDTO>(place.Dishes);
+            }
+            else 
+            {
+                PlaceItems = new ObservableCollection<DishDTO>();
+            }
+
+            DishOrders = new ObservableCollection<DishOrderDTO>();
+
             AddCommand = new Command(Add, CanAdd);
             RemoveCommand = new Command(Remove, CanRemove);
             CreateOrderCommand = new Command(CreateOrder, CanCreateOrder);
-            Closing = new Command(Close);
+            ClosingCommand = new Command(Closing);
         }
 
         private string _placeName;
@@ -46,10 +63,10 @@ namespace DeliveryServiceWPF.ViewModel
         private DishDTO _selectedPlaceItem;
         private DishOrderDTO _selectedOrderItem;
 
-        public ICommand AddCommand;
-        public ICommand RemoveCommand;
-        public ICommand CreateOrderCommand;
-        public ICommand Closing;
+        public ICommand AddCommand { get; set; }
+        public ICommand RemoveCommand { get; set; }
+        public ICommand CreateOrderCommand { get; set; }
+        public ICommand ClosingCommand { get; set; }
 
         public string PlaceName
         {
@@ -111,7 +128,7 @@ namespace DeliveryServiceWPF.ViewModel
             }
         }
 
-        private void Close(object parameter)
+        private void Closing(object parameter)
         {
             _navigationService.ClosePlace(_placeId, _clientId, true);
         }
@@ -119,9 +136,11 @@ namespace DeliveryServiceWPF.ViewModel
         private void Add(object parameter)
         {
             var result = DishOrders.FirstOrDefault(i => i.DishId == SelectedPlaceItem.Id);
-            if (result == null)
+            if (result != null)
             {
                 result.Number = result.Number + 1;
+                DishOrders.Remove(result);
+                DishOrders.Add(result);
             }
             else
             {
@@ -153,7 +172,7 @@ namespace DeliveryServiceWPF.ViewModel
 
         private void CreateOrder(object parameter)
         {
-            var Order = new OrderDTO()
+            var order = new OrderDTO()
             {
                 PlaceId = _placeId,
                 ClientId = _clientId,
@@ -164,18 +183,20 @@ namespace DeliveryServiceWPF.ViewModel
 
             };
 
-            Order.DishOrders = new List<DishOrderDTO>();
+            order.DishOrders = new List<DishOrderDTO>();
             foreach(var item in DishOrders)
             {
-                Order.DishOrders.Add(item);
+                order.DishOrders.Add(item);
             }
+
+            _client.CreateOrder(order);
 
             _navigationService.ClosePlace(_placeId, _clientId);
         }
 
         private bool CanCreateOrder(object parameter)
         {
-            return DishOrders != null;
+            return DishOrders.Count != 0;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

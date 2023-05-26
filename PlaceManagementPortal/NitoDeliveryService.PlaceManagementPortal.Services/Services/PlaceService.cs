@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using NiteDeliveryService.Shared.DAL.Interfaces;
 using NitoDeliveryService.PlaceManagementPortal.Entities.Entities;
-using NitoDeliveryService.PlaceManagementPortal.Repositories;
 using NitoDeliveryService.PlaceManagementPortal.Repositories.Interfaces;
 using NitoDeliveryService.PlaceManagementPortal.Services.Interfaces;
 using NitoDeliveryService.Shared.Models.DTOs;
@@ -55,15 +54,26 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
             await _deliveryServiceHttpClient.CreatePlace(placeDTO);
         }
 
-        public async Task<PlaceDTO> GetPlace(int placeId = -1)
+        public async Task<PlaceDTO> GetPlace(int placeId)
         {
-            if (placeId == -1)
+            var entity = await _placeRepository.ReadWithIncludes(placeId);
+
+            if (entity == null)
             {
-                var metadata = await _auth0Client.GetMetadata();
-                placeId = metadata.PlaceId;
+                throw new Exception("Error getting place");
             }
 
-            var entity = await _placeRepository.ReadWithIncludesBySlotId(placeId);
+            var place = _mapper.Map<Place, PlaceDTO>(entity);
+
+            return place;
+        }
+
+        public async Task<PlaceDTO> GetPlace()
+        {
+            var metadata = await _auth0Client.GetMetadata();
+            var slotId = metadata.PlaceId;
+
+            var entity = await _placeRepository.ReadWithIncludesBySlotId(slotId);
 
             if (entity == null)
             {

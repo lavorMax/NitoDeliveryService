@@ -1,10 +1,12 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using NitoDeliveryService.Shared.Models.Models;
 using NitoDeliveryService.Shared.View.Models.DeliveryServicePortal;
 using NitoDeliveryService.Shared.View.Models.PlaceManagementPortal;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
+using System.Text;
 
 namespace DeliveryServiceWPF.HttpClients
 {
@@ -21,51 +23,118 @@ namespace DeliveryServiceWPF.HttpClients
             _httpClient = new HttpClient();
         }
 
-        public Task CreateOrder(OrderDTO order)
+        public void CreateOrder(OrderDTO order)
         {
-            SetupAuthHeader();
-            throw new System.NotImplementedException();
+            var data = JsonConvert.SerializeObject(order);
+
+            var content = new StringContent(data, Encoding.UTF8, "application/json");
+
+            var url = _deliverySerivePortalUrl + $"/order/create";
+            var response = _httpClient.PostAsync(url, content).Result;
         }
 
-        public Task<int> CreateUser(UserDto user)
+        public int CreateUser(UserDto user)
         {
-            SetupAuthHeader();
-            throw new System.NotImplementedException();
+            var data = JsonConvert.SerializeObject(user);
+
+            var content = new StringContent(data, Encoding.UTF8, "application/json");
+
+            var url = _deliverySerivePortalUrl + $"/user/create";
+            var response = _httpClient.PostAsync(url, content).Result;
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return -1;
+            }
+
+            var responseContent = response.Content.ReadAsStringAsync().Result;
+
+            return JsonConvert.DeserializeObject<int>(responseContent);
         }
 
-        public Task FinishOrder(int orderId)
+        public void FinishOrder(int orderId)
         {
-            throw new System.NotImplementedException();
+            var data = JsonConvert.SerializeObject(OrderStatuses.Finished);
+
+            var content = new StringContent(data, Encoding.UTF8, "application/json");
+
+            var url = _deliverySerivePortalUrl + $"/order/status/{orderId}";
+            var response = _httpClient.PutAsync(url, content).Result;
         }
 
-        public Task<List<OrderDTO>> GetAllOrders()
+        public List<OrderDTO> GetAllOrders(int userId)
         {
-            SetupAuthHeader();
-            throw new System.NotImplementedException();
+            var url = _deliverySerivePortalUrl + $"/order/getall/{userId}/true";
+            var response = _httpClient.GetAsync(url).Result;
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            var responseContent = response.Content.ReadAsStringAsync().Result;
+
+            return JsonConvert.DeserializeObject<List<OrderDTO>>(responseContent);
         }
 
-        public Task<List<PlaceDTO>> GetAllPlaces(string address)
+        public List<PlaceViewDTO> GetAllPlaces(string address)
         {
-            SetupAuthHeader();
-            throw new System.NotImplementedException();
+            var url = _deliverySerivePortalUrl + $"/PlaceView/getall/{address}";
+            var response = _httpClient.GetAsync(url).Result;
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return new List<PlaceViewDTO>();
+            }
+
+            var responseContent = response.Content.ReadAsStringAsync().Result;
+
+            return JsonConvert.DeserializeObject<List<PlaceViewDTO>>(responseContent);
         }
 
-        public Task<OrderDTO> GetOrder(int orderId)
+        public OrderDTO GetOrder(int orderId)
         {
-            SetupAuthHeader();
-            throw new System.NotImplementedException();
+            var url = _deliverySerivePortalUrl + $"/order/get/{orderId}";
+            var response = _httpClient.GetAsync(url).Result;
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            var responseContent = response.Content.ReadAsStringAsync().Result;
+
+            return JsonConvert.DeserializeObject<OrderDTO>(responseContent);
         }
 
-        public Task<PlaceDTO> GetPlace(int placeId, int clientId)
+        public PlaceDTO GetPlace(int placeId, int clientId)
         {
-            SetupAuthHeader();
-            throw new System.NotImplementedException();
+            var url = _deliverySerivePortalUrl + $"/PlaceView/get/{placeId}/{clientId}";
+            var response = _httpClient.GetAsync(url).Result;
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            var responseContent = response.Content.ReadAsStringAsync().Result;
+
+            return JsonConvert.DeserializeObject<PlaceDTO>(responseContent);
         }
 
-        public async Task<UserDto> GetUser(int userId)
+        public UserDto GetUser(string login)
         {
-            SetupAuthHeader();
-            throw new System.NotImplementedException();
+            var url = _deliverySerivePortalUrl + $"/user/get/{login}";
+            var response = _httpClient.GetAsync(url).Result;
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            var responseContent = response.Content.ReadAsStringAsync().Result;
+
+            return JsonConvert.DeserializeObject<UserDto>(responseContent);
         }
 
         public void SetupToken(string token)

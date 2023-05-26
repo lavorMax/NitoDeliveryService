@@ -9,6 +9,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Interfaces
         Task CreateNewPlace(InitializeSlotRequest place);
         Task RemovePlace(int placeId);
         Task UpdatePlace(PlaceDTO place);
-        Task<PlaceDTO> GetPlace(int placeId = -1);
+        Task<PlaceDTO> GetPlace(int placeId);
+        Task<PlaceDTO> GetPlace();
     }
 }

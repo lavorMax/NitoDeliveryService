@@ -44,7 +44,7 @@ namespace DeliveryServicePortal
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(auth0Options.ClientSecret))
                     };
                 });
-
+            services.AddSingleton(auth0Options);
 
 
             services.AddAuthentication("ClientCredentials")

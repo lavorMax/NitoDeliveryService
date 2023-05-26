@@ -81,7 +81,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.API.Controllers
         {
             try
             {
-                var result = await _orderService.GetActiveOrders();
+                var result = await _orderService.GetOrder(id);
                 return Ok(result);
             }
             catch (Exception e)

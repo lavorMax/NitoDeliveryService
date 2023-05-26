@@ -15,6 +15,8 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 {
     public class OrderService : IOrderService
     {
+        private const double EarthRadiusInMeters = 6371000;
+
         private readonly IPlaceManagementPortalHttpClient _placeManagerHttpClient;
         private readonly IOrderRepository _orderRepository;
         private readonly IPlaceViewRepository _placeViewRepository;
@@ -43,10 +45,11 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
             var paymentConfig = place.PaymentConfigurations.OrderBy(i => i.MaxRange).FirstOrDefault(i => distance < i.MaxRange);
 
-            order.DeliveryPrice = paymentConfig.Price;
+            orderEntity.DeliveryPrice = paymentConfig.Price;
+
 
             var result = await _orderRepository.Create(orderEntity);
-            if (result != null)
+            if (result == null)
             {
                 throw new Exception("Error creating order");
             }
@@ -113,7 +116,11 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
         private double GetDistance(double Latitude1, double Longitude1, double Latitude2, double Longitude2)
         {
-            return Math.Sqrt(Math.Pow(Latitude1 - Latitude2, 2) + Math.Pow(Longitude1 - Longitude2, 2));
+            return Math.Acos(
+                    Math.Sin(Latitude1 * Math.PI / 180) * Math.Sin(Latitude2 * Math.PI / 180) +
+                    Math.Cos(Latitude1 * Math.PI / 180) * Math.Cos(Latitude2 * Math.PI / 180) *
+                    Math.Cos(Longitude2 * Math.PI / 180 - Longitude1 * Math.PI / 180)
+                ) * EarthRadiusInMeters;
         }
     }
 }

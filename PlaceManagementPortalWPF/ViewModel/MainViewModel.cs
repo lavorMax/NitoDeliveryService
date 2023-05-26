@@ -2,10 +2,12 @@
 using NitoDeliveryService.Shared.View.Models.PlaceManagementPortal;
 using PlaceManagementPortalWPF.HttpClients;
 using PlaceManagementPortalWPF.Services;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace PlaceManagementPortalWPF.ViewModel
 {
@@ -45,11 +47,15 @@ namespace PlaceManagementPortalWPF.ViewModel
             get { return _selectedOrder; }
             set
             {
-                _navigationService.ShowOrder(value.Id);
+                if(value != null)
+                {
+                    _navigationService.ShowOrder(value.Id);
+                }
                 _selectedOrder = value;
                 OnPropertyChanged(nameof(SelectedOrder));
             }
         }
+        private DispatcherTimer _timer;
 
         public ICommand OpenConfigCommand { get; }
 
@@ -61,6 +67,11 @@ namespace PlaceManagementPortalWPF.ViewModel
             OpenConfigCommand = new Command(OpenConfigPage);
         }
 
+        private void TimerTick(object sender, EventArgs e)
+        {
+            ResetOrders();
+        }
+
         public void Initialize()
         {
             var place = _managementClient.GetPlaceByToken();
@@ -68,6 +79,16 @@ namespace PlaceManagementPortalWPF.ViewModel
             PlaceName = place.Name;
             _placeDTO = place;
 
+            ResetOrders();
+
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromSeconds(10);
+            _timer.Tick += TimerTick;
+            _timer.Start();
+        }
+
+        private void ResetOrders()
+        {
             var orders = _managementClient.GetAllOrders(_placeDTO.Id);
             Orders = new ObservableCollection<OrderDTO>(orders);
         }

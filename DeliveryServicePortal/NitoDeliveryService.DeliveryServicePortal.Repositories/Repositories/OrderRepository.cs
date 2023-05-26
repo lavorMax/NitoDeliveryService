@@ -19,7 +19,9 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Repositories
         public async Task<IEnumerable<Order>> GetOrdersByPlace(int clientId, int placeId, bool onlyActiveOrders = true)
         {
             var result = await _context.Set<Order>()
-                .Where(o => o.ClientId == clientId && o.PlaceId == placeId && onlyActiveOrders ? (o.OrderStatus != OrderStatuses.Finished || o.OrderStatus != OrderStatuses.Closed) : true)
+                .Where(o => o.ClientId == clientId 
+                    && o.PlaceId == placeId 
+                    && onlyActiveOrders ? (o.OrderStatus != OrderStatuses.Finished && o.OrderStatus != OrderStatuses.Closed) : true)
                 .ToListAsync();
 
             return result;
@@ -28,7 +30,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Repositories
         public async Task<IEnumerable<Order>> GetOrdersByUser(int userId, bool onlyActiveOrders = true)
         {
             var result = await _context.Set<Order>()
-                .Where(o => o.UserId == userId && onlyActiveOrders ? (o.OrderStatus != OrderStatuses.Finished || o.OrderStatus != OrderStatuses.Closed) : true)
+                .Where(o => o.UserId == userId && onlyActiveOrders ? (o.OrderStatus != OrderStatuses.Finished && o.OrderStatus != OrderStatuses.Closed) : true)
                 .ToListAsync();
 
             return result;
@@ -37,6 +39,8 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Repositories
         public async Task<Order> ReadWithIncludes(int orderId)
         {
             var result = await _context.Set<Order>()
+                .Include(o => o.User)
+                .Include(o => o.DishOrders)
                 .FirstOrDefaultAsync(o => o.Id == orderId);
 
             return result;

@@ -7,6 +7,6 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Interfaces
     {
         Task<int> CreateUser(UserDTO userDto);
         Task UpdateUser(UserDTO userDto);
-        Task<UserDTO> GetUser(int userId);
+        Task<UserDTO> GetUser(string userLogin);
     }
 }
