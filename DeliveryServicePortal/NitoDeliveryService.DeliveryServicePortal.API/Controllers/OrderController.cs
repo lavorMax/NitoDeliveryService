@@ -26,7 +26,7 @@ namespace NitoDeliveryService.DeliveryServicePortal.API.Controllers
         {
             try
             {
-                var result = await _orderService.GetOrdersByUser(userId, onlyActive);
+                var result = await _orderService.GetOrdersByUser(userId, onlyActive).ConfigureAwait(false);
                 return Ok(result);
             }
             catch (Exception e)
@@ -40,7 +40,7 @@ namespace NitoDeliveryService.DeliveryServicePortal.API.Controllers
         {
             try
             {
-                var result = await _orderService.GetOrder(orderId);
+                var result = await _orderService.GetOrder(orderId).ConfigureAwait(false);
                 return Ok(result);
             }
             catch (Exception e)
@@ -54,7 +54,7 @@ namespace NitoDeliveryService.DeliveryServicePortal.API.Controllers
         {
             try
             {
-                await _orderService.UpdateOrderStatus(orderId, status);
+                await _orderService.UpdateOrderStatus(orderId, status).ConfigureAwait(false);
                 return Ok();
             }
             catch (Exception e)
@@ -68,7 +68,7 @@ namespace NitoDeliveryService.DeliveryServicePortal.API.Controllers
         {
             try
             {
-                await _orderService.CreateOrder(request);
+                await _orderService.CreateOrder(request).ConfigureAwait(false);
                 return Ok();
             }
             catch (Exception e)

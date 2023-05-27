@@ -20,7 +20,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Infrastucture
 
         public async Task SaveAsync()
         {
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
         }
     }
 }

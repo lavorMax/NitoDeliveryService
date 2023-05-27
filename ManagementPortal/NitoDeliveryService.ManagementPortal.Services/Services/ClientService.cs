@@ -27,41 +27,36 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
 
         public async Task CreateNewClient(ClientDto client)
         {
-            try
+
+            var clientEntity = _mapper.Map<ClientDto, Client>(client);
+
+            var result = await _clientRepository.Create(clientEntity).ConfigureAwait(false);
+            if (result == null)
             {
-                var clientEntity = _mapper.Map<ClientDto, Client>(client);
-
-                var result = await _clientRepository.Create(clientEntity);
-                if (result == null)
-                {
-                    throw new Exception("Error crating client");
-                }
-
-                await _unitOfWork.SaveAsync();
-
-                await _clientDbService.CreateDb(result.Id);
-            }catch(Exception e)
-            {
-                throw;
+                throw new Exception("Error crating client");
             }
+
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
+
+            await _clientDbService.CreateDb(result.Id).ConfigureAwait(false);
         }
 
         public async Task RemoveClient(int id)
         {
-            await _clientDbService.RemoveDb(id);
+            await _clientDbService.RemoveDb(id).ConfigureAwait(false);
 
-            var result = await _clientRepository.Delete(id);
+            var result = await _clientRepository.Delete(id).ConfigureAwait(false);
             if (!result)
             {
                 throw new Exception("Error removing client");
             }
 
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<ClientDto>> ReadAllClients()
         {
-            var allClientsEntities = await _clientRepository.GetAll();
+            var allClientsEntities = await _clientRepository.GetAll().ConfigureAwait(false);
 
             var result = _mapper.Map<IEnumerable<Client>, IEnumerable<ClientDto>>(allClientsEntities);
 
@@ -70,7 +65,7 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
 
         public async Task<ClientDto> ReadFullClientById(int id)
         {
-            var clientEntity = await _clientRepository.ReadWithIncludes(id);
+            var clientEntity = await _clientRepository.ReadWithIncludes(id).ConfigureAwait(false);
 
             var result = _mapper.Map<Client, ClientDto>(clientEntity);
 
@@ -81,14 +76,14 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
         {
             var clientEntity = _mapper.Map<ClientDto, Client>(client);
 
-            var result = await _clientRepository.Update(clientEntity);
+            var result = await _clientRepository.Update(clientEntity).ConfigureAwait(false);
 
             if (!result)
             {
                 throw new Exception("Error updating client");
             }
 
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
         }
     }
 }

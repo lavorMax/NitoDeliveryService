@@ -33,7 +33,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.API.Controllers
                     factory.OverrideClientId(clientId);
 
                     var placeService = scope.ServiceProvider.GetRequiredService<IPlaceService>();
-                    await placeService.CreateNewPlace(request);
+                    await placeService.CreateNewPlace(request).ConfigureAwait(false);
                 }
                 return Ok();
             }
@@ -54,7 +54,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.API.Controllers
                     factory.OverrideClientId(clientId);
 
                     var placeService = scope.ServiceProvider.GetRequiredService<IPlaceService>();
-                    await placeService.RemovePlace(slotId);
+                    await placeService.RemovePlace(slotId).ConfigureAwait(false);
                 }
                 return Ok();
             }

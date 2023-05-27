@@ -27,7 +27,7 @@ namespace NitoDeliveryService.DeliveryServicePortal.Services.HttpClients
 
         public async Task CreateUser(UserDTO user)
         {
-            await EnsureAccessToken();
+            await EnsureAccessToken().ConfigureAwait(false);
             var content = new StringContent(JsonConvert.SerializeObject(new
             {
                 email = user.Email,
@@ -39,18 +39,18 @@ namespace NitoDeliveryService.DeliveryServicePortal.Services.HttpClients
                 }
             }), Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync($"/api/v2/users", content);
+            var response = await _httpClient.PostAsync($"/api/v2/users", content).ConfigureAwait(false);
 
             if (!response.IsSuccessStatusCode)
             {
-                var errorResponse = await response.Content.ReadAsStringAsync();
+                var errorResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 throw new Exception($"Failed to create user. Status code: {response.StatusCode}. Error response: {errorResponse}");
             }
         }
 
         private async Task EnsureAccessToken()
         {
-            var token = await GetClientCredentialsToken();
+            var token = await GetClientCredentialsToken().ConfigureAwait(false);
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
 
@@ -68,10 +68,10 @@ namespace NitoDeliveryService.DeliveryServicePortal.Services.HttpClients
 
             request.Content = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.SendAsync(request);
+            var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             dynamic tokenResponse = JsonConvert.DeserializeObject(responseContent);
 
             return tokenResponse.access_token;

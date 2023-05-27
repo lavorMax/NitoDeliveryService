@@ -30,16 +30,16 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Infrastucture
 
         public async Task<UserMetadata> GetMetadata()
         {
-            await EnsureAccessToken();
+            await EnsureAccessToken().ConfigureAwait(false);
 
             var userId = _tokenParser.GetUserId();
             var apiUrl = $"https://{_options.Domain}api/v2/users/{userId}";
 
-            var response = await _httpClient.GetAsync(apiUrl);
+            var response = await _httpClient.GetAsync(apiUrl).ConfigureAwait(false);
 
             if (response.IsSuccessStatusCode)
             {
-                var responseData = await response.Content.ReadAsStringAsync();
+                var responseData = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                 var jsonObject = JsonConvert.DeserializeObject<dynamic>(responseData);
 
@@ -62,7 +62,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Infrastucture
 
         private async Task EnsureAccessToken()
         {
-            var token = await GetClientCredentialsToken();
+            var token = await GetClientCredentialsToken().ConfigureAwait(false);
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
 
@@ -80,10 +80,10 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Infrastucture
 
             request.Content = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.SendAsync(request);
+            var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             dynamic tokenResponse = JsonConvert.DeserializeObject(responseContent);
 
             return tokenResponse.access_token;

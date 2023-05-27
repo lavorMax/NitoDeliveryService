@@ -28,7 +28,7 @@ namespace NitoDeliveryService.DeliveryServicePortal.API.Controllers
         {
             try
             {
-                var result = await _orderService.GetOrdersByPlace(clientId, placeId, onlyActive);
+                var result = await _orderService.GetOrdersByPlace(clientId, placeId, onlyActive).ConfigureAwait(false);
                 return Ok(result);
             }
             catch (Exception e)
@@ -42,7 +42,7 @@ namespace NitoDeliveryService.DeliveryServicePortal.API.Controllers
         {
             try
             {
-                await _placeService.CreatePlaceView(request);
+                await _placeService.CreatePlaceView(request).ConfigureAwait(false);
                 return Ok();
             }
             catch (Exception e)
@@ -56,7 +56,7 @@ namespace NitoDeliveryService.DeliveryServicePortal.API.Controllers
         {
             try
             {
-                await _placeService.UpdatePlaceView(request);
+                await _placeService.UpdatePlaceView(request).ConfigureAwait(false);
                 return Ok();
             }
             catch (Exception e)
@@ -70,7 +70,7 @@ namespace NitoDeliveryService.DeliveryServicePortal.API.Controllers
         {
             try
             {
-                await _placeService.DeletePlaceView(placeId, clientId);
+                await _placeService.DeletePlaceView(placeId, clientId).ConfigureAwait(false);
                 return Ok();
             }
             catch (Exception e)
@@ -84,7 +84,7 @@ namespace NitoDeliveryService.DeliveryServicePortal.API.Controllers
         {
             try
             {
-                await _orderService.UpdateOrderStatus(orderId, status);
+                await _orderService.UpdateOrderStatus(orderId, status).ConfigureAwait(false);
                 return Ok();
             }
             catch (Exception e)
@@ -98,7 +98,7 @@ namespace NitoDeliveryService.DeliveryServicePortal.API.Controllers
         {
             try
             {
-                var result = await _orderService.GetOrder(id);
+                var result = await _orderService.GetOrder(id).ConfigureAwait(false);
                 return Ok(result);
             }
             catch (Exception e)

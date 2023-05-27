@@ -26,26 +26,26 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
         {
             var dishEntity = _mapper.Map<DishDTO, Dish>(dish);
 
-            var result = await _dishRepository.Create(dishEntity);
+            var result = await _dishRepository.Create(dishEntity).ConfigureAwait(false);
 
             if (result == null)
             {
                 throw new Exception("Error creating dish");
             }
 
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
         }
 
         public async Task RemoveDish(int dishId)
         {
-            var result = await _dishRepository.Delete(dishId);
+            var result = await _dishRepository.Delete(dishId).ConfigureAwait(false);
 
             if (!result)
             {
                 throw new Exception("Error removing dish");
             }
 
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
         }
     }
 }

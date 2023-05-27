@@ -24,7 +24,7 @@ namespace NitoDeliveryService.DeliveryServicePortal.API.Controllers
         {
             try
             {
-                var result = await _userService.GetUser(login);
+                var result = await _userService.GetUser(login).ConfigureAwait(false);
                 return Ok(result);
             }
             catch (Exception e)
@@ -39,7 +39,7 @@ namespace NitoDeliveryService.DeliveryServicePortal.API.Controllers
         {
             try
             {
-                var id = await _userService.CreateUser(request);
+                var id = await _userService.CreateUser(request).ConfigureAwait(false);
                 return Ok(id);
             }
             catch (Exception e)

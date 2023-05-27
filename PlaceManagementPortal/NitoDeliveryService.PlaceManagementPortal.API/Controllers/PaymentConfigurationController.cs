@@ -24,7 +24,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.API.Controllers
         {
             try
             {
-                await _paymentConfigurationService.CreateNewConfiguration(config);
+                await _paymentConfigurationService.CreateNewConfiguration(config).ConfigureAwait(false);
                 return Ok();
             }
             catch (Exception e)
@@ -38,7 +38,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.API.Controllers
         {
             try
             {
-                await _paymentConfigurationService.RemoveConfiguration(id);
+                await _paymentConfigurationService.RemoveConfiguration(id).ConfigureAwait(false);
                 return Ok();
             }
             catch (Exception e)

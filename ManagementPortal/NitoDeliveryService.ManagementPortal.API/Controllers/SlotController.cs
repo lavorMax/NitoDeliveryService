@@ -25,7 +25,7 @@ namespace NitoDelivery.ClientManager.API.Controllers
         {
             try
             {
-                await _slotService.CreateSlots(clientId, number);
+                await _slotService.CreateSlots(clientId, number).ConfigureAwait(false);
                 return Ok();
             }
             catch (Exception e)
@@ -39,7 +39,7 @@ namespace NitoDelivery.ClientManager.API.Controllers
         {
             try
             {
-                await _slotService.RemoveSlots(id);
+                await _slotService.RemoveSlots(id).ConfigureAwait(false);
                 return Ok();
             }
             catch (Exception e)
@@ -53,7 +53,7 @@ namespace NitoDelivery.ClientManager.API.Controllers
         {
             try
             {
-                var credentials = await _slotService.InitializeSlot(request);
+                var credentials = await _slotService.InitializeSlot(request).ConfigureAwait(false);
                 return Ok(credentials);
             }
             catch (Exception e)
@@ -67,7 +67,7 @@ namespace NitoDelivery.ClientManager.API.Controllers
         {
             try
             {
-                await _slotService.DeinitializeSlot(id);
+                await _slotService.DeinitializeSlot(id).ConfigureAwait(false);
                 return Ok();
             }
             catch (Exception e)
@@ -81,7 +81,7 @@ namespace NitoDelivery.ClientManager.API.Controllers
         {
             try
             {
-                var credentials = await _slotService.GetCredentials(id);
+                var credentials = await _slotService.GetCredentials(id).ConfigureAwait(false);
                 return Ok(credentials);
             }
             catch (Exception e)

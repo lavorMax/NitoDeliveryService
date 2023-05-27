@@ -30,7 +30,7 @@ namespace NitoDeliveryService.ManagementPortal.Services.HttpClients
 
         public async Task<Auth0CredentialsResponse> CreateUser(string email, int clientId, int slotId)
         {
-            await EnsureAccessToken();
+            await EnsureAccessToken().ConfigureAwait(false);
             var password = GenerateRandomPassword();
             var content = new StringContent(JsonConvert.SerializeObject(new
             {
@@ -44,11 +44,11 @@ namespace NitoDeliveryService.ManagementPortal.Services.HttpClients
                 }
             }), Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync($"/api/v2/users", content);
+            var response = await _httpClient.PostAsync($"/api/v2/users", content).ConfigureAwait(false);
 
             if (!response.IsSuccessStatusCode)
             {
-                var errorResponse = await response.Content.ReadAsStringAsync();
+                var errorResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 throw new Exception($"Failed to create user. Status code: {response.StatusCode}. Error response: {errorResponse}");
             }
 
@@ -61,22 +61,22 @@ namespace NitoDeliveryService.ManagementPortal.Services.HttpClients
 
         private async Task EnsureAccessToken()
         {
-            var token = await GetClientCredentialsToken();
+            var token = await GetClientCredentialsToken().ConfigureAwait(false);
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
 
         public async Task DeleteUser(string username)
         {
-            await EnsureAccessToken();
+            await EnsureAccessToken().ConfigureAwait(false);
 
-            var usersResponse = await _httpClient.GetAsync($"/api/v2/users?q=name:{Uri.EscapeDataString(username)}");
+            var usersResponse = await _httpClient.GetAsync($"/api/v2/users?q=name:{Uri.EscapeDataString(username)}").ConfigureAwait(false);
             if (!usersResponse.IsSuccessStatusCode)
             {
-                var errorResponse = await usersResponse.Content.ReadAsStringAsync();
+                var errorResponse = await usersResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 throw new Exception($"Failed to retrieve user. Status code: {usersResponse.StatusCode}. Error response: {errorResponse}");
             }
 
-            var users = await usersResponse.Content.ReadFromJsonAsync<IEnumerable<dynamic>>();
+            var users = await usersResponse.Content.ReadFromJsonAsync<IEnumerable<dynamic>>().ConfigureAwait(false);
             var user = users.FirstOrDefault();
 
             if (user is null)
@@ -92,16 +92,16 @@ namespace NitoDeliveryService.ManagementPortal.Services.HttpClients
                 throw new Exception($"User ID not found for username: {username}");
             }
             
-            var response = await _httpClient.DeleteAsync($"/api/v2/users/{Uri.EscapeDataString(userId)}");
+            var response = await _httpClient.DeleteAsync($"/api/v2/users/{Uri.EscapeDataString(userId)}").ConfigureAwait(false);
 
             if (!response.IsSuccessStatusCode)
             {
-                var errorResponse = await response.Content.ReadAsStringAsync();
+                var errorResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 throw new Exception($"Failed to delete user. Status code: {response.StatusCode}. Error response: {errorResponse}");
             }
         }
 
-        private string GenerateRandomPassword()
+        private static string GenerateRandomPassword()
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+";
             var random = new Random();
@@ -127,10 +127,10 @@ namespace NitoDeliveryService.ManagementPortal.Services.HttpClients
 
             request.Content = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.SendAsync(request);
+            var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             dynamic tokenResponse = JsonConvert.DeserializeObject(responseContent);
 
             return tokenResponse.access_token;

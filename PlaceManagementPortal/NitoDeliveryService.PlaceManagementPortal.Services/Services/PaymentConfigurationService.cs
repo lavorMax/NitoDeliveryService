@@ -36,43 +36,43 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
             var placeIdToUpdate = configurationEntity.PlaceId;
 
-            var result = await _paymentConfigurationRepository.Create(configurationEntity);
+            var result = await _paymentConfigurationRepository.Create(configurationEntity).ConfigureAwait(false);
 
             if (result == null)
             {
                 throw new Exception("Error creating payment configuration");
             }
 
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
 
-            await UpdatePlaceOnDeliveryPortal(placeIdToUpdate);
+            await UpdatePlaceOnDeliveryPortal(placeIdToUpdate).ConfigureAwait(false);
         }
 
         public async Task RemoveConfiguration(int configurationId)
         {
-            var configuration = await _paymentConfigurationRepository.Read(configurationId);
+            var configuration = await _paymentConfigurationRepository.Read(configurationId).ConfigureAwait(false);
 
             var placeIdToUpdate = configuration.PlaceId;
 
-            var result = await _paymentConfigurationRepository.Delete(configurationId);
+            var result = await _paymentConfigurationRepository.Delete(configurationId).ConfigureAwait(false);
 
             if (!result)
             {
                 throw new Exception("Error removing payment configuration");
             }
 
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
 
-            await UpdatePlaceOnDeliveryPortal(placeIdToUpdate);
+            await UpdatePlaceOnDeliveryPortal(placeIdToUpdate).ConfigureAwait(false);
         }
 
         private async Task UpdatePlaceOnDeliveryPortal(int placeId)
         {
-            var placeToUpdate = await _placeRepository.ReadWithIncludes(placeId);
+            var placeToUpdate = await _placeRepository.ReadWithIncludes(placeId).ConfigureAwait(false);
 
             var placeDto = _mapper.Map<Place, PlaceDTO>(placeToUpdate);
 
-            await _deliveryServiceHttpClient.UpdatePlace(placeDto);
+            await _deliveryServiceHttpClient.UpdatePlace(placeDto).ConfigureAwait(false);
         }
     }
 }

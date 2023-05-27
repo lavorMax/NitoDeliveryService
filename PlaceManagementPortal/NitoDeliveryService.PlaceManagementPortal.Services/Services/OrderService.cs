@@ -23,26 +23,26 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
         public async Task ChangeStatusToClosed(int orderId)
         {
-            await _deliveryServiceHttpClient.ChangeStatus(orderId, OrderStatuses.Closed);
+            await _deliveryServiceHttpClient.ChangeStatus(orderId, OrderStatuses.Closed).ConfigureAwait(false);
         }
 
         public async Task ChangeStatusToDelivering(int orderId)
         {
-            await _deliveryServiceHttpClient.ChangeStatus(orderId, OrderStatuses.Delivering);
+            await _deliveryServiceHttpClient.ChangeStatus(orderId, OrderStatuses.Delivering).ConfigureAwait(false);
         }
 
         public async Task ChangeStatusToPrepearing(int orderId)
         {
-            await _deliveryServiceHttpClient.ChangeStatus(orderId, OrderStatuses.Prepearing);
+            await _deliveryServiceHttpClient.ChangeStatus(orderId, OrderStatuses.Prepearing).ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<OrderDTO>> GetActiveOrders()
         {
-            var userMetadata = await _auth0Client.GetMetadata();
+            var userMetadata = await _auth0Client.GetMetadata().ConfigureAwait(false);
 
-            var place = await _placeRepository.ReadWithIncludesBySlotId(userMetadata.PlaceId);
+            var place = await _placeRepository.ReadWithIncludesBySlotId(userMetadata.PlaceId).ConfigureAwait(false);
 
-            var activeOrders = await _deliveryServiceHttpClient.GetOrders(place.Id, userMetadata.ClientId, true);
+            var activeOrders = await _deliveryServiceHttpClient.GetOrders(place.Id, userMetadata.ClientId, true).ConfigureAwait(false);
 
             if(activeOrders == null)
             {
@@ -54,7 +54,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
         public async Task<OrderDTO> GetOrder(int orderId)
         {
-            var activeOrder = await _deliveryServiceHttpClient.GetOrder(orderId);
+            var activeOrder = await _deliveryServiceHttpClient.GetOrder(orderId).ConfigureAwait(false);
 
             if (activeOrder == null)
             {

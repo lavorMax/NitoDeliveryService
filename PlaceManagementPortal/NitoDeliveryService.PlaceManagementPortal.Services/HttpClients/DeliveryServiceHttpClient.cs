@@ -29,7 +29,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.HttpClients
 
         public async Task ChangeStatus(int orderId, OrderStatuses status)
         {
-            await EnsureAccessToken();
+            await EnsureAccessToken().ConfigureAwait(false);
 
             var data = JsonConvert.SerializeObject(status);
 
@@ -39,7 +39,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.HttpClients
 
             url += $"/{orderId}";
 
-            var response = await _httpClient.PutAsync(url, content);
+            var response = await _httpClient.PutAsync(url, content).ConfigureAwait(false);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -49,7 +49,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.HttpClients
 
         public async Task CreatePlace(PlaceDTO place)
         {
-            await EnsureAccessToken();
+            await EnsureAccessToken().ConfigureAwait(false);
 
             var data = JsonConvert.SerializeObject(place);
 
@@ -57,7 +57,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.HttpClients
 
             var url = BuildUrl(_options.CreatePlaceEndpoint);
 
-            var response = await _httpClient.PostAsync(url, content);
+            var response = await _httpClient.PostAsync(url, content).ConfigureAwait(false);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -67,11 +67,11 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.HttpClients
 
         public async Task DeletePlace(int placeId, int clientId)
         {
-            await EnsureAccessToken();
+            await EnsureAccessToken().ConfigureAwait(false);
 
             var url = BuildUrl(_options.DeletePlaceEndpoint)+$"/{placeId}/{clientId}";
 
-            var response = await _httpClient.DeleteAsync(url);
+            var response = await _httpClient.DeleteAsync(url).ConfigureAwait(false);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -81,17 +81,17 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.HttpClients
 
         public async Task<OrderDTO> GetOrder(int orderId)
         {
-            await EnsureAccessToken();
+            await EnsureAccessToken().ConfigureAwait(false);
 
             var url = BuildUrl(_options.GetOrderEndpoint);
 
             url += $"/{orderId}";
 
-            var response = await _httpClient.GetAsync(url);
+            var response = await _httpClient.GetAsync(url).ConfigureAwait(false);
 
             if (response.IsSuccessStatusCode)
             {
-                var responseContent = await response.Content.ReadAsStringAsync();
+                var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                 return JsonConvert.DeserializeObject<OrderDTO>(responseContent);
             }
@@ -103,17 +103,17 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.HttpClients
 
         public async Task<IEnumerable<OrderDTO>> GetOrders(int placeId, int clientId, bool onlyActive = true)
         {
-            await EnsureAccessToken();
+            await EnsureAccessToken().ConfigureAwait(false);
 
             var url = BuildUrl(_options.GetOrdersEndpoint);
 
             url += $"/{placeId}/{clientId}/{onlyActive}";
 
-            var response = await _httpClient.GetAsync(url);
+            var response = await _httpClient.GetAsync(url).ConfigureAwait(false);
 
             if (response.IsSuccessStatusCode)
             {
-                var responseContent = await response.Content.ReadAsStringAsync();
+                var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                 return JsonConvert.DeserializeObject<IEnumerable<OrderDTO>>(responseContent);
             }
@@ -125,7 +125,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.HttpClients
 
         public async Task UpdatePlace(PlaceDTO place)
         {
-            await EnsureAccessToken();
+            await EnsureAccessToken().ConfigureAwait(false);
 
             var data = JsonConvert.SerializeObject(place);
 
@@ -133,7 +133,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.HttpClients
 
             var url = BuildUrl(_options.UpdatePlaceEndpoint);
 
-            var response = await _httpClient.PutAsync(url, content);
+            var response = await _httpClient.PutAsync(url, content).ConfigureAwait(false);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -152,7 +152,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.HttpClients
 
         private async Task EnsureAccessToken()
         {
-            var token = await GetClientCredentialsToken();
+            var token = await GetClientCredentialsToken().ConfigureAwait(false);
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
 
@@ -170,10 +170,10 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.HttpClients
 
             request.Content = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.SendAsync(request);
+            var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             dynamic tokenResponse = JsonConvert.DeserializeObject(responseContent);
 
             return tokenResponse.access_token;

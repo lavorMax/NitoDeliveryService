@@ -22,7 +22,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Repositories
                 .Where(o => o.ClientId == clientId 
                     && o.PlaceId == placeId 
                     && onlyActiveOrders ? (o.OrderStatus != OrderStatuses.Finished && o.OrderStatus != OrderStatuses.Closed) : true)
-                .ToListAsync();
+                .ToListAsync().ConfigureAwait(false);
 
             return result;
         }
@@ -31,7 +31,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Repositories
         {
             var result = await _context.Set<Order>()
                 .Where(o => o.UserId == userId && onlyActiveOrders ? (o.OrderStatus != OrderStatuses.Finished && o.OrderStatus != OrderStatuses.Closed) : true)
-                .ToListAsync();
+                .ToListAsync().ConfigureAwait(false);
 
             return result;
         }
@@ -41,7 +41,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Repositories
             var result = await _context.Set<Order>()
                 .Include(o => o.User)
                 .Include(o => o.DishOrders)
-                .FirstOrDefaultAsync(o => o.Id == orderId);
+                .FirstOrDefaultAsync(o => o.Id == orderId).ConfigureAwait(false);
 
             return result;
         }

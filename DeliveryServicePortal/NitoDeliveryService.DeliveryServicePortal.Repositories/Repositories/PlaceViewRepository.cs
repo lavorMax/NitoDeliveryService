@@ -25,14 +25,17 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Repositories
                     Math.Cos(Latitude * Math.PI / 180) * Math.Cos(p.Latitude * Math.PI / 180) *
                     Math.Cos(p.Longitude * Math.PI / 180 - Longitude * Math.PI / 180)
                 ) * EarthRadiusInMeters <= p.DeliveryRange && !p.Deleted)
-                .ToListAsync();
+                .ToListAsync().ConfigureAwait(false);
 
             return result;
         }
 
         public async Task<PlaceView> ReadByPlaceAndClientId(int clientId, int placeId)
         {
-            var result = await _context.Set<PlaceView>().Where(p => p.ClientId == clientId && p.PlaceId == placeId).FirstOrDefaultAsync();
+            var result = await _context.Set<PlaceView>()
+                .Where(p => p.ClientId == clientId && p.PlaceId == placeId)
+                .FirstOrDefaultAsync()
+                .ConfigureAwait(false);
 
             return result;
         }
