@@ -6,6 +6,7 @@ using NitoDeliveryService.PlaceManagementPortal.Models.DTOs;
 using NitoDeliveryService.PlaceManagementPortal.Repositories.Interfaces;
 using NitoDeliveryService.PlaceManagementPortal.Services.Interfaces;
 using System;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
@@ -32,7 +33,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
             var result = await _userRepository.Create(userEntity).ConfigureAwait(false);
             if (result == null)
             {
-                throw new Exception("Error creating user");
+                throw new ExternalException("Error creating user");
             }
 
             await _unitOfWork.SaveAsync().ConfigureAwait(false);
@@ -60,7 +61,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
             var result = await _userRepository.Update(userEntity).ConfigureAwait(false);
             if (!result)
             {
-                throw new Exception("Error updating user");
+                throw new ExternalException("Error updating user");
             }
 
             await _unitOfWork.SaveAsync().ConfigureAwait(false);

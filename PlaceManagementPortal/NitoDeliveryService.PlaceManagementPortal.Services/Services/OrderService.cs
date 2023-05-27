@@ -2,8 +2,8 @@
 using NitoDeliveryService.PlaceManagementPortal.Services.Interfaces;
 using NitoDeliveryService.Shared.Models.Models;
 using NitoDeliveryService.Shared.Models.PlaceDTOs;
-using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
@@ -46,7 +46,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
             if(activeOrders == null)
             {
-                throw new Exception("Error getting active orders");
+                throw new ExternalException("Error getting active orders");
             }
 
             return activeOrders;
@@ -58,7 +58,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
             if (activeOrder == null)
             {
-                throw new Exception("Error getting order");
+                throw new ExternalException("Error getting order");
             }
 
             return activeOrder;

@@ -6,6 +6,7 @@ using NitoDeliveryService.ManagementPortal.Repositories.RepositoriesInterfaces;
 using NitoDeliveryService.ManagementPortal.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace NitoDeliveryService.ManagementPortal.Services.Services
@@ -33,7 +34,7 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
             var result = await _clientRepository.Create(clientEntity).ConfigureAwait(false);
             if (result == null)
             {
-                throw new Exception("Error crating client");
+                throw new ExternalException("Error crating client");
             }
 
             await _unitOfWork.SaveAsync().ConfigureAwait(false);
@@ -48,7 +49,7 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
             var result = await _clientRepository.Delete(id).ConfigureAwait(false);
             if (!result)
             {
-                throw new Exception("Error removing client");
+                throw new ExternalException("Error removing client");
             }
 
             await _unitOfWork.SaveAsync().ConfigureAwait(false);
@@ -80,7 +81,7 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
 
             if (!result)
             {
-                throw new Exception("Error updating client");
+                throw new ExternalException("Error updating client");
             }
 
             await _unitOfWork.SaveAsync().ConfigureAwait(false);

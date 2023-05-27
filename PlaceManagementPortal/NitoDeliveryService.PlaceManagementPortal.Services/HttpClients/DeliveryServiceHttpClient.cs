@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -43,7 +44,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.HttpClients
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new Exception($"Error occurred while calling the CreatePlace endpoint. StatusCode={response.StatusCode}");
+                throw new ExternalException($"Error occurred while calling the CreatePlace endpoint. StatusCode={response.StatusCode}");
             }
         }
 
@@ -61,7 +62,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.HttpClients
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new Exception($"Error occurred while calling the CreatePlace endpoint. StatusCode={response.StatusCode}");
+                throw new ExternalException($"Error occurred while calling the CreatePlace endpoint. StatusCode={response.StatusCode}");
             }
         }
 
@@ -75,7 +76,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.HttpClients
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new Exception($"Error occurred while calling the DeletePlace endpoint. StatusCode={response.StatusCode}");
+                throw new ExternalException($"Error occurred while calling the DeletePlace endpoint. StatusCode={response.StatusCode}");
             }
         }
 
@@ -97,7 +98,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.HttpClients
             }
             else
             {
-                throw new Exception($"Error occurred while calling the GetOrder endpoint. StatusCode={response.StatusCode}");
+                throw new ExternalException($"Error occurred while calling the GetOrder endpoint. StatusCode={response.StatusCode}");
             }
         }
 
@@ -119,7 +120,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.HttpClients
             }
             else
             {
-                throw new Exception($"Error occurred while calling the GetOrders endpoint. StatusCode={response.StatusCode}");
+                throw new ExternalException($"Error occurred while calling the GetOrders endpoint. StatusCode={response.StatusCode}");
             }
         }
 
@@ -137,7 +138,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.HttpClients
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new Exception($"Error occurred while calling the CreatePlace endpoint. StatusCode={response.StatusCode}");
+                throw new ExternalException($"Error occurred while calling the CreatePlace endpoint. StatusCode={response.StatusCode}");
             }
         }
 

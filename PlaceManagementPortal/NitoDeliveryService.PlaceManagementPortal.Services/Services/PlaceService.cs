@@ -5,7 +5,7 @@ using NitoDeliveryService.PlaceManagementPortal.Repositories.Interfaces;
 using NitoDeliveryService.PlaceManagementPortal.Services.Interfaces;
 using NitoDeliveryService.Shared.Models.DTOs;
 using NitoDeliveryService.Shared.Models.PlaceDTOs;
-using System;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
@@ -44,7 +44,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
             if (result == null)
             {
-                throw new Exception("Error creating place");
+                throw new ExternalException("Error creating place");
             }
 
             await _unitOfWork.SaveAsync().ConfigureAwait(false);
@@ -60,7 +60,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
             if (entity == null)
             {
-                throw new Exception("Error getting place");
+                throw new ExternalException("Error getting place");
             }
 
             var place = _mapper.Map<Place, PlaceDTO>(entity);
@@ -77,7 +77,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
             if (entity == null)
             {
-                throw new Exception("Error getting place");
+                throw new ExternalException("Error getting place");
             }
 
             var place = _mapper.Map<Place, PlaceDTO>(entity);
@@ -93,7 +93,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
             if (!result)
             {
-                throw new Exception("Error removing place");
+                throw new ExternalException("Error removing place");
             }
 
             await _deliveryServiceHttpClient.DeletePlace(place.Id, place.ClientId).ConfigureAwait(false);
@@ -109,7 +109,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
             if (!result)
             {
-                throw new Exception("Error updatng place");
+                throw new ExternalException("Error updatng place");
             }
 
             await _deliveryServiceHttpClient.UpdatePlace(place).ConfigureAwait(false);

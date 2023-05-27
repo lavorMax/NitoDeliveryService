@@ -4,7 +4,7 @@ using NitoDeliveryService.PlaceManagementPortal.Entities.Entities;
 using NitoDeliveryService.PlaceManagementPortal.Repositories.Interfaces;
 using NitoDeliveryService.PlaceManagementPortal.Services.Interfaces;
 using NitoDeliveryService.Shared.Models.PlaceDTOs;
-using System;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
@@ -30,7 +30,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
             if (result == null)
             {
-                throw new Exception("Error creating dish");
+                throw new ExternalException("Error creating dish");
             }
 
             await _unitOfWork.SaveAsync().ConfigureAwait(false);
@@ -42,7 +42,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
             if (!result)
             {
-                throw new Exception("Error removing dish");
+                throw new ExternalException("Error removing dish");
             }
 
             await _unitOfWork.SaveAsync().ConfigureAwait(false);

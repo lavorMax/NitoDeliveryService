@@ -5,6 +5,7 @@ using NitoDeliveryService.PlaceManagementPortal.Models.DTOs;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -44,7 +45,7 @@ namespace NitoDeliveryService.DeliveryServicePortal.Services.HttpClients
             if (!response.IsSuccessStatusCode)
             {
                 var errorResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                throw new Exception($"Failed to create user. Status code: {response.StatusCode}. Error response: {errorResponse}");
+                throw new ExternalException($"Failed to create user. Status code: {response.StatusCode}. Error response: {errorResponse}");
             }
         }
 

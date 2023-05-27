@@ -9,6 +9,7 @@ using NitoDeliveryService.Shared.Models.PlaceDTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
@@ -43,7 +44,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
             if (result == null)
             {
-                throw new Exception("Error creating place");
+                throw new ExternalException("Error creating place");
             }
 
             await _unitOfWork.SaveAsync().ConfigureAwait(false);
@@ -55,7 +56,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
             if(result == null)
             {
-                throw new Exception("Error getting place");
+                throw new ExternalException("Error getting place");
             }
 
             return result;
@@ -100,7 +101,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
             if (!result)
             {
-                throw new Exception("Error updating place");
+                throw new ExternalException("Error updating place");
             }
 
             await _unitOfWork.SaveAsync().ConfigureAwait(false);
@@ -116,7 +117,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
             if (!result)
             {
-                throw new Exception("Error updating place");
+                throw new ExternalException("Error updating place");
             }
 
             await _unitOfWork.SaveAsync().ConfigureAwait(false);
