@@ -25,7 +25,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.API.Controllers
         {
             try
             {
-                await _orderService.ChangeStatusToClosed(id);
+                await _orderService.ChangeStatusToClosed(id).ConfigureAwait(false);
                 return Ok();
             }
             catch (Exception e)
@@ -39,7 +39,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.API.Controllers
         {
             try
             {
-                await _orderService.ChangeStatusToDelivering(id);
+                await _orderService.ChangeStatusToDelivering(id).ConfigureAwait(false);
                 return Ok();
             }
             catch (Exception e)
@@ -53,7 +53,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.API.Controllers
         {
             try
             {
-                await _orderService.ChangeStatusToPrepearing(id);
+                await _orderService.ChangeStatusToPrepearing(id).ConfigureAwait(false);
                 return Ok();
             }
             catch (Exception e)
@@ -67,7 +67,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.API.Controllers
         {
             try
             {
-                var result = await _orderService.GetActiveOrders();
+                var result = await _orderService.GetActiveOrders().ConfigureAwait(false);
                 return Ok(result);
             }
             catch (Exception e)
@@ -81,7 +81,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.API.Controllers
         {
             try
             {
-                var result = await _orderService.GetOrder(id);
+                var result = await _orderService.GetOrder(id).ConfigureAwait(false);
                 return Ok(result);
             }
             catch (Exception e)

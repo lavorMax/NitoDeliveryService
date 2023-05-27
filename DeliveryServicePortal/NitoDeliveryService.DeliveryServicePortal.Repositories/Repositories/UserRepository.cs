@@ -16,7 +16,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Repositories
         public async Task<User> ReadByLogin(string login)
         {
             var result = await _context.Set<User>()
-                .FirstOrDefaultAsync(i => i.Email == login);
+                .FirstOrDefaultAsync(i => i.Email == login).ConfigureAwait(false);
 
             return result;
         }

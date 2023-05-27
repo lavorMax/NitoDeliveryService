@@ -34,21 +34,21 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
                     ClientId = clientId
                 };
 
-                var result = await _slotRepository.Create(slot);
+                var result = await _slotRepository.Create(slot).ConfigureAwait(false);
 
                 if (result == null)
                 {
                     throw new Exception("Error creating slots");
                 }
 
-                await _unitOfWork.SaveAsync();
+                await _unitOfWork.SaveAsync().ConfigureAwait(false);
             }
             
         }
 
         public async Task DeinitializeSlot(int id)
         {
-            var slot = await _slotRepository.Read(id);
+            var slot = await _slotRepository.Read(id).ConfigureAwait(false);
 
             if(slot == null)
             {
@@ -60,25 +60,25 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
                 return;
             }
 
-            await _placeHttpClient.DeinitializeSlot(slot.ClientId, slot.Id);
+            await _placeHttpClient.DeinitializeSlot(slot.ClientId, slot.Id).ConfigureAwait(false);
 
-            await _auth0cClient.DeleteUser(slot.ManagerLogin);
+            await _auth0cClient.DeleteUser(slot.ManagerLogin).ConfigureAwait(false);
 
             slot.IsUsed = false;
             slot.Name = null;
-            var result = await _slotRepository.Update(slot);
+            var result = await _slotRepository.Update(slot).ConfigureAwait(false);
 
             if (!result)
             {
                 throw new Exception("Error deinitializing slot");
             }
 
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
         }
 
         public async Task<Auth0CredentialsResponse> GetCredentials(int slotId)
         {
-            var slot = await _slotRepository.Read(slotId);
+            var slot = await _slotRepository.Read(slotId).ConfigureAwait(false);
 
             if (slot == null)
             {
@@ -101,7 +101,7 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
 
         public async Task<Auth0CredentialsResponse> InitializeSlot(InitializeSlotRequest request)
         {
-            var slot = await _slotRepository.Read(request.SlotId);
+            var slot = await _slotRepository.Read(request.SlotId).ConfigureAwait(false);
 
             if (slot == null)
             {
@@ -113,22 +113,22 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
                 throw new Exception("Slot is in use");
             }
 
-            await _placeHttpClient.InitializeSlot(slot.ClientId, request);
+            await _placeHttpClient.InitializeSlot(slot.ClientId, request).ConfigureAwait(false);
 
-            var auth0Creds = await _auth0cClient.CreateUser(request.Email, slot.ClientId, slot.Id);
+            var auth0Creds = await _auth0cClient.CreateUser(request.Email, slot.ClientId, slot.Id).ConfigureAwait(false);
 
             slot.ManagerPassword = auth0Creds.auth0password;
             slot.ManagerLogin = request.Email;
             slot.IsUsed = true;
             slot.Name = request.Name;
-            var result = await _slotRepository.Update(slot);
+            var result = await _slotRepository.Update(slot).ConfigureAwait(false);
 
             if (!result)
             {
                 throw new Exception("Error initializing slot");
             }
 
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
 
             return auth0Creds;
         
@@ -136,15 +136,15 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
 
         public async Task RemoveSlots(int id)
         {
-            await DeinitializeSlot(id);
-            var result = await _slotRepository.Delete(id);
+            await DeinitializeSlot(id).ConfigureAwait(false);
+            var result = await _slotRepository.Delete(id).ConfigureAwait(false);
 
             if (!result)
             {
                 throw new Exception("Error removing slots");
             }
 
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
         }
     }
 }

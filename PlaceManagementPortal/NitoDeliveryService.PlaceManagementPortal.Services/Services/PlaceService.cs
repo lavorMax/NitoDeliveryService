@@ -40,23 +40,23 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
                 SlotId = place.SlotId
             };
 
-            var result = await _placeRepository.Create(placeEntity);
+            var result = await _placeRepository.Create(placeEntity).ConfigureAwait(false);
 
             if (result == null)
             {
                 throw new Exception("Error creating place");
             }
 
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
 
             var placeDTO = _mapper.Map<Place, PlaceDTO>(result);
 
-            await _deliveryServiceHttpClient.CreatePlace(placeDTO);
+            await _deliveryServiceHttpClient.CreatePlace(placeDTO).ConfigureAwait(false);
         }
 
         public async Task<PlaceDTO> GetPlace(int placeId)
         {
-            var entity = await _placeRepository.ReadWithIncludes(placeId);
+            var entity = await _placeRepository.ReadWithIncludes(placeId).ConfigureAwait(false);
 
             if (entity == null)
             {
@@ -70,10 +70,10 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
         public async Task<PlaceDTO> GetPlace()
         {
-            var metadata = await _auth0Client.GetMetadata();
+            var metadata = await _auth0Client.GetMetadata().ConfigureAwait(false);
             var slotId = metadata.PlaceId;
 
-            var entity = await _placeRepository.ReadWithIncludesBySlotId(slotId);
+            var entity = await _placeRepository.ReadWithIncludesBySlotId(slotId).ConfigureAwait(false);
 
             if (entity == null)
             {
@@ -87,34 +87,34 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
         public async Task RemovePlace(int slotId)
         {
-            var place = await _placeRepository.ReadWithIncludesBySlotId(slotId);
+            var place = await _placeRepository.ReadWithIncludesBySlotId(slotId).ConfigureAwait(false);
 
-            var result = await _placeRepository.DeleteBySlotId(slotId);
+            var result = await _placeRepository.DeleteBySlotId(slotId).ConfigureAwait(false);
 
             if (!result)
             {
                 throw new Exception("Error removing place");
             }
 
-            await _deliveryServiceHttpClient.DeletePlace(place.Id, place.ClientId);
+            await _deliveryServiceHttpClient.DeletePlace(place.Id, place.ClientId).ConfigureAwait(false);
 
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
         }
 
         public async Task UpdatePlace(PlaceDTO place)
         {
             var placeEntity = _mapper.Map<PlaceDTO, Place>(place);
 
-            var result = await _placeRepository.Update(placeEntity);
+            var result = await _placeRepository.Update(placeEntity).ConfigureAwait(false);
 
             if (!result)
             {
                 throw new Exception("Error updatng place");
             }
 
-            await _deliveryServiceHttpClient.UpdatePlace(place);
+            await _deliveryServiceHttpClient.UpdatePlace(place).ConfigureAwait(false);
 
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
         }
     }
 }

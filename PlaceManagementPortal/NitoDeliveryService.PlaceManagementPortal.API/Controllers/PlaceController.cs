@@ -24,7 +24,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.API.Controllers
         {
             try
             {
-                await _placeService.UpdatePlace(request);
+                await _placeService.UpdatePlace(request).ConfigureAwait(false);
                 return Ok();
             }
             catch (Exception e)
@@ -38,7 +38,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.API.Controllers
         {
             try
             {
-                var result = await _placeService.GetPlace();
+                var result = await _placeService.GetPlace().ConfigureAwait(false);
                 return Ok(result);
             }
             catch (Exception e)

@@ -19,7 +19,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Repositories
         {
             try
             {
-                var result = await _context.Set<Place>().FirstAsync(p => p.SlotId == slotId);
+                var result = await _context.Set<Place>().FirstAsync(p => p.SlotId == slotId).ConfigureAwait(false);
                 if (result != null)
                 {
                     _context.Set<Place>().Remove(result);
@@ -41,7 +41,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Repositories
                 return await _context.Set<Place>()
                     .Include(p => p.PaymentConfigurations)
                     .Include(c => c.Dishes)
-                    .FirstAsync(p => p.Id == id);
+                    .FirstAsync(p => p.Id == id).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -56,7 +56,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Repositories
                 return await _context.Set<Place>()
                     .Include(p => p.PaymentConfigurations)
                     .Include(c => c.Dishes)
-                    .FirstAsync(p => p.SlotId == id);
+                    .FirstAsync(p => p.SlotId == id).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -68,7 +68,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Repositories
         {
             try
             {
-                var result = await Read(entity.Id);
+                var result = await Read(entity.Id).ConfigureAwait(false);
                 if (result != null)
                 {
                     PropertyInfo[] properties = typeof(Place).GetProperties();

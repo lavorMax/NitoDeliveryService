@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using NiteDeliveryService.Shared.DAL.Interfaces;
+using NitoDeliveryService.DeliveryServicePortal.Services.Infrastructure;
 using NitoDeliveryService.PlaceManagementPortal.Entities.Entities;
 using NitoDeliveryService.PlaceManagementPortal.Repositories.Interfaces;
 using NitoDeliveryService.PlaceManagementPortal.Services.Interfaces;
 using NitoDeliveryService.Shared.Models.Models;
 using NitoDeliveryService.Shared.Models.PlaceDTOs;
-using Nominatim.API.Geocoders;
-using Nominatim.API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +14,6 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 {
     public class OrderService : IOrderService
     {
-        private const double EarthRadiusInMeters = 6371000;
 
         private readonly IPlaceManagementPortalHttpClient _placeManagerHttpClient;
         private readonly IOrderRepository _orderRepository;
@@ -36,30 +34,30 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
         {
             var orderEntity = _mapper.Map<OrderDTO, Order>(order);
 
-            var place = await _placeManagerHttpClient.Get(order.PlaceId, order.ClientId);
-            var placeView = await _placeViewRepository.Read(order.PlaceViewId);
+            var place = await _placeManagerHttpClient.Get(order.PlaceId, order.ClientId).ConfigureAwait(false);
+            var placeView = await _placeViewRepository.Read(order.PlaceViewId).ConfigureAwait(false);
 
-            var (addressLatitude, addressLongitude) = await GetCoordinates(order.Adress);
+            var (addressLatitude, addressLongitude) = await CoordinateGetter.GetCoordinates(order.Adress).ConfigureAwait(false);
 
-            var distance = GetDistance(addressLatitude, addressLongitude, placeView.Latitude, placeView.Longitude);
+            var distance = CoordinateGetter.GetDistance(addressLatitude, addressLongitude, placeView.Latitude, placeView.Longitude);
 
             var paymentConfig = place.PaymentConfigurations.OrderBy(i => i.MaxRange).FirstOrDefault(i => distance < i.MaxRange);
 
             orderEntity.DeliveryPrice = paymentConfig.Price;
 
 
-            var result = await _orderRepository.Create(orderEntity);
+            var result = await _orderRepository.Create(orderEntity).ConfigureAwait(false);
             if (result == null)
             {
                 throw new Exception("Error creating order");
             }
 
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<OrderDTO>> GetOrdersByUser(int userId, bool onlyActiveOrders = true)
         {
-            var allOrdersEntities = await _orderRepository.GetOrdersByUser(userId, onlyActiveOrders);
+            var allOrdersEntities = await _orderRepository.GetOrdersByUser(userId, onlyActiveOrders).ConfigureAwait(false);
 
             var result = _mapper.Map<IEnumerable<Order>, IEnumerable<OrderDTO>>(allOrdersEntities);
 
@@ -68,7 +66,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
         public async Task<IEnumerable<OrderDTO>> GetOrdersByPlace(int clientId, int placeId, bool onlyActiveOrders = true)
         {
-            var allOrdersEntities = await _orderRepository.GetOrdersByPlace(clientId, placeId, onlyActiveOrders);
+            var allOrdersEntities = await _orderRepository.GetOrdersByPlace(clientId, placeId, onlyActiveOrders).ConfigureAwait(false);
 
             var result = _mapper.Map<IEnumerable<Order>, IEnumerable<OrderDTO>>(allOrdersEntities);
 
@@ -77,50 +75,26 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
         public async Task UpdateOrderStatus(int orderId, OrderStatuses status)
         {
-            var orderEntity = await _orderRepository.Read(orderId);
+            var orderEntity = await _orderRepository.Read(orderId).ConfigureAwait(false);
 
             orderEntity.OrderStatus = status;
 
-            var result = await _orderRepository.Update(orderEntity);
+            var result = await _orderRepository.Update(orderEntity).ConfigureAwait(false);
             if (!result)
             {
                 throw new Exception("Error updating order");
             }
 
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
         }
 
         public async Task<OrderDTO> GetOrder(int orderId)
         {
-            var order = await _orderRepository.ReadWithIncludes(orderId);
+            var order = await _orderRepository.ReadWithIncludes(orderId).ConfigureAwait(false);
 
             var result = _mapper.Map<Order, OrderDTO>(order);
 
             return result;
-        }
-
-        private async Task<(double, double)> GetCoordinates(string address)
-        {
-
-            var geocoder = new ForwardGeocoder();
-            var addressResponse = await geocoder.Geocode(new ForwardGeocodeRequest { queryString = address, BreakdownAddressElements = true });
-
-            var addresDecoded = addressResponse.FirstOrDefault();
-            if (addresDecoded == null)
-            {
-                throw new Exception("Error getting address");
-            }
-
-            return (addresDecoded.Latitude, addresDecoded.Longitude);
-        }
-
-        private double GetDistance(double Latitude1, double Longitude1, double Latitude2, double Longitude2)
-        {
-            return Math.Acos(
-                    Math.Sin(Latitude1 * Math.PI / 180) * Math.Sin(Latitude2 * Math.PI / 180) +
-                    Math.Cos(Latitude1 * Math.PI / 180) * Math.Cos(Latitude2 * Math.PI / 180) *
-                    Math.Cos(Longitude2 * Math.PI / 180 - Longitude1 * Math.PI / 180)
-                ) * EarthRadiusInMeters;
         }
     }
 }

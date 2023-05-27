@@ -26,7 +26,7 @@ namespace NitoDeliveryService.DeliveryServicePortal.API.Controllers
         {
             try
             {
-                var result = await _placeService.Get(placeId, clientId);
+                var result = await _placeService.Get(placeId, clientId).ConfigureAwait(false);
                 return Ok(result);
             }
             catch (Exception e)
@@ -40,7 +40,7 @@ namespace NitoDeliveryService.DeliveryServicePortal.API.Controllers
         {
             try
             {
-                var result = await _placeService.GetAllPossibleToDeliver(adress);
+                var result = await _placeService.GetAllPossibleToDeliver(adress).ConfigureAwait(false);
                 return Ok(result);
             }
             catch (Exception e)

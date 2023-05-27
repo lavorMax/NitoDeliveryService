@@ -25,7 +25,7 @@ namespace NitoDelivery.ClientManager.API.Controllers
         {
             try
             {
-                var clients = await _clientService.ReadAllClients();
+                var clients = await _clientService.ReadAllClients().ConfigureAwait(false);
                 return Ok(clients);
             }
             catch(Exception e)
@@ -39,7 +39,7 @@ namespace NitoDelivery.ClientManager.API.Controllers
         {
             try
             {
-                var client = await _clientService.ReadFullClientById(id);
+                var client = await _clientService.ReadFullClientById(id).ConfigureAwait(false);
                 return Ok(client);
             }
             catch (Exception e)
@@ -53,7 +53,7 @@ namespace NitoDelivery.ClientManager.API.Controllers
         {
             try
             {
-                await _clientService.CreateNewClient(client);
+                await _clientService.CreateNewClient(client).ConfigureAwait(false);
                 return Ok();
             }
             catch (Exception e)
@@ -67,7 +67,7 @@ namespace NitoDelivery.ClientManager.API.Controllers
         {
             try
             {
-                await _clientService.RemoveClient(id);
+                await _clientService.RemoveClient(id).ConfigureAwait(false);
                 return Ok();
             }
             catch (Exception e)

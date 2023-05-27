@@ -19,7 +19,7 @@ namespace NiteDeliveryService.Shared.DAL.Implemetations
         {
             try
             {
-                var result = await _context.Set<T>().AddAsync(entity);
+                var result = await _context.Set<T>().AddAsync(entity).ConfigureAwait(false);
 
                 return result.Entity;
             }
@@ -33,7 +33,7 @@ namespace NiteDeliveryService.Shared.DAL.Implemetations
         {
             try
             {
-                return await _context.Set<T>().FindAsync(id);
+                return await _context.Set<T>().FindAsync(id).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -45,7 +45,7 @@ namespace NiteDeliveryService.Shared.DAL.Implemetations
         {
             try
             {
-                T result = await Read(entity.Id);
+                T result = await Read(entity.Id).ConfigureAwait(false);
                 if(result != null)
                 {
                     _context.Entry(result).CurrentValues.SetValues(entity);
@@ -64,7 +64,7 @@ namespace NiteDeliveryService.Shared.DAL.Implemetations
         {
             try
             {
-                T result = await Read(id);
+                T result = await Read(id).ConfigureAwait(false);
                 if (result != null)
                 {
                     _context.Set<T>().Remove(result);
@@ -83,7 +83,7 @@ namespace NiteDeliveryService.Shared.DAL.Implemetations
         {
             try
             {
-                return await _context.Set<T>().ToListAsync();
+                return await _context.Set<T>().ToListAsync().ConfigureAwait(false);
             }
             catch (Exception e)
             {

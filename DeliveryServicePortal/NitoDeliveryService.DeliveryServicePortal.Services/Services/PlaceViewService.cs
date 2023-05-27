@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using NiteDeliveryService.Shared.DAL.Interfaces;
+using NitoDeliveryService.DeliveryServicePortal.Services.Infrastructure;
 using NitoDeliveryService.PlaceManagementPortal.Entities.Entities;
 using NitoDeliveryService.PlaceManagementPortal.Models.DTOs;
 using NitoDeliveryService.PlaceManagementPortal.Repositories.Interfaces;
 using NitoDeliveryService.PlaceManagementPortal.Services.Interfaces;
 using NitoDeliveryService.Shared.Models.PlaceDTOs;
-using Nominatim.API.Geocoders;
-using Nominatim.API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,19 +39,19 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
                 Deleted = false
             };
 
-            var result = await _placeViewRepository.Create(PlaceView);
+            var result = await _placeViewRepository.Create(PlaceView).ConfigureAwait(false);
 
             if (result == null)
             {
                 throw new Exception("Error creating place");
             }
 
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
         }
 
         public async Task<PlaceDTO> Get(int placeId, int clientId)
         {
-            var result = await _placeManagerHttpClient.Get(placeId, clientId);
+            var result = await _placeManagerHttpClient.Get(placeId, clientId).ConfigureAwait(false);
 
             if(result == null)
             {
@@ -64,9 +63,9 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
         public async Task<IEnumerable<PlaceViewDTO>> GetAllPossibleToDeliver(string adress)
         {
-            var (addressLatitude, addressLongitude) = await GetCoordinates(adress);
+            var (addressLatitude, addressLongitude) = await CoordinateGetter.GetCoordinates(adress).ConfigureAwait(false);
 
-            var result = await _placeViewRepository.GetPossibleToDeliverPlaces(addressLatitude, addressLongitude);
+            var result = await _placeViewRepository.GetPossibleToDeliverPlaces(addressLatitude, addressLongitude).ConfigureAwait(false);
 
             var resultDto = _mapper.Map<IEnumerable<PlaceView>, IEnumerable<PlaceViewDTO>>(result);
 
@@ -75,9 +74,9 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
         public async Task UpdatePlaceView(PlaceDTO placeDto)
         {
-            var entityToUpdate = await _placeViewRepository.ReadByPlaceAndClientId(placeDto.ClientId, placeDto.Id);
+            var entityToUpdate = await _placeViewRepository.ReadByPlaceAndClientId(placeDto.ClientId, placeDto.Id).ConfigureAwait(false);
 
-            var (addressLatitude, addressLongitude) = await GetCoordinates(placeDto.Address);
+            var (addressLatitude, addressLongitude) = await CoordinateGetter.GetCoordinates(placeDto.Address).ConfigureAwait(false);
 
             var PlaceView = new PlaceView()
             {
@@ -97,45 +96,30 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
                 Deleted = false
             };
 
-            var result = await _placeViewRepository.Update(PlaceView);
+            var result = await _placeViewRepository.Update(PlaceView).ConfigureAwait(false);
 
             if (!result)
             {
                 throw new Exception("Error updating place");
             }
 
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
         }
 
         public async Task DeletePlaceView(int placeId, int clientId)
         {
-            var entityToUpdate = await _placeViewRepository.ReadByPlaceAndClientId(clientId, placeId);
+            var entityToUpdate = await _placeViewRepository.ReadByPlaceAndClientId(clientId, placeId).ConfigureAwait(false);
 
             entityToUpdate.Deleted = true;
 
-            var result = await _placeViewRepository.Update(entityToUpdate);
+            var result = await _placeViewRepository.Update(entityToUpdate).ConfigureAwait(false);
 
             if (!result)
             {
                 throw new Exception("Error updating place");
             }
 
-            await _unitOfWork.SaveAsync();
-        }
-
-        private async Task<(double, double)> GetCoordinates(string address)
-        {
-
-            var geocoder = new ForwardGeocoder();
-            var addressResponse = await geocoder.Geocode(new ForwardGeocodeRequest { queryString = address, BreakdownAddressElements = true });
-
-            var addresDecoded = addressResponse.FirstOrDefault();
-            if (addresDecoded == null)
-            {
-                throw new Exception("Error getting address");
-            }
-
-            return (addresDecoded.Latitude, addresDecoded.Longitude);
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
         }
     }
 }

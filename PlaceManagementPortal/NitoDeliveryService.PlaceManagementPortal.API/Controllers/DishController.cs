@@ -24,7 +24,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.API.Controllers
         {
             try
             {
-                await _dishService.CreateNewDish(dish);
+                await _dishService.CreateNewDish(dish).ConfigureAwait(false);
                 return Ok();
             }
             catch (Exception e)
@@ -38,7 +38,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.API.Controllers
         {
             try
             {
-                await _dishService.RemoveDish(id);
+                await _dishService.RemoveDish(id).ConfigureAwait(false);
                 return Ok();
             }
             catch (Exception e)

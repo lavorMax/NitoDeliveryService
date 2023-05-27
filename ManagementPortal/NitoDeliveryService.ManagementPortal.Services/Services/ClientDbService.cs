@@ -24,8 +24,8 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
                 string createDatabaseQuery = $"CREATE DATABASE {databaseName}";
                 using (SqlCommand command = new(createDatabaseQuery, connection))
                 {
-                    await connection.OpenAsync();
-                    await command.ExecuteNonQueryAsync();
+                    await connection.OpenAsync().ConfigureAwait(false);
+                    await command.ExecuteNonQueryAsync().ConfigureAwait(false);
                 }
             }
         }
@@ -38,16 +38,16 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                await connection.OpenAsync();
+                await connection.OpenAsync().ConfigureAwait(false);
                 using (SqlCommand command = new SqlCommand($"SELECT db_id('{databaseName}')", connection))
                 {
-                    object result = await command.ExecuteScalarAsync();
+                    object result = await command.ExecuteScalarAsync().ConfigureAwait(false);
 
                     if (result != null && int.TryParse(result.ToString(), out int databaseId))
                     {
                         using (SqlCommand deleteCommand = new SqlCommand($"DROP DATABASE [{databaseName}]", connection))
                         {
-                            await deleteCommand.ExecuteNonQueryAsync();
+                            await deleteCommand.ExecuteNonQueryAsync().ConfigureAwait(false);
 
                         }
                     }

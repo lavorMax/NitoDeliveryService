@@ -29,24 +29,24 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
         {
             var userEntity = _mapper.Map<UserDTO, User>(userDto);
 
-            var result = await _userRepository.Create(userEntity);
+            var result = await _userRepository.Create(userEntity).ConfigureAwait(false);
             if (result == null)
             {
                 throw new Exception("Error creating user");
             }
 
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
 
             var userDTO = _mapper.Map<User, UserDTO>(result);
             userDTO.Password = userDto.Password;
 
-            await _auth0Client.CreateUser(userDTO);
+            await _auth0Client.CreateUser(userDTO).ConfigureAwait(false);
             return result.Id;
         }
 
         public async Task<UserDTO> GetUser(string userLogin)
         {
-            var userEntity = await _userRepository.ReadByLogin(userLogin);
+            var userEntity = await _userRepository.ReadByLogin(userLogin).ConfigureAwait(false);
 
             var result = _mapper.Map<User, UserDTO>(userEntity);
 
@@ -57,13 +57,13 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
         {
             var userEntity = _mapper.Map<UserDTO, User>(userDto);
 
-            var result = await _userRepository.Update(userEntity);
+            var result = await _userRepository.Update(userEntity).ConfigureAwait(false);
             if (!result)
             {
                 throw new Exception("Error updating user");
             }
 
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
         }
     }
 }

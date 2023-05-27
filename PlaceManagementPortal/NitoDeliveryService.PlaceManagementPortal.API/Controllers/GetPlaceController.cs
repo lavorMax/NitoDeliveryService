@@ -35,7 +35,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.API.Controllers
 
                     var placeService = scope.ServiceProvider.GetRequiredService<IPlaceService>();
                     
-                    var result = await placeService.GetPlace(placeId);
+                    var result = await placeService.GetPlace(placeId).ConfigureAwait(false);
                     return Ok(result);
                 }
             }
