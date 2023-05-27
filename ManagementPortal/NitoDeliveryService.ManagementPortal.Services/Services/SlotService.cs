@@ -5,6 +5,7 @@ using NitoDeliveryService.ManagementPortal.Repositories.RepositoriesInterfaces;
 using NitoDeliveryService.ManagementPortal.Services.Interfaces;
 using NitoDeliveryService.Shared.Models.DTOs;
 using System;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace NitoDeliveryService.ManagementPortal.Services.Services
@@ -38,7 +39,7 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
 
                 if (result == null)
                 {
-                    throw new Exception("Error creating slots");
+                    throw new ExternalException("Error creating slots");
                 }
 
                 await _unitOfWork.SaveAsync().ConfigureAwait(false);
@@ -52,7 +53,7 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
 
             if(slot == null)
             {
-                throw new Exception("Error getting slot for deinitializing");
+                throw new ExternalException("Error getting slot for deinitializing");
             }
 
             if (!slot.IsUsed)
@@ -70,7 +71,7 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
 
             if (!result)
             {
-                throw new Exception("Error deinitializing slot");
+                throw new ExternalException("Error deinitializing slot");
             }
 
             await _unitOfWork.SaveAsync().ConfigureAwait(false);
@@ -82,12 +83,12 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
 
             if (slot == null)
             {
-                throw new Exception("Error getting slot for deinitializing");
+                throw new ExternalException("Error getting slot for deinitializing");
             }
 
             if (!slot.IsUsed)
             {
-                throw new Exception("Slot is not in use");
+                throw new ExternalException("Slot is not in use");
             }
 
             var creds = new Auth0CredentialsResponse()
@@ -105,12 +106,12 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
 
             if (slot == null)
             {
-                throw new Exception("Error getting slot for initializing");
+                throw new ExternalException("Error getting slot for initializing");
             }
 
             if (slot.IsUsed)
             {
-                throw new Exception("Slot is in use");
+                throw new ExternalException("Slot is in use");
             }
 
             await _placeHttpClient.InitializeSlot(slot.ClientId, request).ConfigureAwait(false);
@@ -125,7 +126,7 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
 
             if (!result)
             {
-                throw new Exception("Error initializing slot");
+                throw new ExternalException("Error initializing slot");
             }
 
             await _unitOfWork.SaveAsync().ConfigureAwait(false);
@@ -141,7 +142,7 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
 
             if (!result)
             {
-                throw new Exception("Error removing slots");
+                throw new ExternalException("Error removing slots");
             }
 
             await _unitOfWork.SaveAsync().ConfigureAwait(false);

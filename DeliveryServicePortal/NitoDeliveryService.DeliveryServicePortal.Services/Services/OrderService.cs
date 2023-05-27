@@ -9,6 +9,7 @@ using NitoDeliveryService.Shared.Models.PlaceDTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 {
@@ -49,7 +50,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
             var result = await _orderRepository.Create(orderEntity).ConfigureAwait(false);
             if (result == null)
             {
-                throw new Exception("Error creating order");
+                throw new ExternalException("Error creating order");
             }
 
             await _unitOfWork.SaveAsync().ConfigureAwait(false);
@@ -82,7 +83,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
             var result = await _orderRepository.Update(orderEntity).ConfigureAwait(false);
             if (!result)
             {
-                throw new Exception("Error updating order");
+                throw new ExternalException("Error updating order");
             }
 
             await _unitOfWork.SaveAsync().ConfigureAwait(false);

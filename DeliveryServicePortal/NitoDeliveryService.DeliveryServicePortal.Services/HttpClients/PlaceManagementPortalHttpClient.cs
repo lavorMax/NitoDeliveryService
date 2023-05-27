@@ -4,6 +4,7 @@ using NitoDeliveryService.Shared.Models.PlaceDTOs;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -41,7 +42,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.HttpClients
             }
             else
             {
-                throw new Exception($"Error occurred while calling the Get endpoint. StatusCode={response.StatusCode}");
+                throw new ExternalException($"Error occurred while calling the Get endpoint. StatusCode={response.StatusCode}");
             }
         }
 

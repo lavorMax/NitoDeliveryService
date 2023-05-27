@@ -5,6 +5,7 @@ using NitoDeliveryService.Shared.Models.DTOs;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,7 +36,7 @@ namespace NitoDeliveryService.ManagementPortal.Services.HttpClients
             
             if (!response.IsSuccessStatusCode)
             {
-                throw new Exception($"Error occurred while calling the Denitialize endpoint. StatusCode={response.StatusCode}");
+                throw new ExternalException($"Error occurred while calling the Denitialize endpoint. StatusCode={response.StatusCode}");
             }
         }
 
@@ -52,7 +53,7 @@ namespace NitoDeliveryService.ManagementPortal.Services.HttpClients
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new Exception($"Error occurred while calling the Denitialize endpoint. StatusCode={response.StatusCode}");
+                throw new ExternalException($"Error occurred while calling the Denitialize endpoint. StatusCode={response.StatusCode}");
             }
         }
 

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -49,7 +50,7 @@ namespace NitoDeliveryService.ManagementPortal.Services.HttpClients
             if (!response.IsSuccessStatusCode)
             {
                 var errorResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                throw new Exception($"Failed to create user. Status code: {response.StatusCode}. Error response: {errorResponse}");
+                throw new ExternalException($"Failed to create user. Status code: {response.StatusCode}. Error response: {errorResponse}");
             }
 
             return new Auth0CredentialsResponse()
@@ -73,7 +74,7 @@ namespace NitoDeliveryService.ManagementPortal.Services.HttpClients
             if (!usersResponse.IsSuccessStatusCode)
             {
                 var errorResponse = await usersResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                throw new Exception($"Failed to retrieve user. Status code: {usersResponse.StatusCode}. Error response: {errorResponse}");
+                throw new ExternalException($"Failed to retrieve user. Status code: {usersResponse.StatusCode}. Error response: {errorResponse}");
             }
 
             var users = await usersResponse.Content.ReadFromJsonAsync<IEnumerable<dynamic>>().ConfigureAwait(false);
@@ -81,7 +82,7 @@ namespace NitoDeliveryService.ManagementPortal.Services.HttpClients
 
             if (user is null)
             {
-                throw new Exception($"User not found with username: {username}");
+                throw new ExternalException($"User not found with username: {username}");
             }
 
             var userIdProperty = user.GetProperty("user_id");
@@ -89,7 +90,7 @@ namespace NitoDeliveryService.ManagementPortal.Services.HttpClients
 
             if (userId is null)
             {
-                throw new Exception($"User ID not found for username: {username}");
+                throw new ExternalException($"User ID not found for username: {username}");
             }
             
             var response = await _httpClient.DeleteAsync($"/api/v2/users/{Uri.EscapeDataString(userId)}").ConfigureAwait(false);
@@ -97,7 +98,7 @@ namespace NitoDeliveryService.ManagementPortal.Services.HttpClients
             if (!response.IsSuccessStatusCode)
             {
                 var errorResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                throw new Exception($"Failed to delete user. Status code: {response.StatusCode}. Error response: {errorResponse}");
+                throw new ExternalException($"Failed to delete user. Status code: {response.StatusCode}. Error response: {errorResponse}");
             }
         }
 

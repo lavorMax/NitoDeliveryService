@@ -2,6 +2,7 @@
 using NitoDeliveryService.ManagementPortal.Services.Infrastructure;
 using NitoDeliveryService.ManagementPortal.Services.Interfaces;
 using System;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace NitoDeliveryService.ManagementPortal.Services.Services
@@ -53,7 +54,7 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
                     }
                     else
                     {
-                        throw new Exception("Database don`t exist");
+                        throw new ExternalException("Database don`t exist");
                     }
                 }
             }

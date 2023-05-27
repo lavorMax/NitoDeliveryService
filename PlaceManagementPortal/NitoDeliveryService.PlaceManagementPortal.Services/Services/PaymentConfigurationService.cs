@@ -5,6 +5,7 @@ using NitoDeliveryService.PlaceManagementPortal.Repositories.Interfaces;
 using NitoDeliveryService.PlaceManagementPortal.Services.Interfaces;
 using NitoDeliveryService.Shared.Models.PlaceDTOs;
 using System;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
@@ -40,7 +41,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
             if (result == null)
             {
-                throw new Exception("Error creating payment configuration");
+                throw new ExternalException("Error creating payment configuration");
             }
 
             await _unitOfWork.SaveAsync().ConfigureAwait(false);
@@ -58,7 +59,7 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
 
             if (!result)
             {
-                throw new Exception("Error removing payment configuration");
+                throw new ExternalException("Error removing payment configuration");
             }
 
             await _unitOfWork.SaveAsync().ConfigureAwait(false);
