@@ -125,16 +125,20 @@ namespace DeliveryServiceWPF.ViewModel
             };
 
             var userId = _client.CreateUser(user);
-            var token = await _authClient.Authenticate(Email, Password);
 
-            if (token != null)
+            if(userId != -1)
             {
-                _client.SetupToken(token);
-                _navigationService.ShowMain(userId);
-            }
-            else
-            {
-                IncorrectCredentialsVisibility = Visibility.Visible;
+                var token = await _authClient.Authenticate(Email, Password);
+
+                if (token != null)
+                {
+                    _client.SetupToken(token);
+                    _navigationService.ShowMain(userId);
+                }
+                else
+                {
+                    IncorrectCredentialsVisibility = Visibility.Visible;
+                }
             }
         }
 

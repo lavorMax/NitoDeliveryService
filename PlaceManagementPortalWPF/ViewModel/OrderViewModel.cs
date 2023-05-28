@@ -3,17 +3,14 @@ using NitoDeliveryService.Shared.View;
 using NitoDeliveryService.Shared.View.Models.PlaceManagementPortal;
 using PlaceManagementPortalWPF.HttpClients;
 using PlaceManagementPortalWPF.Services;
-using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace PlaceManagementPortalWPF.ViewModel
 {
     public class OrderViewModel : INotifyPropertyChanged
     {
-        private readonly INavigationService _navigationService;
         private readonly IPlaceManagementPortal _managementClient;
 
         private ObservableCollection<DishOrderDTO> _items;
@@ -44,6 +41,7 @@ namespace PlaceManagementPortalWPF.ViewModel
         private string _orderName;
         private string _userName;
         private string _userPhone;
+        private string _userAddress;
 
         public string OrderName
         {
@@ -52,6 +50,16 @@ namespace PlaceManagementPortalWPF.ViewModel
             {
                 _orderName = value;
                 OnPropertyChanged(nameof(OrderName));
+            }
+        }
+
+        public string UserAddress
+        {
+            get { return _userAddress; }
+            set
+            {
+                _userAddress = value;
+                OnPropertyChanged(nameof(UserAddress));
             }
         }
 
@@ -90,10 +98,9 @@ namespace PlaceManagementPortalWPF.ViewModel
         public ICommand PrepareCommand { get; }
         public ICommand DeliverCommand { get; }
 
-        public OrderViewModel(int orderId, IPlaceManagementPortal managementClient, INavigationService nav)
+        public OrderViewModel(int orderId, IPlaceManagementPortal managementClient)
         {
             _managementClient = managementClient;
-            _navigationService = nav;
 
             _orderId = orderId;
             ResetOrderDTO();
@@ -143,6 +150,7 @@ namespace PlaceManagementPortalWPF.ViewModel
             OrderStatus = _orderDTO.OrderStatus.ToString();
             UserName = $"{_orderDTO.User.Name} {_orderDTO.User.Surname}";
             UserPhone = _orderDTO.User.Phone;
+            UserAddress = _orderDTO.Adress;
             Items = new ObservableCollection<DishOrderDTO>(_orderDTO.DishOrders);
         }
 

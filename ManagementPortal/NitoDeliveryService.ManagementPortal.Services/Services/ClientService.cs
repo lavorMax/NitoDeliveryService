@@ -14,12 +14,18 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
     public class ClientService : IClientService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ISlotService _slotService;
         private readonly IClientRepository _clientRepository;
         private readonly IClientDbService _clientDbService;
         private readonly IMapper _mapper;
 
-        public ClientService(IUnitOfWork unitOfWork, IClientRepository clientRepository, IClientDbService clientDbService, IMapper mapper)
+        public ClientService(IUnitOfWork unitOfWork,
+            IClientRepository clientRepository, 
+            ISlotService slotService, 
+            IClientDbService clientDbService, 
+            IMapper mapper)
         {
+            _slotService = slotService;
             _unitOfWork = unitOfWork;
             _clientRepository = clientRepository;
             _clientDbService = clientDbService;
@@ -44,6 +50,16 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
 
         public async Task RemoveClient(int id)
         {
+            var clientToDelete = await _clientRepository.ReadWithIncludes(id).ConfigureAwait(false);
+
+            var tasks = new List<Task>();
+            foreach(var slot in clientToDelete.Slots)
+            {
+                tasks.Add(_slotService.DeinitializeSlot(slot.Id));
+            }
+
+            await Task.WhenAll(tasks);
+
             await _clientDbService.RemoveDb(id).ConfigureAwait(false);
 
             var result = await _clientRepository.Delete(id).ConfigureAwait(false);

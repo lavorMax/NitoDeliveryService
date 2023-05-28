@@ -34,10 +34,6 @@ namespace NitoDeliveryService.DeliveryServicePortal.Services.HttpClients
                 email = user.Email,
                 password = user.Password,
                 connection = "DeliveryServiceConection",
-                user_metadata = new
-                {
-                    user.Id
-                }
             }), Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PostAsync($"/api/v2/users", content).ConfigureAwait(false);

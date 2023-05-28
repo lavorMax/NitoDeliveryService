@@ -265,7 +265,7 @@ namespace PlaceManagementPortalWPF.ViewModel
 
         private bool AddMenuItemCanExecute(object parameter)
         {
-            var menuItemPriceResult = int.TryParse(DishPrice, out var menuItemPrice);
+            var menuItemPriceResult = decimal.TryParse(DishPrice, out var menuItemPrice);
 
             return menuItemPriceResult 
                 && menuItemPrice > 0

@@ -137,6 +137,9 @@ namespace ManagementPortalWPF.ViewModels
 
             _managementClient.InitSlot(request);
 
+            SlotName = null;
+            ManagerEmail = null;
+
             UpdatePage();
         }
 
@@ -193,6 +196,8 @@ namespace ManagementPortalWPF.ViewModels
             var numberOfSlots = int.Parse(NumberOfSlots);
 
             _managementClient.CreateSlot(numberOfSlots, _clientId);
+
+            NumberOfSlots = null;
 
             UpdatePage();
         }

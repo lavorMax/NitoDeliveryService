@@ -10,7 +10,7 @@
     <Grid Margin="0,0,0,0">
         <Label Content="Place Management Portal" HorizontalAlignment="Left" Margin="14,10,0,0" VerticalAlignment="Top" AutomationProperties.Name="Label" Height="40" Width="266" FontSize="20" FontFamily="Segoe UI Emoji" FontWeight="Bold"/>
         <Label Content="{Binding OrderName }" HorizontalAlignment="Left" Margin="14,55,0,0" VerticalAlignment="Top" Width="85" Height="30"/>
-        <ListBox Margin="10,153,14,0" ItemsSource="{Binding Items , UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem}" Height="153" VerticalAlignment="Top"/>
+        <ListBox Margin="10,190,14,0" ItemsSource="{Binding Items , UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem}" Height="116" VerticalAlignment="Top"/>
         <Button Content="Close" HorizontalAlignment="Center" Margin="0,317,0,0" VerticalAlignment="Top" Command="{Binding CloseCommand}"/>
         <Button Content="Prepare" HorizontalAlignment="Center" Margin="0,367,0,0" VerticalAlignment="Top" Command="{Binding PrepareCommand}"/>
         <Button Content="Deliver" HorizontalAlignment="Center" Margin="0,342,0,0" VerticalAlignment="Top" Command="{Binding DeliverCommand}"/>
@@ -19,5 +19,7 @@
         <Label Content="{Binding UserPhone}" HorizontalAlignment="Right" Margin="0,0,14,295" VerticalAlignment="Bottom" Width="89" Height="23"/>
         <Label Content="Status" HorizontalAlignment="Right" Margin="0,0,109,336" VerticalAlignment="Bottom" RenderTransformOrigin="0.228,0.181"/>
         <Label Content="Phone" HorizontalAlignment="Right" Margin="0,0,108,292" VerticalAlignment="Bottom" RenderTransformOrigin="0.228,0.181"/>
+        <Label Content="Address" HorizontalAlignment="Right" Margin="0,0,109,249" VerticalAlignment="Bottom" RenderTransformOrigin="0.228,0.181"/>
+        <Label Content="{Binding UserAddress}" HorizontalAlignment="Right" Margin="0,0,14,250" VerticalAlignment="Bottom" Width="89" Height="23"/>
     </Grid>
 </Window>

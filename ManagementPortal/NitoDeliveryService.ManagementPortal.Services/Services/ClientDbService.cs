@@ -46,6 +46,11 @@ namespace NitoDeliveryService.ManagementPortal.Services.Services
 
                     if (result != null && int.TryParse(result.ToString(), out int databaseId))
                     {
+                        using (SqlCommand killCommand = new SqlCommand($"ALTER DATABASE [{databaseName}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE", connection))
+                        {
+                            await killCommand.ExecuteNonQueryAsync().ConfigureAwait(false);
+                        }
+
                         using (SqlCommand deleteCommand = new SqlCommand($"DROP DATABASE [{databaseName}]", connection))
                         {
                             await deleteCommand.ExecuteNonQueryAsync().ConfigureAwait(false);

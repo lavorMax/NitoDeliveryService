@@ -16,8 +16,8 @@ namespace DeliveryServiceWPF.ViewModel
         private readonly IDeliveryServiceHttpClient _client;
 
 
-        private string login = "maksym32@gmail.com";
-        private string password = "maksym32";
+        private string login;
+        private string password;
         private Visibility incorrectCredentialsVisibility;
 
         public ICommand EnterCommand { get; }

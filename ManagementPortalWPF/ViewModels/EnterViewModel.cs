@@ -11,8 +11,8 @@ namespace ManagementPortalWPF.ViewModels
 {
     public class EnterViewModel : INotifyPropertyChanged
     {
-        private string login = "lavor.maxim@gmail.com";
-        private string password = "maksym32";
+        private string login;
+        private string password;
         private Visibility incorrectCredentialsVisibility;
 
         private readonly IAuthClient _authClient;

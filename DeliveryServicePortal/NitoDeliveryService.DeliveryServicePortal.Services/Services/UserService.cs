@@ -36,12 +36,12 @@ namespace NitoDeliveryService.PlaceManagementPortal.Services.Services
                 throw new ExternalException("Error creating user");
             }
 
-            await _unitOfWork.SaveAsync().ConfigureAwait(false);
-
             var userDTO = _mapper.Map<User, UserDTO>(result);
             userDTO.Password = userDto.Password;
 
             await _auth0Client.CreateUser(userDTO).ConfigureAwait(false);
+
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
             return result.Id;
         }
 

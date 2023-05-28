@@ -18,20 +18,29 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Repositories
 
         public async Task<IEnumerable<Order>> GetOrdersByPlace(int clientId, int placeId, bool onlyActiveOrders = true)
         {
-            var result = await _context.Set<Order>()
-                .Where(o => o.ClientId == clientId 
-                    && o.PlaceId == placeId 
-                    && onlyActiveOrders ? (o.OrderStatus != OrderStatuses.Finished && o.OrderStatus != OrderStatuses.Closed) : true)
-                .ToListAsync().ConfigureAwait(false);
+            var query = _context.Set<Order>()
+                .Where(o => o.ClientId == clientId && o.PlaceId == placeId);
 
+            if (onlyActiveOrders)
+            {
+                query = query.Where(o => o.OrderStatus != OrderStatuses.Finished && o.OrderStatus != OrderStatuses.Closed);
+            }
+
+            var result = await query.ToListAsync().ConfigureAwait(false);
             return result;
         }
 
         public async Task<IEnumerable<Order>> GetOrdersByUser(int userId, bool onlyActiveOrders = true)
         {
-            var result = await _context.Set<Order>()
-                .Where(o => o.UserId == userId && onlyActiveOrders ? (o.OrderStatus != OrderStatuses.Finished && o.OrderStatus != OrderStatuses.Closed) : true)
-                .ToListAsync().ConfigureAwait(false);
+            var query = _context.Set<Order>()
+                .Where(o => o.UserId == userId);
+
+            if (onlyActiveOrders)
+            {
+                query = query.Where(o => o.OrderStatus != OrderStatuses.Finished && o.OrderStatus != OrderStatuses.Closed);
+            }
+
+            var result = await query.ToListAsync().ConfigureAwait(false);
 
             return result;
         }

@@ -1,7 +1,6 @@
 ﻿using PlaceManagementPortalWPF.HttpClients;
 using PlaceManagementPortalWPF.View;
 using PlaceManagementPortalWPF.ViewModel;
-using System;
 using System.Collections.Generic;
 
 namespace PlaceManagementPortalWPF.Services
@@ -35,7 +34,7 @@ namespace PlaceManagementPortalWPF.Services
 
         public void ShowConfiguration()
         {
-            if (PlaceConfigurationWindow.ShowActivated)
+            if(PlaceConfigurationWindow.Visibility != System.Windows.Visibility.Visible)
             {
                 PlaceConfigurationWindow.Show();
                 PlaceConfigurationVM.ResetPlace();
@@ -56,7 +55,7 @@ namespace PlaceManagementPortalWPF.Services
 
         public void ShowOrder(int orderId)
         {
-            var clientViewModel = new OrderViewModel(orderId, ManagementClient, this);
+            var clientViewModel = new OrderViewModel(orderId, ManagementClient);
 
             var currentOrderWindow = new OrderWindow(this, orderId)
             {
