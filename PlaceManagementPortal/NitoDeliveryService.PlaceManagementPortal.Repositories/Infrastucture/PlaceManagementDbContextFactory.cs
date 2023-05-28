@@ -1,17 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using NitoDeliveryService.PlaceManagementPortal.Repositories.Interfaces;
-using System;
 
 namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Infrastucture
 {
     public class PlaceManagementDbContextFactory : IOverridingDbContextFactory<PlaceManagementDbContext>
     {
         private PlaceManagementDbContext _scopedContext;
+
+        private readonly string _connectionStringTemplate;
         private readonly IAuth0Client _authClient;
+
         private int _overrideClientId = -1;
 
-        public PlaceManagementDbContextFactory(IAuth0Client authClient)
+        public PlaceManagementDbContextFactory(IAuth0Client authClient, IConfiguration configuration)
         {
+            _connectionStringTemplate = configuration.GetConnectionString("PlaceManagementDbConnection");
             _authClient = authClient;
         }
 
@@ -24,8 +28,10 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Infrastucture
 
             if (_overrideClientId != -1)
             {
+                var overridenConnectionString = string.Format(_connectionStringTemplate, _overrideClientId);
+
                 var overrideOptionsBuilder = new DbContextOptionsBuilder<PlaceManagementDbContext>()
-                .UseSqlServer($"Data Source=.\\SQLEXPRESS;Initial Catalog=ClientDB{_overrideClientId};Integrated Security=True;MultipleActiveResultSets=True;");
+                .UseSqlServer(overridenConnectionString);
 
                 _scopedContext = new PlaceManagementDbContext(overrideOptionsBuilder.Options);
 
@@ -34,8 +40,10 @@ namespace NitoDeliveryService.PlaceManagementPortal.Repositories.Infrastucture
 
             var userMetadata = _authClient.GetMetadata().Result;
 
+            var connectionString = string.Format(_connectionStringTemplate, userMetadata.ClientId);
+
             var optionsBuilder = new DbContextOptionsBuilder<PlaceManagementDbContext>()
-                    .UseSqlServer($"Data Source=.\\SQLEXPRESS;Initial Catalog=ClientDB{userMetadata.ClientId};Integrated Security=True;MultipleActiveResultSets=True;");
+                    .UseSqlServer(connectionString);
 
             _scopedContext = new PlaceManagementDbContext(optionsBuilder.Options);
 

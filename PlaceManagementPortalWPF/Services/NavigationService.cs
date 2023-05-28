@@ -34,8 +34,12 @@ namespace PlaceManagementPortalWPF.Services
 
         public void ShowConfiguration()
         {
-            if(PlaceConfigurationWindow.Visibility != System.Windows.Visibility.Visible)
+            if(PlaceConfigurationWindow == null || !PlaceConfigurationWindow.IsVisible)
             {
+                PlaceConfigurationWindow = new PlaceConfigurationWindow()
+                {
+                    DataContext = PlaceConfigurationVM
+                };
                 PlaceConfigurationWindow.Show();
                 PlaceConfigurationVM.ResetPlace();
             }

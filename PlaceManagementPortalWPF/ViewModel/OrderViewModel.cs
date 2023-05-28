@@ -2,7 +2,6 @@
 using NitoDeliveryService.Shared.View;
 using NitoDeliveryService.Shared.View.Models.PlaceManagementPortal;
 using PlaceManagementPortalWPF.HttpClients;
-using PlaceManagementPortalWPF.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
